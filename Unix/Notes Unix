@@ -1,0 +1,142 @@
+7.2.4.2
+Faire le jeu de piste après avoir tout lu
+
+~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
+~nom_user : pour aller dans le répertoire d'un autre utilisateur (si on a les droits)
+~/.local/share/Trash/files : corbeille
+
+atom : edit > preference > packages > options (linter pylint...)
+
+cp ~jdpunix/jeu-de-piste/etape_b1.py . : étape du jeu de piste
+le . correspond à ./ qui correspond au répertoire courant
+
+/bin/
+    Contient les fichiers exécutables strictement nécessaires au fonctionnement du système.
+/usr/bin/
+    Contient la plupart des fichiers exécutables du système. Il y en a beaucoup !
+/etc/
+    Contient les fichiers de configuration globaux du système.
+/var/
+    Contient les données gérées par le système.
+
+cd repertoire : change directory
+cd (sans rien) : cd ~ : cd au répertoire domicile
+
+ls : liste les répertoires à un chemin donné en paramètre
+-l : long : plus précis
+-a : all : même les fichies cachés (.fichier)
+
+mkdir : créer un répertoire
+
+rm : supprime un fichier (commande générale qui supprime définitivement car ne met pas dans la poubelle)
+rmdir : supprime un répertoire
+rm -r : commande générale avec l'option r qui permet de supprimer un fichier de façon récursif (donc un répertoire et tout ce qu'il y a dedans) (= rmdir)
+
+cp : copie un fichier dans ...
+cp -r : permet de copier un fichier de façon récursif (donc un répertoire et tout ce qu'il y a dedans)
+
+
+less : liste le contenu d'un fichier
+
+mv : déplace ... dans ...
+     mais aussi peut renommer le fichier ... en ... (si déplacement dans le même répertoire)
+     on peut aussi déplacer et changer en même temps le nom du fichier
+
+window : unix (LibreOffice > OpenDocument)
+.doc : .odt : document texte (word...)
+.xls : .ods : tableur (excel...)
+.ppt : .odp : présentation (powerpoint...)
+
+libreoffice : permet d'ouvrir un doc .odt (ou .txt ou .jpg ou .pdf ... mais modifié)
+
+eog : permet de lire une image (fichier JPEG, PNG, GIF...) avec le logiciel Eye Of Gnome
+
+acroread : permet de lire un .pdf (juste pour l'affichage) avec le logiciel Acrobat Reader
+evince : idem
+
+gimp : logiciel de retouche numérique
+
+LaTeX : écriture d'un document texte (fichier.tex) qu'on peut compiler
+pdflatex fichier.tex : convertit un fichier .tex en .pdf
+
+atom : permet d'éditer du texte
+vim : idem
+emacs : idem
+atom . : ouvre tous les fichiers du répertoire courant
+
+atom [chemin] [nouveau_fichier] : créer un nouveau fichier là ou on veut
+
+python3 fichier.py : exécute un fichier en python 3
+
+#! /usr/bin/env python3 : à mettre en première ligne du script pour spécifier qu'il s'agit d'un programme python3 (et pas une ancienne version de python par exemple)
+
+chmod +x [nom_fichier] : pour rajouter le droit en exécution
+
+flake8 [nom_fichier] : logiciel pour détecter à la volée les erreurs / bugs potentiels à un instant t
+pylint : encore plus exigeant que flake8
+
+sleep [nombre_de_secondes] : met en pause le programme (on perd la main)
+ctrl+c : pour nous redonner la main (si on ouvre un autre processus comme un logiciel etc...) en tuant l'application qui a été lancé à partir de ce terminal
+commande & : pour nous donner la main juste après l’exécution d’une commande qui était censé nous faire perdre la main
+
+ctrl + / : commente ou décommente un bloc de code
+
+file : permet de "deviner" le type (au sens précis) d'un fichier (image, text...) mais pas toujours correct
+
+droits : ugo : user group others (a pour all : tous)
+user : utilisateur
+group : chaque utilisateur appartient à un ou plusieurs groupes
+	(par ex moi, "yoeungm" appartiens au groupe "etudiants"
+others : tous les autres utilisateurs
+Si un utilisateur est susceptible d'appartenir à plusieurs catégories, il appartient au plus propriétaire ; user > group > others
+Donc en majorité, nos fichiers appartiennent à user
+rwx : read write execute
+Pour un répertoire :
+read : lister contenu du répertoire (ls)
+write : créer ou détruire un objet dans le répertoire (rm...)
+execute : traverser le répertoire (cd)
+
+chmod u-xw,go+w fichier : pour modifier les droits d'un fichier
+= chmod u=r,go=rwx (dans notre cas)
+
+setfacl -m u:yoeungm:r fichier : donner le droit à un utilisateur précis d'écrire dans un fichier
+
+Remarques :
+- On ne peut pas modifier un fichier sur lequel on a les droits en écriture mais qui se trouve dans un répertoire dans lequel on a pas le droit en écriture (par contre si le fichier se trouve dans un sous répertoire (d'un répertoire interdit en écriture) dont on a les droits en écriture, on peut)
+- On peut lire dans un fichier qui se trouve dans un répertoire interdit à la lecture seulement dans le cas ou il se trouve dans un sous répertoire dont la lecture est autorisée
+- On ne peut pas exécuter un fichier lorsqu'il se trouve dans un répertoire interdit en exécution (dans tous les cas) (car il faut pouvoir rentrer dans le fichier interdit avant de faire la suite)
+- L'interdiction en exécution du répertoire courant nécessite de mettre "." et doit etre évité
+
+Espace disque :
+du (disk used) : pour connaître l'utilisation d'espace disque d'un fichier ou d'un répertoire (répertoire courant par défaut)
+du -sh : pour summary (total en une ligne) et human readable (avec les unités)
+df (disk fgree) : pour connaître l'espace disque pour chaque disque dur de la machine (chaque partition)
+df -h : pour human readable (avec les unités)
+
+Lecture du contenu d'un fichier :
+less > more
+less : entrée pour faire apparaître une ligne supplémentaire
+       espace pour faire apparaître une page supplémentaire
+       q pour quitter
+       / pour chercher un mot
+       & pour afficher les lignes contenant un motif de texte
+
+less peut aussi être utilisé pour améliorer la lisibilité avec une autre commande (comme ls)
+ls /usr/bin | less : on fait un less sur le résultat de l'affichage de ls
+
+Lien symbolique :
+Fait référence à un fichier ou à un répertoire
+ln -s chemin_pointé nom_du_lien : création d'un lien symbolique
+
+Remarque : La plupart des opérations (ouverture, lecture, 		   écriture) sur un lien symbolique le déréférencent 		   automatiquement et opèrent sur sa destination
+	   La suppression (rm) et le déplacement/renommagemv) 	         portent sur le lien lui-même et n'affectent pas la 		   cible
+
+Trouver un fichier :
+
+find repertoire_depart criteres : permet de trouver un fichier
+find . -name ... : permet de trouver un fichier par son nom à partir du répertoire courant (en descendant l'arborescence à partir du répertoire courant uniquement)
+find . -name '*.py' : les fichiers qui ont l'extension .py
+find . -mtime 6 : les fichiers dont on a édité il y a 6 jours
+
+find . \( -name "*.py" -o -name "*.pyc" \) \-ctime +6 -a -ctime -14 \! -newer toto.py
+: retrouver tous les fichiers python (source et byte code) que l'on a édité pendant la semaine dernière il y a plus de 6 fois 24 heures et moins de 14 fois 24 heures) sauf ceux qu'on a modifié après le fichier toto.py
