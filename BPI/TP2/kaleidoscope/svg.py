@@ -15,20 +15,13 @@ def affiche_triangle(triangle, couleur):
     """
     fonction qui affiche sur la sortie standard un triangle
     """
-    # print("<polygon points=\"" + str(triangle.point_1.coord_x_y[0]), + "," +
-    #       str(triangle.point_1.coord_x_y[1]) + " " +
-    #       str(triangle.point_2.coord_x_y[0]) + "," +
-    #       str(triangle.point_2.coord_x_y[1]) + " " +
-    #       str(triangle.point_3.coord_x_y[0]) + "," +
-    #       str(triangle.point_3.coord_x_y[1]) + "\" style=\"fill:" +
-    #       couleur + ";stroke-width=\"0\" />")
-    print("<polygon points=\"" + str(triangle.point_1.coord_x_y[0]), + ",")
-    print(str(triangle.point_1.coord_x_y[1]) + " ")
-    print(str(triangle.point_2.coord_x_y[0]) + ",")
-    print(str(triangle.point_2.coord_x_y[1]) + " ")
-    print(str(triangle.point_3.coord_x_y[0]) + ",")
-    print(str(triangle.point_3.coord_x_y[1]) + "\" style=\"fill:")
-    print(couleur + ";stroke-width=\"0\" />")
+    print("<polygon points=\"" + str(triangle.point_1.coord_x_y[0]) + "," +
+          str(triangle.point_1.coord_x_y[1]) + " " +
+          str(triangle.point_2.coord_x_y[0]) + "," +
+          str(triangle.point_2.coord_x_y[1]) + " " +
+          str(triangle.point_3.coord_x_y[0]) + "," +
+          str(triangle.point_3.coord_x_y[1]) + "\" style=\"fill:" +
+          couleur + ";stroke-width=\"0\" />")
 
 def couleur_aleatoire():
     """
