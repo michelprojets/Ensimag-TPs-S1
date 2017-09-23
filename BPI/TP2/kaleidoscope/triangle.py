@@ -46,20 +46,20 @@ class Triangle:
                                     sin(angle)) + ((self.point_1.coord_x_y[1] -
                                                     centre.coord_x_y[1]) * cos(angle)) +
                                    centre.coord_x_y[1])]
-        self.point_2.coord_x_y = [(((self.point_1.coord_x_y[0] - centre.coord_x_y[0]) *
-                                    cos(angle)) - ((self.point_1.coord_x_y[1] -
+        self.point_2.coord_x_y = [(((self.point_2.coord_x_y[0] - centre.coord_x_y[0]) *
+                                    cos(angle)) - ((self.point_2.coord_x_y[1] -
                                                     centre.coord_x_y[1]) * sin(angle)) +
                                    centre.coord_x_y[0]),
-                                  (((self.point_1.coord_x_y[0] - centre.coord_x_y[0]) *
-                                    sin(angle)) + ((self.point_1.coord_x_y[1] -
+                                  (((self.point_2.coord_x_y[0] - centre.coord_x_y[0]) *
+                                    sin(angle)) + ((self.point_2.coord_x_y[1] -
                                                     centre.coord_x_y[1]) * cos(angle)) +
                                    centre.coord_x_y[1])]
-        self.point_3.coord_x_y = [(((self.point_1.coord_x_y[0] - centre.coord_x_y[0]) *
-                                    cos(angle)) - ((self.point_1.coord_x_y[1] -
+        self.point_3.coord_x_y = [(((self.point_3.coord_x_y[0] - centre.coord_x_y[0]) *
+                                    cos(angle)) - ((self.point_3.coord_x_y[1] -
                                                     centre.coord_x_y[1]) * sin(angle)) +
                                    centre.coord_x_y[0]),
-                                  (((self.point_1.coord_x_y[0] - centre.coord_x_y[0]) *
-                                    sin(angle)) + ((self.point_1.coord_x_y[1] -
+                                  (((self.point_3.coord_x_y[0] - centre.coord_x_y[0]) *
+                                    sin(angle)) + ((self.point_3.coord_x_y[1] -
                                                     centre.coord_x_y[1]) * cos(angle)) +
                                    centre.coord_x_y[1])]
         return self # pour s'adapter à l'énoncé (mais déconseillé)
