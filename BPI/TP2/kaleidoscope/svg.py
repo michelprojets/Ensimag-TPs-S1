@@ -21,7 +21,7 @@ def affiche_triangle(triangle, couleur):
           str(triangle.point_2.coord_x_y[1]) + " " +
           str(triangle.point_3.coord_x_y[0]) + "," +
           str(triangle.point_3.coord_x_y[1]) + "\" style=\"fill:" +
-          couleur + ";stroke-width=\"0\"\" />")
+          couleur + ";stroke-width=0\"/>")
 
 def couleur_aleatoire():
     """
