@@ -1,4 +1,4 @@
-7.2.4.2
+7.3.3
 Faire le jeu de piste après avoir tout lu
 
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
@@ -140,4 +140,27 @@ find . -mtime 6 : les fichiers dont on a édité il y a 6 jours
 
 find . \( -name "*.py" -o -name "*.pyc" \) \-ctime +6 -a -ctime -14 \! -newer toto.py
 : retrouver tous les fichiers python (source et byte code) que l'on a édité pendant la semaine dernière il y a plus de 6 fois 24 heures et moins de 14 fois 24 heures) sauf ceux qu'on a modifié après le fichier toto.py
+
+Recherche dans un fichier :
+
+grep expression_reguliere fichier1 fichier2 : recherche les lignes qui comportent une chaîne de caractère qui suit une expression régulière dans un (ou plusieurs) fichier(s)
+cas particulier : expression_reguliere = chaine
+
+Recherche dans un texte :
+En combinant, avec | grep ...
+Exemple : ps -A | grep gnome
+
+Compression-decompression d'un fichier :
+
+gzip nom_fichier : compresse en .gz un fichier
+gunzip nom_fichier.gz : décompresse un fichier .gz
+
+Archiver plusieurs fichiers ou répertoires :
+
+tar -cvf nom_fichier_cree.tar chemin_repertoire : archive en regroupant les fichiers et les répertoires dans un répertoire en un fichier nom_fichier.tar
+tar -xvf nom_fichier.tar : extrait le contenu d'une archive (nom_fichier.tar qui est un fichier .tar)
+
+Archiver et compresser :
+
+
 
