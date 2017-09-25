@@ -140,3 +140,4 @@ find . -mtime 6 : les fichiers dont on a édité il y a 6 jours
 
 find . \( -name "*.py" -o -name "*.pyc" \) \-ctime +6 -a -ctime -14 \! -newer toto.py
 : retrouver tous les fichiers python (source et byte code) que l'on a édité pendant la semaine dernière il y a plus de 6 fois 24 heures et moins de 14 fois 24 heures) sauf ceux qu'on a modifié après le fichier toto.py
+
