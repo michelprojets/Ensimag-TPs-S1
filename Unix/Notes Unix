@@ -1,4 +1,4 @@
-7.3.3
+7.8
 Faire le jeu de piste après avoir tout lu
 
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
@@ -150,17 +150,64 @@ Recherche dans un texte :
 En combinant, avec | grep ...
 Exemple : ps -A | grep gnome
 
-Compression-decompression d'un fichier :
+Compression-decompression d'un fichier (avec gzip) :
 
 gzip nom_fichier : compresse en .gz un fichier
 gunzip nom_fichier.gz : décompresse un fichier .gz
 
-Archiver plusieurs fichiers ou répertoires :
+Archiver plusieurs fichiers ou répertoires (avec tar) :
 
-tar -cvf nom_fichier_cree.tar chemin_repertoire : archive en regroupant les fichiers et les répertoires dans un répertoire en un fichier nom_fichier.tar
+tar -cvf nom_fichier_cree.tar chemin_repertoire : archive en regroupant les fichiers et les répertoires dans un répertoire en un fichier nom_fichier_cree.tar
 tar -xvf nom_fichier.tar : extrait le contenu d'une archive (nom_fichier.tar qui est un fichier .tar)
 
-Archiver et compresser :
+Archiver et compresser (avec tar) :
 
+tar -czvf nom_fichier_cree.tar.gz chemin_repertoire : archive et compresse un répertoire en un fichier nom_fichier_cree.tar.gz (ou .tgz)
+tar -xzvf nom_fichier_cree.tar.gz : décompresse et extrait un fichier .tar.gz
+
+Archiver et compresser (avec zip) :
+
+(Zip est un format qui est utilisé par tout le monde : ceux qui n'utilisent pas Unix, donc c'est le format à préférer)
+zip -r nom_fichier_cree.zip chemin_repertoire : archive et compresse un répertoire en un fichier nom_fichier_cree.zip
+unzip nom_fichier_cree.zip : décompresse et extrait un fichier .zip
+
+Impression de documents :
+
+lpstat -p nom_imprimante : pour voir les travaux en attente
+cancel numero_impression : pour annuler l'impression s'il n'est pas trop tard
+a2ps nom_fichier : lance l'impression du fichier (mise en page implicite en convertissant le fichier sous format .ps PostScript)
+a2ps -o nom_fichier_reception.ps nom_fichier1 : envoie le résultat de la mise en page de l'impression dans nom_fichier_reception.ps (PostScript) (on peut mettre plusieurs nom_fichier pour avoir plusieurs pages dans nom_fichier_reception.ps)
+lpr nom_fichier.ps : imprime un fichier sous format .ps (PostScript) uniquement
+lp nom_fichier.ps : imprime un fichier sous format .ps (PostScript) uniquement
+ps2pdf nomfichier.ps : convertit un fichier .ps en .pdf
+pdf2ps nomfichier.pdf : convertit un fichier .pdf en .ps
+
+Obtenir de l'aide :
+
+nom_commande --help : aide rapide sur la commande (ou "help nom_commande" ou "nom_commande --h")
+man nom_commande : ouvre la page du manuel unix concernant la commande (affiché sous la commande less donc on peut utiliser / pour chercher un mot par exemple)
+info nom_commande : permet d'avoir beaucoup d'informations (comme avec man) sur une commande
+
+Processus :
+
+users : liste les utilisateurs qui exécutent des programmes (processus actifs) sur le même serveur que nous
+top : liste les processus sur la machine par ordre décroissant d'utilisation des ressources du processeur
+ps : liste tous les processus (programmes en cours d'exécution) de la machine
+ps -u nom_user : liste les processus de nom_user
+ps : liste les processus (sauf ce bash) de l'utilisateur courant
+ps u : liste les processus en mode joli
+ps -a : liste les processus (avec ce bash) de l'utilisateur courant
+ps -A : liste tous les processus du système
+lsof : liste les fichiers ouverts qui m'appartiennent
+
+Fenêtre != processus
+Les droits d'un processus sur les fichiers sont ceux de son propriétaire
+
+kill numero_pid : demande à un processus de se terminer
+kill -9 numero_pid : ordonne à un processus de se terminer
+kill -9 -1 : ordonne à tous les processus de la session de se terminer (sans sauvegarde)
+pkill nom_processus : termine un processus à partir de son nom de programme
+Ctrl + C : raccourci pour terminre un processus (raccourci de kill)
+xkill : lancé depuis un terminal, si on clique sur une fenêtre, on tue l'application à laquelle appartient cette fenêtre
 
 
