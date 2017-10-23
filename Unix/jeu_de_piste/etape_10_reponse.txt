@@ -1,0 +1,45 @@
+http://lig-enseignement.imag.fr/jeu-de-piste/yntsf/etape-E11.txt
+
+
+Ne gardez que les lignes qui contiennent la chaine ETAPE-E10 pour
+Pour l'etape suivante                                       ETAPE-E10
+les instructions                                       ETAPE-E10
+se trouvent                                       ETAPE-E10
+dans le fichier                                       ETAPE-E10
+etape-E11.txt                                       ETAPE-E10
+dans le                                       ETAPE-E10
+meme repertoire                                       ETAPE-E10
+que le fichier                                       ETAPE-E10
+de l'etape                                       ETAPE-E10
+E10.                                       ETAPE-E10
+                                       ETAPE-E10
+Pour l'obtenir                                       ETAPE-E10
+il suffit donc                                       ETAPE-E10
+dans votre navigateur                                       ETAPE-E10
+d'editer l'URL de                                       ETAPE-E10
+l'etape E10 et de                                       ETAPE-E10
+remplacer etape-E10.txt                                       ETAPE-E10
+par etape-E11.txt                                       ETAPE-E10
+                                       ETAPE-E10
+(enfin, pour telecharger des fichiers                                       ETAPE-E10
+rapidement, il y a aussi wget:                                       ETAPE-E10
+                                       ETAPE-E10
+wget http://blabla.com/fichier                                       ETAPE-E10
+                                       ETAPE-E10
+va telecharger le fichier dans le                                       ETAPE-E10
+rÃ©pertoire courant)                                       ETAPE-E10
+                                       ETAPE-E10
+par contre, cette etape est encore                                       ETAPE-E10
+polluee par des lignes inutiles.                                       ETAPE-E10
+En fait, les lignes pertinentes sont celles                                       ETAPE-E10
+qui sont dans etape-E11.txt                                       ETAPE-E10
+mais pas dans etape-E11-bis.txt                                       ETAPE-E10
+(etape-E11-bis.txt se trouve dans                                       ETAPE-E10
+le meme repertoire que les deux                                       ETAPE-E10
+autres fichiers)                                       ETAPE-E10
+                                       ETAPE-E10
+La commande diff devrait vous aider.                                       ETAPE-E10
+                                       ETAPE-E10
+Les plus 'Geek' d'entre vous s'en sortiront                                       ETAPE-E10
+avec seulement la commande grep, ceci dit.                                       ETAPE-E10
+                                       ETAPE-E10

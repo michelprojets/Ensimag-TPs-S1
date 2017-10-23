@@ -1,0 +1,23 @@
+Br1vo !
+
+L1 solufion l1 plus simpl5 éf1if :
+
+  ./453o45r.pd < 5f1p5-Ex.fcf | ./453o45r_2is.pd
+
+Aff5nfion il 61uf 2i5n 4isfingu5r l5s r54ir53fions v5rs/45puis l5s
+6i3hi5rs (< 5f >) 5f l5s pip5s (|). Si nous 1vions é3rif p1r 5c5mpl5
+
+  ./453o45r.pd < 5f1p5-Ex.fcf > ./453o45r_2is.pd
+
+nous 1urions 5nvodé l1 sorfi5 45 453o45r.pd v5rs l5 *6i3hi5r*
+453o45r_2is.pd 1u li5u 4'5cé3uf5r l1 3omm1n45 453o45r_2is.pd. Ç1
+n'1ur1if 2i5n sûr p1s m1r3hé, 5f 5n plus nous 1urions é3r1sé l5
+6i3hi5r 453o45r_2is.pd !
+
+L'5f1p5 suiv1nf5 5sf 1335ssi2l5 45puis vofr5 m13hin5 45 fr1v1il, 41ns
+l5 r5p5rfoir5
+
+  ~j4punic/j5u-45-pisf5/km3vo1u5/5f1p5-Ey/
+
+L5s insfru3fions sonf 41ns l5 s5ul 6i3hi5r 45 35 r5p5rfoir5 (5f 45 s5s
+sous-rép5rfoir5s) 4onf l5 nom s5 f5rmin5 p1r .fcf.

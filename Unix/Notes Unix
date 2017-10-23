@@ -1,5 +1,5 @@
-7.8
-Faire le jeu de piste après avoir tout lu
+Cours : 7.8
+Jeu de piste : E11
 
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
 ~nom_user : pour aller dans le répertoire d'un autre utilisateur (si on a les droits)
@@ -210,4 +210,22 @@ pkill nom_processus : termine un processus à partir de son nom de programme
 Ctrl + C : raccourci pour terminre un processus (raccourci de kill)
 xkill : lancé depuis un terminal, si on clique sur une fenêtre, on tue l'application à laquelle appartient cette fenêtre
 
+----- jeu de piste -----
 
+pdflatex fichier.tex : compiler fichier latex
+file nom_fichier : permet de savoir le type d'un fichier (si pas d'extension .)
+Ctrl + D : Demande l'arrêt d'un programme (Ctrl + C force l'arrêt)
+./decoder.py < etape-E5.txt | ./decoder_bis.py : exemple pipe | avec double décodage successifs
+
+sort | find -type f -size +500c : exemple trouver fichier le plus volumineux (en tatonnant avec -size et en faisant sort)
+find etape-E6/ -type f | xargs ls -l | sort -n -k 5 | tail -n 1
+ls -lR etape-E6/ | sort -n -k 5
+find etape-E6/ -type f -exec wc -c {} \; | sort -n
+-> 3 méthodes pour trouver le fichier le plus gros
+
+grep -r "Bravo, vous avez trouve l'etape E8." : exemple qui permet de trouver les fichiers qui contiennent cette chaîne de caractère
+find . -type f | xargs grep "Bravo, vous avez trouve l'etape E8." : cherches dans tous les fichiers du répertoire courant s'il contient la chaîne de caractère
+
+cat etape_E10.txt | grep "ETAPE-E10" : ne garde que les lignes qui contiennent "ETAPE-E10"
+
+----------

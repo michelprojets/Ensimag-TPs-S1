@@ -1,0 +1,29 @@
+print[
+print(
+
+']
+')
+
+0 =
+0 ==
+
+"]
+")
+
+chr[
+chr(
+
+],
+),
+
+exec[
+exec(
+
+]]
+])
+
+translate[dec]
+translate(dec)
+
+i[
+i(
