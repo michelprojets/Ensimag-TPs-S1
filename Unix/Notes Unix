@@ -218,14 +218,17 @@ Ctrl + D : Demande l'arrêt d'un programme (Ctrl + C force l'arrêt)
 ./decoder.py < etape-E5.txt | ./decoder_bis.py : exemple pipe | avec double décodage successifs
 
 sort | find -type f -size +500c : exemple trouver fichier le plus volumineux (en tatonnant avec -size et en faisant sort)
-find etape-E6/ -type f | xargs ls -l | sort -n -k 5 | tail -n 1
-ls -lR etape-E6/ | sort -n -k 5
-find etape-E6/ -type f -exec wc -c {} \; | sort -n
--> 3 méthodes pour trouver le fichier le plus gros
+find ./ -type f | xargs ls -l | sort -n -k 5 : trouve les fichiers dans un répertoire, on le combine | avec xargs qui permet de reprendre le résultat de find pour faire un ls -l puis on le combine | avec sort sur la taille (on peut rajouter "| tail -n 1")
+find ./ -type f -exec ls -l \; | sort -n -k 5 : trouve les fichiers dans un répertoire, on utilise -exec de find qui permet de reprendre le résultat de find pour faire un ls -l et s'arrêter à la fin ";" puis on le combine | avec sort sur la taille
+ls -lR ./ | sort -n -k 5 : on fait un ls -l récursif sur le répertoire courant puis on le combine | avec sort sur la taille
+find ./ -type f -exec wc -c {} \; | sort -n : méthode plus difficile
+-> 5 méthodes pour trouver le fichier le plus gros
 
 grep -r "Bravo, vous avez trouve l'etape E8." : exemple qui permet de trouver les fichiers qui contiennent cette chaîne de caractère
 find . -type f | xargs grep "Bravo, vous avez trouve l'etape E8." : cherches dans tous les fichiers du répertoire courant s'il contient la chaîne de caractère
 
 cat etape_E10.txt | grep "ETAPE-E10" : ne garde que les lignes qui contiennent "ETAPE-E10"
+
+wget http://lig-enseignement.imag.fr/jeu-de-piste/yntsf/etape-E11.txt : permet de télécharger directement le fichier à l'url donné dans le répertoire courant
 
 ----------

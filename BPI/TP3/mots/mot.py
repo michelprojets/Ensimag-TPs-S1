@@ -70,13 +70,6 @@ def affiche_graphe(suivants):
     system("dot -Tpng test.dot -o test.png")
     system("tycat test.png")
 
-    # digraph g {
-    # puis -> happe [label= 1 ];
-    # puis -> il [label= 1 ];
-    # d -> Enfer [label= 1 ];
-    # d -> argent [label= 1 ];
-    # }
-
 def analyse_texte():
     """
     analyse le fichier donne et dessine le graphe
@@ -87,10 +80,15 @@ def analyse_texte():
         sys.exit(1)
     suivants = compte_mots_suivants(sys.argv[1])
     affiche_graphe(suivants)
+    # clonage
+    input() # pause
+    affiche_graphe(clonage_dict(suivants))
     # une petite phrase aleatoire.
-    mot_depart = choice(list(suivants.keys()))
+    mot_depart = choice(list(suivants.keys()))  # mot de départ
     phrase = [mot_depart]
     for _ in range(10):
+        # reprend à chaque fois le dernier mot de la phrase en cours de construction
+        # comme une suite
         phrase.append(suivant_aleatoire(phrase[-1], suivants))
     print(" ".join(phrase))
 
@@ -107,15 +105,43 @@ def suivant_aleatoire(mot, suivants):
         for nb_occu in suivants[mot].values():
             nb_suivants += nb_occu
         indice_alea = randint(0, nb_suivants - 1)
-        for mots_suivant, nb_occu in suivants[mot].items():
-            for i in range(nb_occu):
-                i = i   #
-                if indice_alea == 0:
-                    return mots_suivant
-                indice_alea -= 1
+        for mot_suivant, nb_occu in suivants[mot].items():
+            indice_alea -= nb_occu
+            if indice_alea < 0: # strictement inférieur car on décrémente indice_alea juste avant
+                return mot_suivant
+            # # autre méthode
+            # for _ in range(nb_occu):
+            #     if indice_alea == 0:
+            #         return mots_suivant
+            #     indice_alea -= 1
+            # #######################
     else:   # retourne un mot aléatoire
         return choice(list(suivants.keys()))
 
+def clonage_dict(suivants): # fonction bonus
+    """
+    clone un dictionnaire (recopie)
+    et renvoie ce nouveau dictionnaire
+    """
+    # première recopie (premier dictionnaire)
+    clone_suivants = dict()
+    for mot in suivants.keys():
+        clone_suivants.update({mot : dict()})
+    # deuxième recopie (dictionnaire à chaque élément du dictionnaire général)
+    for mot in clone_suivants.keys():
+        for mot_suivant in suivants[mot].keys():
+            clone_suivants[mot].update({mot_suivant : suivants[mot][mot_suivant]})
+    return clone_suivants
+    # # si on essaye de copier les dictionnaires, il y aura copie de référence
+    # # car dict est non mutable
+    # clone_suivants = dict()
+    # for mot in suivants.keys():
+    #     clone_suivants.update({mot : dict()})
+    # for mot in suivants.keys():
+    #     clone_suivants[mot] = suivants[mot]
+    # # test pour savoir s'il y a eu des copies de références ou non
+    # clone_suivants["serpent"]["python"] = 3
+    # return clone_suivants
 
 if __name__ == "__main__":
     analyse_texte()
