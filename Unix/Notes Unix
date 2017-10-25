@@ -1,4 +1,4 @@
-Cours : 7.8
+Cours : 8.2
 Jeu de piste : E11
 
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
@@ -198,6 +198,7 @@ ps : liste les processus (sauf ce bash) de l'utilisateur courant
 ps u : liste les processus en mode joli
 ps -a : liste les processus (avec ce bash) de l'utilisateur courant
 ps -A : liste tous les processus du système
+ps -ef : liste tous les processus tournant sur la machine
 lsof : liste les fichiers ouverts qui m'appartiennent
 
 Fenêtre != processus
@@ -210,11 +211,48 @@ pkill nom_processus : termine un processus à partir de son nom de programme
 Ctrl + C : raccourci pour terminre un processus (raccourci de kill)
 xkill : lancé depuis un terminal, si on clique sur une fenêtre, on tue l'application à laquelle appartient cette fenêtre
 
+Redirection des entrées sorties :
+
+commande < nom-fichier-entree : redirection de l'entrée
+commande > nom-fichier-sortie : redirection vers la sortie
+commande < nom-fichier-entree > nom-fichier-sortie : redirection de l'entrée et le résultat vers la sortie
+cat fic1 fic2 : afficher sur la sortie standard le contenu des fichiers passés en paramètre
+sort fic > fic_sorted : tri les lignes par ordre alphanumérique (premier caractère de chaque ligne) et redirige le résultat du tri vers un autre fichier
+
+wc : permet de compter mots ou lignes ou caractères ce qu'on lui donne en entrée (entrée standard puis ctrl+D pour lui dire qu'on a fini ou redirection ou "|")
+wc -w : compter les mots
+wc -l : compter les lignes
+wc -c < fichier : redirection pour compter
+ls | wc -l : "redirection pour les commandes" pour compter (ici le nombre d'éléments dans ls)
+
+Les tuyaux ("|") :
+
+commande1 | commande2 : coopération de deux processus dans une chaîne, commande2 s'exécute sur l'information produite par commande1
+
+ll | sort -n -k 5 : tri par ordre croissant les fichiers par taille
+
+ps -ef | grep nom_login : affiche parmi tous les processus tournant sur la machine seulement les lignes qui contiennent nom_login
+
+Tri :
+
+sort -n -k 5 : prend un tableau en entrée et fait un tri croissant sur la valeur de la 5ième colonne
+
+Historique :
+
+history : permet d'obtenir la liste des dernières commandes avec leur numéro
+!numero_historique : réexécuter la commande identifiée par son numero_historique
+
+La convention ~ :
+
+~/nom_user remplacé par /users/nom_user : si l'utilisateur existe
+~/ remplacé par /users/yoeungm : si pas d'utilisateur, c'est nous-même
+
 ----- jeu de piste -----
 
 pdflatex fichier.tex : compiler fichier latex
 file nom_fichier : permet de savoir le type d'un fichier (si pas d'extension .)
-Ctrl + D : Demande l'arrêt d'un programme (Ctrl + C force l'arrêt)
+Ctrl + D : Demande l'arrêt d'un programme car on a fini (EOF : end of file)
+Ctrl + C : Force l'arrêt d'un programme (SIGINT : interruption)
 ./decoder.py < etape-E5.txt | ./decoder_bis.py : exemple pipe | avec double décodage successifs
 
 sort | find -type f -size +500c : exemple trouver fichier le plus volumineux (en tatonnant avec -size et en faisant sort)
