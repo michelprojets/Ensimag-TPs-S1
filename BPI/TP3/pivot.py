@@ -37,7 +37,7 @@ def pivote_enplace(tableau, indice_pivot):
                 if tableau[j] > pivot:
                     (tableau[i], tableau[j]) = (tableau[j], tableau[i])   # permutation
     return tableau
-
+    
 def main():
     """
     programme principal

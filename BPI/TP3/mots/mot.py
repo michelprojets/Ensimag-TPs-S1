@@ -142,6 +142,7 @@ def clonage_dict(suivants): # fonction bonus
     # # test pour savoir s'il y a eu des copies de références ou non
     # clone_suivants["serpent"]["python"] = 3
     # return clone_suivants
+    
 
 if __name__ == "__main__":
     analyse_texte()

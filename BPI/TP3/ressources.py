@@ -96,6 +96,7 @@ def test():
     ressource.reserve(3)
     print(ressource)
     print(ressource.intervalles)
+    fdsf
 
 if __name__ == "__main__":
     test()
