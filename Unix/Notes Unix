@@ -1,5 +1,6 @@
-Cours : 8.2
-Jeu de piste : E11
+Jeu de piste : E13
+~jdpunix/jeu-de-piste/123654/etape-E13.tar.gz
+etape-E13.txt
 
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
 ~nom_user : pour aller dans le répertoire d'un autre utilisateur (si on a les droits)
@@ -268,5 +269,9 @@ find . -type f | xargs grep "Bravo, vous avez trouve l'etape E8." : cherches dan
 cat etape_E10.txt | grep "ETAPE-E10" : ne garde que les lignes qui contiennent "ETAPE-E10"
 
 wget http://lig-enseignement.imag.fr/jeu-de-piste/yntsf/etape-E11.txt : permet de télécharger directement le fichier à l'url donné dans le répertoire courant
+
+diff etape-E11.txt etape-E11-bis.txt | grep '^<' : sélectionne les lignes qui sont dans le premier fichier mais qui ne sont pas dans le deuxième fichier (le grep sert juste à rendre plus lisible en n'affichant que les lignes qui commencent '^' par ...)
+
+
 
 ----------
