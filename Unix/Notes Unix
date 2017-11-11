@@ -248,10 +248,55 @@ La convention ~ :
 ~/nom_user remplacé par /users/nom_user : si l'utilisateur existe
 ~/ remplacé par /users/yoeungm : si pas d'utilisateur, c'est nous-même
 
+Les wildcards (métacaractères) :
+
+permet de désigner plusieurs fichiers à la fois
+* : remplace séquence de caractères quelconque (même la séquence vide)
+? : remplace un et un seul caractère quelconque
+[abc] : remplace soit a soit b soit c (ou exclusif)
+[a-f] : remplace un caractère entre a et f (plage de caractères)
+[^abc] : remplace n'importe quel caractère autre que a ou b ou c (complémentaire)
+voir : man 7 glob / man 7 regex
+\*.txt ou "*".txt ou '*'.txt : pour ne pas interprêter les wildcards (désigne le fichier *.txt)
+
+Lancer plusieurs tâches (ou applications) en même temps :
+
+On lance une application mais on a plus la main sur le terminal
+Ctrl+z : stop l'exécution de l'application
+bg [num_job] : met l'exécution de l'application (identifiée par son numéro de job) en arrière-plan
+fg [num_job] : met l'exécution de l'application (identifiée par son numéro de job) en avant-plan
+jobs : pour avoir les applications et leur numéro de job
+
+ou on lance l'application avec "&" : revient à lancer l'application, faire Ctrl+z et bg [num_job]
+
+Configuration du bash :
+
+~/.bashrc : contient les lignes de commandes (création alias, affectation de valeurs à des variables du shell) qui seront lues à chaque lancement d'un shell
+nom_var=valeur : créé une variable (couple nom,valeur) dans le shell (ne pas mettre d'espace "nom_var = valeur")
+$nom_var : permet d'accéder à la valeur de la variable (par ex, si elle contient un chemin de fichier)
+set : pour connaître l'ensemble des variables et leur valeur à un instant donné
+$nom_var=$nom_var1$nom_var2"chaine" : on peut affecter une variable en réutilisant (en concaténant) les variables de la sorte
+On peut aussi stocker une commande dans une variable et appeler la commande avec $nom_var (comme un alias mais moins pratique)
+Mais ces variables ne sont pas visibles par les autres applications
+export nom_var : convertit la variable en variable d'environnement (visible par les autres applications) (on peut export pendant la création de la variable)
+env : pour connaître l'ensemble des variables d'environnement (seulement) à un instant donné
+alias nom_alias=commande : permet de créer un alias pour une commande
+
+Emplacement des commandes :
+
+echo $PATH : affiche le contenu de la variable d'environnement PATH : définit une liste de répertoires par défaut où le système va chercher les exécutables
+Lorsqu'on fait "firefox" (pour éviter de taper tout le chemin /usr/bin/firefox ou pour éviter de se placer dans /usr/bin/ et faire ./firefox), le shell va chercher dans la variable et va concaténer "firefox" sur chaque élément de la liste dans PATH
+type nom_commande : permet de savoir l'emplacement de la commande (du programme)
+Mais pour les commandes internes (cd etc.), ce n'est pas la même chose
+Au début d'un programme interprêté (traduit en langage machine à la volée), on indique au système quel interprêteur utiliser avec "#! ..."
+\commande : pour utiliser la vraie commande et non l'alias (si on a donné comme nom d'alias le nom d'une commande existante)
+
 ----- jeu de piste -----
 
 pdflatex fichier.tex : compiler fichier latex
-file nom_fichier : permet de savoir le type d'un fichier (si pas d'extension .)
+file nom_fichier : permet de savoir le type d'un fichier (si pas d'extension .) ainsi que le type d'encodage du fichier (UTF-8 etc.)
+iconv --from utf-8 --to latin1 toto.txt -o titi.txt : permet de convertir le fichier toto.txt qui est en UTF-8 en le fichier titi.txt qui sera en latin1
+recode : permet de convertir le type d'encodage d'un fichier aussi
 Ctrl + D : Demande l'arrêt d'un programme car on a fini (EOF : end of file)
 Ctrl + C : Force l'arrêt d'un programme (SIGINT : interruption)
 ./decoder.py < etape-E5.txt | ./decoder_bis.py : exemple pipe | avec double décodage successifs
@@ -275,3 +320,14 @@ diff etape-E11.txt etape-E11-bis.txt | grep '^<' : sélectionne les lignes qui s
 
 
 ----------
+
+Accéder à l'Ensimag depuis l'extérieur :
+
+scp creeSurPC votre-login@pcserveur.ensimag.fr:copieDistante : permet de transférer des fichiers avec le protocole FTP ou SFTP
+rsync : comme scp mais en mieux (mais parfois pas implémentée) 
+ssh votre-login@pcserveur.ensimag.fr (si extérieur) OU ssh pcserveur.ensimag.fr (si intérieur) : permet de se connecter à pcserveur (même contenu que notre compte ensimag si intérieur) avec le protocole SSH   
+.ssh/know_hosts : fichier qui stocke les signatures des machines auxquelles on s'est connecté
+ssh -x pcserveur.ensimag.fr : permet de se connecter à pcserveur mais avec interface graphique (donc on peut lancer des éditeurs de texte etc.)
+Emacs permet d'utiliser ce genre de transfert directement : /votre-login@pcserveur.ensimag.fr:fichier.txt
+Gnome et KDE permettent aussi ce genre de transfert : sftp://votre-login@pcserveur.ensimag.fr/ (à entrer à la place d'un nom de fichier dans le sélecteur de fichier)
+screen : permet de lancer une commande et de fermer la session sans attendre la fin (on détache "screen" avec Ctrl+a puis d et on se réattache avec la commande "screen -r")
