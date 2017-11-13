@@ -1,7 +1,3 @@
-Jeu de piste : E13
-~jdpunix/jeu-de-piste/123654/etape-E13.tar.gz
-etape-E13.txt
-
 ~ : pseudo de notre répertoire personnel (ou domicile) /~ = /user/6/yoeungm
 ~nom_user : pour aller dans le répertoire d'un autre utilisateur (si on a les droits)
 ~/.local/share/Trash/files : corbeille
@@ -220,7 +216,7 @@ commande < nom-fichier-entree > nom-fichier-sortie : redirection de l'entrée et
 cat fic1 fic2 : afficher sur la sortie standard le contenu des fichiers passés en paramètre
 sort fic > fic_sorted : tri les lignes par ordre alphanumérique (premier caractère de chaque ligne) et redirige le résultat du tri vers un autre fichier
 
-wc : permet de compter mots ou lignes ou caractères ce qu'on lui donne en entrée (entrée standard puis ctrl+D pour lui dire qu'on a fini ou redirection ou "|")
+wc : permet de compter mots ou lignes ou caractères ce qu'on lui donne en entrée (entrée standard puis ctrl+D pour lui dire "qu'on a fini" ou redirection ou "|")
 wc -w : compter les mots
 wc -l : compter les lignes
 wc -c < fichier : redirection pour compter
@@ -263,6 +259,7 @@ Lancer plusieurs tâches (ou applications) en même temps :
 
 On lance une application mais on a plus la main sur le terminal
 Ctrl+z : stop l'exécution de l'application
+Ctrl+d : envoi un caractère de fin de lecture pour stopper le programme
 bg [num_job] : met l'exécution de l'application (identifiée par son numéro de job) en arrière-plan
 fg [num_job] : met l'exécution de l'application (identifiée par son numéro de job) en avant-plan
 jobs : pour avoir les applications et leur numéro de job
@@ -317,7 +314,19 @@ wget http://lig-enseignement.imag.fr/jeu-de-piste/yntsf/etape-E11.txt : permet d
 
 diff etape-E11.txt etape-E11-bis.txt | grep '^<' : sélectionne les lignes qui sont dans le premier fichier mais qui ne sont pas dans le deuxième fichier (le grep sert juste à rendre plus lisible en n'affichant que les lignes qui commencent '^' par ...)
 
+more x*[^z] = ls x*[^z] = ls | grep '^x.*[^z]$' : pour accéder au fichier qui commence par 'x' et qui se termine par autre chose que 'z' (première méthode avec wildcards et deuxième méthode avec expressions régulières de grep)
 
+sftp depots.ensimag.fr : connexion avec sftp au serveur depots
+get /depots/2017/jeu-de-piste//etape-G1.txt : récupère le fichier sur "depots" pour le mettre dans le répertoire courant
+put ... : pour envoyer
+
+get /depots/2017/jeu-de-piste//etape-G2.sh : on récupère le script sur "depots" pour le mettre dans le répertoire courant
+ssh pcserveur.ensimag.fr : connexion avec ssh au serveur pcserveur
+./etape-G2.sh : on se replace au répertoire et on exécute le programme
+
+cp ~jdpunix/jeu-de-piste/FqM6IhHP/etape-G3.sh . : on récupère le script
+ssh -X pcserveur.ensimag.fr : connexion avec ssh du serveur pcserveur (avec interface graphique)
+./etape-G3.sh : on se replace au répertoire et on exécute le programme
 
 ----------
 
@@ -325,7 +334,13 @@ Accéder à l'Ensimag depuis l'extérieur :
 
 scp creeSurPC votre-login@pcserveur.ensimag.fr:copieDistante : permet de transférer des fichiers avec le protocole FTP ou SFTP
 rsync : comme scp mais en mieux (mais parfois pas implémentée) 
-ssh votre-login@pcserveur.ensimag.fr (si extérieur) OU ssh pcserveur.ensimag.fr (si intérieur) : permet de se connecter à pcserveur (même contenu que notre compte ensimag si intérieur) avec le protocole SSH   
+ssh votre-login@pcserveur.ensimag.fr (si extérieur) OU ssh pcserveur.ensimag.fr (si intérieur) : permet de se connecter à pcserveur (même contenu que notre compte ensimag si intérieur) avec le protocole SSH
+ssh pcserveur.ensimag.fr : connexion avec ssh (plus simple)
+sftp pcserveur.ensimag.fr : connexion avec sftp (plus simple)
+depots : pour récupérer et mettre des fichiers avec sftp
+pcserveur : pour exécuter des scripts à distance avec ssh
+get ... : récupérer un fichier
+pull ... : mettre un fichier
 .ssh/know_hosts : fichier qui stocke les signatures des machines auxquelles on s'est connecté
 ssh -x pcserveur.ensimag.fr : permet de se connecter à pcserveur mais avec interface graphique (donc on peut lancer des éditeurs de texte etc.)
 Emacs permet d'utiliser ce genre de transfert directement : /votre-login@pcserveur.ensimag.fr:fichier.txt
