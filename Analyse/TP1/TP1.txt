@@ -1,0 +1,79 @@
+I) Scilab
+1)
+1-
+spec : renvoie les valeurs propres d'une matrice
+eye(n,n) : matrice identité
+2)
+1-
+size(A)
+2-
+A(1,:)
+A(:,4)
+A(2,3)
+3-
+diag(A)
+triu(A) : triangulaire supérieure
+tril(A) : triangulaire inférieure
+3)
+1-
+A=ones(1,10)
+B=diag(A)
+: matrice identité 10x10
+2-
+avec diag(-m:m) ?
+4)
+1-
+Fonctions échantillonées (discrétisées)
+x=-1:0.1:1 : création d'une grille discrète en faisant une discrétisation de x (l'intervalle [0,1] par pas de 0.1)
+x=linspace(-1,1,21) équivalent à x=-1:0.1:1 : 21 est le nombre de points de discrétisation
+pas = (b-a)/(n-1) : relation entre le pas et le nombre de points de discrétisation dans [a,b]
+y=x.^2 : fonction carrée sur [0,1] par pas de 0.1
+plot(x, x.^2) : affiche la fonction (en lui donnant la discrétisation puis la fonction par rapport à cette discrétisation)
+plot2d : comme plot mais pour scilab
+plot(x, f(x), "<couleur><type_trait>") : pour spécifier la couleur et le traçage (ex: "r--" pour un traçage en "--" en rouge)
+plot(x, cos(x), "r", x, sin(x), "b") : pour tracer plusieurs courbes dans une fenêtre
+xtitle("Graphe des fonctions cos et sin") : titre
+legend("cos","sin") : légende des courbes
+xlabel("temps"); ylabel("f(t)") : noms des axes x et y
+subplot(m,n,p) : subdivise la fenêtre en une matrice mxn puis p = numéro de case i,j = (i-1)n+j (faire subplot avant chaque plot)
+figure() : pour créer une nouvelle fenêtre
+4)
+x=linspace(0,2%pi,6)
+x=linspace(0,2%pi,21)
+plot(x, cos(x), "r", y, sin(y), "b")
+xtitle("Graphe de la fonction sin")
+legend("cos","sin")
+
+II) Latex
+pdflatex enonce.tex : compile le fichier .tex
+\ : début d'une commande
+{...} : paramètres
+[...] : options
+\begin{...} : déclare le début d'un environnement
+\end{...} : fin d'un environnement
+entre les balises \begin et \end, il y aura une mise en forme du texte
+5)
+Changer la classe article en book change la structure du document
+\documentclass[...]{...} : définition de la classe
+\usepackage{...} : import d'un package
+\newcommand{...} : définition personnalisée d'une commande / d'un environnement
+\title{...} \author{...} \date{...} : définition de titre, auteur, date
+L'environnement "document" va générer le contenu du pdf
+6)
+\begin{figure}
+\includegraphics{image.jpg}
+\begin{figure}
+: ajoute une image
+(on peut ajouter l'option [h] ou [h!] à l'environnement figure pour forcer la position de la figure par rapport au texte)
+(on peut ajouter la commande \label{...} dans l'environnement figure pour créer une référence potentielle et il faudra faire la commande \ref{...} pour référer la figure dans un texte)
+<text>$<contenu maths>$<text> : intégrer des maths en plein milieu d'un texte
+\begin{equation}
+<contenu maths>
+\end{equation}
+: intégrer des maths dans une ligne séparée
+
+3) TP : compte-rendu
+1-
+Exercice 1:
+
+
