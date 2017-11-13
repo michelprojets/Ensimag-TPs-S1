@@ -1,0 +1,58 @@
+CIRCUIT COMBINATOIRE
+
+On peut ou pas faire passer du courant : 0 ou 1 (base 2)
+Ordinateur = Circuit électronique numérique
+Données manipulées : Informations électriques discrètes (0100101)
+Types de données (entier, mp3 ...)
+Taille des données
+Quand on regarde une suite de bits, il faut savoir ce qu'elle représente (tout n'est que question d'interprêtation en fonction du type de la donnée)
+Machine 32 ou 64 bits : Aujourd'hui tous les PCs sont sur 64 bits (32 pour embarqués)
+
+Entier naturel (unsigned) :
+De base 2 en base 10 :
+x = somme(de n-1 à 0) de Xi * base^i
+En base 2 : 0 <= x <= 2^n - 1
+De base 10 en base 2 :
+Division successive par 2 pour avoir le reste à chaque fois et reconstituer le nombre du bas vers le haut (inverse)
+
+Entier relatif (signed) :
+2 méthodes : Signe et grandeur : Bit de poids fort 0 si positif et 1 sinon (possède un "-" ?)
+	     Complément à 2 (2^n-1) utilisé dans 99.9% des cas : Bit de poids fort négatif et les autres positifs
+-2^(n-1) <= x <= 2^(n-1) - 1
+Pour faire l'opposé, on fait le complémentaire des bits + 1
+
+Affectation d'un vecteur de taille n dans un vecteur de taille m
+Si n > m alors perte de données
+Sinon, on recopie les bits et le MSB est répliqué dans les autres
+
+Décimal :
+2 méthodes : Virgule fixe : Comme entiers mais avec une virgule et (^(-i))
+	     Virgule flottante : ...
+
+Autres types :
+...
+
+Booléens :
+Fonctions "not", "and" et "or"
+De Morgan
+
+Fonctions ad hoc :
+Une combinaison pour que f = 1
+sop (sommes de produits généralement) : x . y (pour les f=1)
+pos (produits de sommes) : x + y (pour les f=0)
+Infinité de fonctions booléennes pour construire une fonction booléenne
+Pour une fonction, chaque fois que c'est =1, on aura un produit "." donc pour 3 fois, on aura f = ( . ) + ( . ) + ( . ) et il faut mettre le complémentaire là ou la variable = 0
+Possible de minimiser une équation booléenne avec la table de karnaugh
+
+Passer de l'équation à l'objet permettant de réaliser la chose : avec les portes logiques (avec des graphes et aussi avec des langages comme VHDL)
+Arité : Nombre d'entrées d'une porte logique
+|>o : not
+D : and (.)
+)> : or (+)
+))> : xor
+(o à la fin représente not)
+Porte logique : Dispositif électronique, donc un calcul logique prend du temps
+2 temps dans une porte logique : Temps de propagation (moment entre le signal qui rentre dans une des entrées la porte et entre le signal qui sort avec la bonne valeur)
+				 Temps de transition (temps qu'il faut pour faire passer le signal de 0 à 1 ou de 1 à 0)
+Temps de propagation qui va dépendre de la position de l'entrée et varie entre Vdd/2 à l'entrée et Vdd/2 à la sortie (temps qu'il faut pour passer) (Vdd : alimentation du circuit en volt)
+Temps de transition : entre le moment ou le signal est à 0,1 x Vdd jusqu'à 0,9 x Vdd (sur les fronts montants) et réciproquement (sur les fronts descendants)

@@ -1,0 +1,82 @@
+CIRCUIT COMPLEXE
+
+Construction des opérateurs complexes en assemblant des portes simples
+Multiplexeur (mux) : Opérateur qui permet de choisir entre deux entrées
+j signaux d'entrées
+o : signal de sortie
+s : signal de sélection
+En fonction de la valeur du signal de sélection, on va retrouver sur la sortie le signal qui correspond à l'entrée sélectionnée
+Représentation en vhdl : On interprête le signal de sélection (s) comme un entier naturel qui va donner l'indice Ik de "l'entrée qu'on veut voir sur la sortie"
+Multiplexeurs décodés : n entrées = n signaux de sélection (1 signal de sélection à 1 et le reste à 0 et donne l'indice)
+			o = Io So + I1 S1 (avec So et S1 pas = 1 en même temps)
+Multiplexeurs encodés : n entrées = log2(n) signaux de sélection (formule de la somme qui, à partir d'un signal de sélection, on fait une somme des entiers naturels de 0 à log2(n) va donner l'indice
+			O = Io !S + I1 S
+Porte 3 états (0,1,hz) (hz : déconnexion ou haute impédence) : Connexion des Oi possible s'il y a au plus un seul e = 1
+							       Si tous les e = 0, on peut imposer une valeur de l'extérieur
+
+Construction itérative :
+2 entrées de n bits et une sortie de n bits
+Principe : Choisir une porte logique (opération)
+	   Répliquer n fois et connecter les entrées et les sorties de telle sorte à réaliser l'opération sur n bits
+	   (Si sur 2 entrées de 12 bits, on veut faire and, on va instancier 12 and dont chacun va avoir deux entrées de 1 bit et à la fin, on va avoir deux entrées de 12 bits et donc une sortie de 12 bits)
+Ex : Si nor avec 3 entrées de 4 bits alors on réplique 4 fois l'opérateur nor pour avoir une sortie de 4 bits
+Pour la somme de A et B, retenue entrante (Cin) qui va être additionné à Ai et Bi à chaque fois puis une retenue sortante (Cout) après la somme pour la faire injecter dans la somme suivante
+= Addition par propagation de retenue (donc temps de propagation linéaire car varie en fonction du nombre de propagation de retenue)
+Registre n bits (donc plusieurs registres à connecter) :
+n bits d'entrée et n bits de sortie (mais toujours 1 clock ck), on va échantillonner les n bits en même temps (donc toutes les sorties en même temps car on fait l'hypothèse que toutes les données d'entrée arrivent en même temps)
+Ne marche que pour un faible nombre car comme il faut attendre que toutes les données arrivent, puis sur un front montant de l'horloge, elles vont toutes être échantillonnées dans la bascule et disponibles en sortie, alors problème
+(car le signal d'horloge ne peut pas connecter autant d'entrées de clock qu'on le voudrait)
+Donc faire des sous-circuits
+
+Pour la multiplication :
+Double boucle et additions intermédiaires (propagation de la retenue, somme ...)
+
+Construction récursive :
+Principe : Etant données des portes d'arité n, n-1, n-2
+	   Construire la porte d'arité m > n avec la même fonctionnalité
+	   (Construire des portes à 2 x n entrées à partir de porte à n et 2 bits)
+Exemple : Pour faire un xor à 8 entrées :
+	  - Approche équilibrée : On fait (2entrées)x4 x2 x1 = 8
+	    On va de 8 bits d'entrées à 1 bit de sortie
+	    Profondeur (nombre de couches logiques à traverser) = log2(n) où n est le nombre d'entrées
+	    Et (n-1) portes à utiliser
+	    Peut être utilisé pour les sorties d'un registre (sur un front montant, on a tous les sorties qui sont présentes en même temps)
+	  - Approche non équilibrée : On fait 7 6 5 4 3 2 1 porte(s) à traverser
+	    Peut être utilisé s'il faut amener les choses au bon moment
+	  Pour faire un mux 2 x n entrées :
+	  On fait 2 mux puis un autre mux qui va sélectionner une des deux valeurs de sortie des 2 premiers mux
+	  Nombre de bits de sélection = profondeur = log2(n) aussi
+Décodeur :
+n entrées vers 2^n sorties
+Valeur de la combinaison des n bits d'entrées = Indice de la seule valeur de sortie égale à 1 (une seule sortie à 1)
+(Pour le multiplexeur décodé)
+Encodeur :
+La seule valeur d'entrée va être convertit en valeur binaire (une seule entrée à 1)
+
+Assemblage ad-hoc (à la demande) :
+Principe : Etant données des cellules complexes
+	   Construire une cellule implantant une nouvelle fonction en assemblant des portes et des cellules complexes
+Exemple : Additionneur / soustracteur n bits :
+	  s = a + b si !p / m = 0
+	    = a + (!b) + 1 = a - b si !p / m = 1
+	  xor : Inverseur commandé car si signal d'inversion = 0 (donc x = 0 dans la table de vérité), alors recopie (pas d'inversion)
+				       sinon, si le signal d'inversion = 1 (donc x = 2 dans la table de vérité), alors inversion
+Exemple : Banc de registre (lecture / écriture) :
+	  (De 4 mots de 2 bits chacun)
+	  4 registres de 2 bits d'entrée et 2 bits de sortie
+	  Tous les registres (lus et écrits en même temps) sont activés par une seule horloge ck
+	  Lecture : Sélection d'un registre parmi les 4 par un mux
+  	  Signal de sélection du mux (2 bits) = Adresse de lecture du banc de registre sélectionnée (numéro de registre)
+	  Ecriture : Tous les registres sont connectés à un seul signal WE (car l'écriture est commandée par un seul signal WE)
+	  Donc adresse d'écriture
+	  Décodeur avec 2 bits d'entrée pour encoder la valeur du registre qu'on cherche à écrire
+	  On ajoute encore un signal WE pour mettre tous ces signaux à 0 de telle sorte qu'on puisse ne pas écrire un cycle donné
+Exemple : Registre de décalage (déplacement d'une donnée) :
+	  (Patienter le bit 4 cycles avant de faire une action avec)
+	  Besoin de 4 registres (pas de transparence entre les bascules donc on ne se retrouve pas directement avec le bit en sortie lorsque l'horloge ck passe à 1)
+	  Tous connectés à une horloge
+	  (Si on veut initialiser les bascules avec une certaine valeur)
+	  On rajoute un mux devant chaque bascule qui va prendre soit la donnée de la précédente bascule (décalage), soit une donnée de l'extérieur
+	  On relie chaque mux entre eux car un même signal L (load) qui permet de sélectionné entre la donnée extérieure ou la donnée du décalage
+
+

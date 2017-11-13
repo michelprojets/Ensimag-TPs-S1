@@ -1,0 +1,80 @@
+Mémoire :
+
+Système numérique : Processeur (calcul) + mémoire (stockage des instructions...)
+Mémoire flash (SSD ou clé USB)
+Mémoire statique (cache dans processeur)
+Mémoire dynamique
+Mémoire morte (BIOS : permet de bootstrap l'exécution du pc)
+Mémoire associative (proche des processeurs)
+Mémoire : Elément qui stocke de l'information dans une adresse (un numéro qui dépend de la taille de la mémoire : petite mémoire, petit numéro)
+Adresse sur nA bits si la mémoire en question peut stocker 2^(nA) éléments (cases mémoires / éléments possibles dans la mémoire)
+Pour une case mémoire donnée, on va stocker soit 1 soit un multiple de 8 bits d'information (nD / données)
+Mémoire : Gros tableau (adresse : indice du tableau / donnée : donnée dans la case du tableau à l'indice considéré)
+Il faut pouvoir gérer la mémoire pour ne pas consommer d'énergie lorsqu'on n'a pas besoin d'accéder à la mémoire (grâce aux signaux de contrôle lorsqu'on présente une adresse à la mémoire)
+!CE : Chip Enable : Activation de la mémoire (si CE = 0, mémoire active, sinon inactive)
+	Si active, soit lecture de la mémoire (en positionnant le signal OE : Output Enable à 0)
+!OE : Output Enable : L'adresse A positionnée dans le fil d'entrée de la mémoire va engendrer une donnée D pour la lire de l'extérieur
+		   Soit écriture de la mémoire (en positionnant le signal WE : Write Enable à 0)
+!WE : Write Enable : La donnée D présente dans le fil d'entrée va être échantillonnée dans la mémoire à l'adresse A
+Une mémoire est accessible à un instant t, soit en lecture soit en écriture (jamais les deux simultanéments)
+Sur un registre, on peut car on va présenter les données à l'entrée du registre pendant qu'on lit sa sortie, et lors d'un front d'horloge, l'entrée va être écrite dans le registre et la sortie va changer
+Donc à un cycle donné, on peut à la fois écrire et lire dans le registre ce qui n'est pas le cas des mémoires
+Mémoire : Tableau de nA éléments de nD bits
+
+Types de mémoire :
+ROM : Mémoire morte : On écrit dedans une seule fois lors de la fabrication et on ne peut plus changer le contenu (en lecture seulement)
+RAM : Mémoire vive : (mémoire à accès aléatoire car on peut accéder à n'importe quelle adresse dans n'importe quel ordre en un même temps alors que les CDs non car balayage)
+	Asynchrone généralement (pas de signal d'horloge sur une mémoire à accès aléatoire) (le signal est le positionnement de l'adresse à l'entrée)
+	Synchones (signal d'horloge qui va permettre aux signaux d'entrées d'être pris en compte sur un front du signal d'horloge)
+	Statique (SRAM) : 6 transistors par bit / Rapide (10x plus lent qu'un accès registre) / Prédictible au niveau du temps d'accès à la mémoire
+	Dynamique (DRAM) : 1 transistor par bit / Circuiterie complexe / Lent (10x plus lent que la SRAM) / Durée de rétention de l'information limité (on ne sait plus au bout d'un cetain temps la valeur de l'information qu'elle contient) (64 ms à 70°)
+			   Donc réécriture de la mémoire toutes les périodes de < 64 ms (d'ôù le temps d'accès à la mémoire non prédictible car on doit attendre les éventuels rafraîchissements (réécritures) de la mémoire)
+			   Lecture destructrice (lors de la lecture, on va stocker le résultat dans des registres et on va réécrire la donnée dans la mémoire) (un seul registre pour une grande quantité de mémoire)
+	Flash (NVRAM : Non-Volatile RAM) : Reprogrammable par "pages" et par chemins détournés / Dissymétrie des temps de lecture et d'écriture (x10-x100 le temps de lecture) -> mais comme on fait généralement + de lecture que d'écriture, le SSD "va plus vite" en général
+					   Processeur qui va faire des calculs pour répartir les données sur la mémoire			
+					   Durée de rétention de 10 à 20 ans
+CAM : Content-Addressable Memory (mémoire adressable par le contenu) : Mémoire associative : On donne une donnée et on récupère l'indice à laquelle est stockée la donnée (en un seul cycle, sans parcourir toute la mémoire (de 64 ou 128 éléments))
+											     Présent dans le cache du processeur et dans les routeurs réseau (on reçoit un paquet contenant une adresse IP et il faut savoir sur quel port on va forwarder le paquet)
+
+En pratique :
+La taille minimum des accès va être en général inférieure à la largeur du nombre de bits que procure la mémoire (nD)
+									  nombre de bits de données
+Mais si supérieure, comment faire ?
+La mémoire n'est pas un tableau (vecteur) mais plutôt une matrice
+Lors de chaque accès, on accède à toutes les colonnes à une adresse donnée mais le logiciel va seulement récupérer l'information dont il a besoin
+Facile d'accéder à l'information si elle se trouve sur la même ligne (un seul cycle)
+Cas mot 16 bits : Absence de recouvrement de deux mots (2 premières cases ou 2 dernières cases) (mots indépendants)
+Cas mot 24 bits : Prend forcément 32 bits
+Cas mot 32 bits : Les 4 cases d'une ligne
+Cas mot 64 bits : Deux accès 32 bits à deux lignes successives
+Le hardware considère que ce sont des adresses qui accèdent un octet
+Mais si on veut accéder autre chose qu'un octet, on aura des contraintes sur les adresses
+Adresse élément de 8 bits multiple de 1 (octets)
+Adresse élémént de 16 bits multiple de 2 (octets)
+Adresse élément de 32 bits multiple de 4 (octets)
+Adresse élément de 64 bits multiple de 8 (octets) (4 à 11 pas possible car 4 n'est pas multiple de 8, 8 à 15 possible car 8 est multiple de 8)
+Si pas d'alignement (processeur récents) le nombre de cycle va potentiellement augmenter de 1 car chevauchement possible sur la ligne suivante
+Poids forts de l'adresse permettent d'indiquer la ligne
+Poids faibles de l'adresse permettent d'indiquer la colonne
+Endianness : Mot de 32 bits, ordre des bits de poids forts et de poids faibles
+Little endian : Adresse du mot = adresse de l'octet le plus faible
+Big endiant : Adresse du mot = adresse de l'octet le plus fort
+
+Micro-architecture des mémoires :
+Registre : 12 transistors par bit et beaucoup de connexions
+SRAM : 6 transistors par bit et partage de connexions
+ROM, DRAM, flash : 1 transistor par bit et partage de connexions
+Inconvénients des mémoires : Temps d'accès élevé / Circuit complexe / Granularité d'accès (ensemble de n mots) / Pas d'accès simultané en lecture et en écriture
+Principe de fonctionnement : Lecture : Précharge de capacité / Points mémoire qui vont mémoriser et vont être connectés à des fils qui sont des word lines (donc en ligne) / Tous les points mémoire d'un même word line vont correspondre aux points mémoires qui vont être lus en même temps lorsqu'une seule word line passe à 1 (donc vont appartenir au même mot)
+				       Les bit lines (en colonne) : Partage de connexion / Rôle de multiplexeur (si tous les interrupteurs sont fermés, pas de valeur imposée au fil, mais si un seul interrupteur est fermé, il va imposer sa valeur au fil)
+				       On impose une valeur de fil au départ : Processus de précharge pour charger les capacités pour mettre à 0 les WL et à 1 les BL
+									       Processus d'évaluation où parmi toutes les WL, il y en a une seule qui va être à 1 (donc un seul interrupteur fermé) et là ou le point est à 0, il y aura décharge de la capacité, et là ou le point est à 1, pas de décharge
+			     Ecriture : On met cette fois une valeur sur la BL (l'information à écrire : soit 0 soit 1)
+					On positionne ensuite la WL à 1 et l'interrupteur va se fermer et on va pouvoir écrire la valeur dans les points mémorisants de la ligne
+
+				       Toutes les bit lines sont évaluées en même temps et la valeur de la bit line est la valeur du point mémoire WL/BL
+			     Donc si les lignes ont bien été préchargés, on pourra faire la lecture, et si on impose les valeurs de l'extérieur, on pourra faire de l'écriture
+			     Au niveau du timing, on doit respecter le timing entre le positionnement du Chip Enable et le changement de valeur des adresses, et ce changement va générer un pulse d'horloge qui va déclencher le circuit de précharge (quand OE = 0) et le décodeur va activer la bonne ligne pour récupérer la valeur sur la sortie
+
+Utilisation d'une mémoire dans un système :
+Lecture : 

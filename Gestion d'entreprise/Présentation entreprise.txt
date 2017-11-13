@@ -1,0 +1,25 @@
+Stratégie marketing :
+
+Alors, parlons de la stratégie marketing
+
+- Déjà, notre entreprise fonctionne en b2c, donc business to client donc chaque année, on a analysé
+le marché pour essayer, d'une part, de comprendre au mieux le comportement du client face aux produits
+existants et les produits qui viennent juste d'être mis sur le marché (s'il achetait plutôt de la
+haute gamme, du bas de gamme etc.), également pour connaître approximativement leur pouvoir d'achat
+
+- On a donc, suite à cette analyse opté pour une de production en masse, donc on produit beaucoup et
+pas cher avec une qualité légèrement en dessous de la moyenne (produire beaucoup nous permet par la
+même occasion d'absorber au maximum les coûts fixes liés à la production et rentabiliser au mieux nos
+machines)
+
+- Il faut aussi noter que même si notre qualité de produit était moyenne, elle était surtout croissante
+au fil des années (avec un prix relativement bas) alors nos clients continuaient d'acheter nos produits
+et des nouveaux clients étaient prêts à acheter nos produits	
+
+Graphe part de marché produit A :
+
+- On peut le voir clairement sur ce graphe, qui représente les parts du marché de notre entreprise,
+face à nos deux plus grands concurrents (x-corp et 666-xorp) et face aux autres entreprises, donc on
+voit une augmentation de notre part du marché pour le produit A ce qui montre clairement que notre
+produit était de plus en plus apprécié par les clients et actuellement, on voit bien que nous sommes
+clairement leader sur le marché du produit A avec une part de presque 40%

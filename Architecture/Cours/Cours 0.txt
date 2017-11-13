@@ -1,0 +1,24 @@
+Transistor MOS : Permet de réaliser des interrupteurs de manière très efficace
+2 types : PMOS et NMOS
+Possèdent une grille (G), une source (S) et un grain (D)
+PMOS : Si G=1, interrupteur ouvert, sinon fermé
+NMOS : Complémentaire au PMOS
+
+Finesse de la gravure de la technologie (procésseur) : En fonction "Longueur" (largeur) du canal électronique
+
+Comportement électrique du transistor, donc l'interrupteur ne s'ouvre ou ne se ferme pas instantanément
+= Temps de charge ou de décharge d'une capacité (donc fréquence processeur qui varie)
+Charge d'une capacité à travers une résistance :
+Vout = Vdd * (1-e^(-t/RC))
+Décharge d'une capacité à travers une résistance :
+Vout = Vdd * (e^(-t/RC))
+R = Résistance transistor
+C = Capacité de la grille
+
+CMOS : Complementary Metal Oxyde Semiconductor (utilisation de PMOS + NMOS)
+La plus répandue (99.9% des objets numériques sont faits en CMOS car transistors CMOS de dimension très petites : 10nm)
+Permet d'avoir des circuits contenant des milliards de transistors (comportement comme des interrupteurs = 0 et 1)
+
+Nombre de transistors (augmentation)
+Taille de la gravure (diminution)
+

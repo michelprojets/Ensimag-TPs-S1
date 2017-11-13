@@ -1,0 +1,63 @@
+CIRCUIT SEQUENTIEL
+
+Circuit séquentiel : Mémoriser l'information dans une variable
+Pour un circuit combinatoire qui implémente une fonction, il produit toujours la même sortie indépendamment de la séquence d'entrées
+Un élément séquentiel concerve un état
+La valeur de sortie va dépendre non seulement des entrées, mais aussi de la séquence des entrées
+Plus de table de vérité
+n entrées, m éléments séquentiels : 2^(n+m) cas
+Un élément séquentiel va conserver la variable
+Chronogramme
+
+Elément mémorisant simple (inverseur couplé) :
+Prend sa valeur à la mise sous tension (on inverse, ça donne 1), puis n'en change pas (on réinverse, ça donne 0), puis on désaffecte
+Si le nombre d'inverseurs est impair, on va avoir une suite oscillante 010101
+Si pair, circuit stable (conserve sa valeur), si impair, circuit oscillant
+Verrou Reset/Set :
+Si 1 à l'entrée reset (r) et 0 set, sortie q est à 0
+Si 1 à l'entrée set (s) et 0 reset, sortie q passe à 1
+Si reset et set repassent à 0, le verrou va conserver sa valeur (phase de mémorisation)
+Jamais reset = set = 1
+Ex : R M S M ...
+     Vaut 0 grâce au reset puis à la mémorisation
+     Vaut 1 grâce au set puis à la mémorisation
+     ...
+Donc il faut un reset ou un set pour ensuite mémoriser (problème, donc verrou de type D ?)
+Implémentation du reset/set par deux portes nor couplées
+Pour la porte nor, dans le cas ou un des deux (a ou b) vaut 0, si a vaut 0, la sortie vaut le complément de b (l'autre entrée)
+Donc s'il y a un 0 sur un nor, ça se comporte comme un inverseur
+Verrou de type D :
+Echantillonne une entrée de donnée
+Signal pour vérouiller la donnée (donc si la donnée en entrée change, la sortie va rester stable : entrée de commande c)
+Si la commande (latch) est active à l'état bas, on va faire le complément de la commande
+	Si c = 0, on recopie l'entrée de donnée (d) à la sortie (q)
+	Si c = 1, quoi qu'il se passe sur l'entrée, la sortie va rester à la même valeur (q') à la sortie (q) = sortie mémorisée
+Si la commande est active à l'état haut, effets complémentaires
+Donc une partie de transparence (recopiage) et ensuite une partie de mémorisation (de l'état juste avant la commande)
+S'il y a un changement de la valeur (d) juste avant la mémorisation, on ne sait pas ce qu'on doit mémoriser (il faut donc des différences de temps "hold")
+Mais sinon, c'est la valeur qui est juste avant le changement (si ça se produit en même temps) qui va être échantillonnée
+
+Bascule D (flip-flop) :
+Echantillonner une entrée de donnée sur un événement de la commande et non pas sur son état
+Horloge clock
+Fréquence du processeur à laquelle le signal va être activé pour échantillonner une donnée
+Si la bascule est active sur front descendant
+	Si le signal de commande ck va subir un passage de 1 à 0, recopiage (échantillonnement de donnée)
+	Sinon, la sortie va être stable tout le reste du temps
+Si la bascule est active sur front montant :
+	Idem mais passage de 0 à 1
+Donc contrairement au verrou, changement de la valeur de la sortie uniquement sur un front de ck
+Meme problème que le verrou lors de la simultanéité (et même solution)
+Implémentation avec deux verroux (un maître et un esclave) et verroux activés sur des commandes complémentaires
+Ou un seul verrou et un générateur de pulse (court) intégré au verrou
+Pulse : 010 sur une durée delta T (le temps de traverser l'inverseur "not")
+Sur les bascules D, une entrée de reset peut être immédiat dans le passage de la sortie à 0 (asynchrone) ou bien effectué lors du prochain front montant (synchrone à l'horloge)
+On peut aussi échantillonner une donnée à un moment précis (et pas forcément à chaque cycle) grâce à un signal supplémentaire sur la bascule D : autorisation d'écriture (WE)
+E pour enable
+L pour load (toujours synchrone car besoin de WE à 1 et aussi un front montant de l'horloge pour échantillonner la donnée dans la bascule)
+Les circuits séquentiels utilisent plusieurs bascules :
+Bascule puis logique combinatoire puis autre bascule
+Temps qu'il faut pour traverser la logique et échantillonner la bonne valeur dans la bascule suivante
+Période minimum (t ck min) = t p (ck,q) + t logique + t setup + t skew
+t skew : décalage temporel entre les deux entrées ck
+Il faut également garantir : t p (ck,q) + t logique + t skew > t hold (des bascules)
