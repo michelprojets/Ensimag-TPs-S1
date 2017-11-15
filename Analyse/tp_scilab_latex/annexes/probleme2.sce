@@ -1,3 +1,5 @@
+// exp 6
+
 function f = fourier(x,n)
     f=0
     for i=0:(n+1)

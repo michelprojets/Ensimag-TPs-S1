@@ -38,11 +38,11 @@ xlabel("temps"); ylabel("f(t)") : noms des axes x et y
 subplot(m,n,p) : subdivise la fenêtre en une matrice mxn puis p = numéro de case i,j = (i-1)n+j (faire subplot avant chaque plot)
 figure() : pour créer une nouvelle fenêtre
 4)
-x=linspace(0,2%pi,6)
-x=linspace(0,2%pi,21)
-plot(x, cos(x), "r", y, sin(y), "b")
-xtitle("Graphe de la fonction sin")
-legend("cos","sin")
+x=linspace(0,2*%pi,6)
+y=linspace(0,2*%pi,21)
+plot(x, sin(x), "r", y, sin(y), "b")
+xtitle("Graphes de la fonction sin")
+legend("sin (6 points discrétisation)","sin (21 points discrétisation)")
 
 II) Latex
 pdflatex enonce.tex : compile le fichier .tex
