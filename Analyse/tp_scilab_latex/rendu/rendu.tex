@@ -33,7 +33,7 @@
 \newcommand{\set}[1]{\left\{#1\right\}}
 
 \title{TP Scilab-Latex : Compte-rendu}
-\author{Michel Yoeung (groupe 2)}
+\author{Michel Yoeung et Billy Ndihokubwayo (groupe 2)}
 \date{22 Novembre 2017}
 
 % ===============
@@ -53,7 +53,7 @@ Pour w, on évalue en premier $ x-x $ qui vaut 0 puis $ \frac{1e(-8)}{1e(-8)} $ 
 
 \begin{exo} \ \\
 \begin{figure}[h]
-\includegraphics[scale=0.9]{../annexes/courbe_racine.PNG}
+\includegraphics[scale=0.9]{../annexes/images/courbe_racine.PNG}
 \end{figure} \ \\
 Lorsque $ x \in [0,1[, f(x)=0 $ car lorsqu'on répète la racine, on va s'approcher de $ 1 $ mais sans jamais être égal à $ 1 $ pile (un moment donné, la valeur de la racine carrée sera bloquée à la valeur juste en dessous de $ 1 $). Donc lorsqu'on va répéter les carrés par la suite, le résultat va décroître jusqu'à atteindre $ 0 $. \ \\
 Lorsque $ x=1 $, enchainer les racines carrées et les carrées ne change rien et $ f(x)=1 $ toujours. \ \\
@@ -64,10 +64,10 @@ Lorsque $ x \in ]1,4], f(x)=1 $ car lorsqu'on répète la racine carrée, le ré
 \begin{exo} \ \\
 \begin{enumerate}
 \item On a $ I_n=\int_{0}^{1} x^ne^x \, \mathrm{d}x = e-n\int_{0}^{1} x^{n-1}e^x \, \mathrm{d}x = e-nI_{n-1} $ et $ I_0=e-1 $. \ \\
-En utilisant une fonction récursive sur Scilab (courbe\_racine.sce > suite(n)), on trouve $ I_{20}\approx\text{-}129.26 $.
+En utilisant une fonction récursive sur Scilab (probleme1.sce > suite(n)), on trouve $ I_{20}\approx\text{-}129.26 $.
 \item On a $ I_n = \int_{0}^{1} x^n\sum_{k=0}^{\text{+}\infty} \left (\frac{x^k}{k!} \right) \, \mathrm{d}x = \int_{0}^{1} \sum_{k=0}^{\text{+}\infty} \left (\frac{x^{k+n}}{k!} \right) \, \mathrm{d}x = \int_{0}^{1} \lim_{N\to\\{\text{+}\infty}}\sum_{k=0}^{N} \left (\frac{x^{k+n}}{k!} \right) \, \mathrm{d}x $. \ \\
 D'après Beppo-Levi, on obtient $ I_n = \lim_{N\to\\{\text{+}\infty}}\sum_{k=0}^{N} \left(\int_{0}^{1} \frac{x^{k+n}}{k!} \, \mathrm{d}x \right) \newline = \lim_{N\to\\{\text{+}\infty}}\sum_{k=0}^{N} \left(\frac{1}{k!}[\frac{x^{k+n+1}}{k+n+1}]_0^1 \right) = \lim_{N\to\\{\text{+}\infty}}\sum_{k=0}^{N} \left(\frac{1}{k!(k+n+1)} \right) $. \ \\
-En calculant cette somme jusqu'à $ N=10000 $ sur Scilab (courbe\_racine.sce > serie\_exp(n)), on trouve $ I_{20}\approx0.1238 $.
+En calculant cette somme jusqu'à $ N=10000 $ sur Scilab (probleme1.sce > serie\_exp(n)), on trouve $ I_{20}\approx0.1238 $.
 \item Il vaut mieux donc utiliser la série exponentielle plutôt que la récurrence car en utilisant la fonction récursive, on cumule $ 20 $ fois les erreurs de précision de Scilab pour finalement obtenir un résultat incohérent de $ I_{20} $.
 \end{enumerate}
 \end{exo}
@@ -75,7 +75,7 @@ En calculant cette somme jusqu'à $ N=10000 $ sur Scilab (courbe\_racine.sce > s
 \begin{exo} \ \\ \\
 On sait que $ \int_{a}^{b} f(x) \, \mathrm{d}x = \lim_{N\to\\{\text{+}\infty}}\sum_{k=0}^{N} \left(\frac{b-a}{N}f(a+k\frac{b-a}{N}) \right) $. \ \\
 On a donc $ I_{20} = \int_{0}^{1} x^{20}e^x \, \mathrm{d}x = \lim_{n\to\\{\text{+}\infty}}\sum_{k=0}^{n} \left(\frac{1}{n}(\frac{k}{n})^{20}e^{\frac{k}{n}} \right) $. \ \\
-En calculant cette somme jusqu'à $ n=100000 $ sur Scilab (rectangle.sce > rectangle(n)), on trouve $ I_{20}\approx0.1238 $ ce qui correspond au résultat trouvé en 3.2.
+En calculant cette somme jusqu'à $ n=100000 $ sur Scilab (probleme1.sce > rectangle(n)), on trouve $ I_{20}\approx0.1238 $ ce qui correspond au résultat trouvé en 3.2.
 \end{exo}
 
 %======================================
