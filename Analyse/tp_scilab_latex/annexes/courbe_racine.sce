@@ -4,7 +4,7 @@ function f=racine(x)
         f=sqrt(f);
     end
     for i=1:128
-        f=f^2;
+        f=f.^2;
     end
 endfunction
 
