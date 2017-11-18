@@ -55,7 +55,7 @@ begin
     port map (  clk     => clk,         -- Connexion du port ``clk'' du
                                         -- composant ``bascule_D'' au signal
                                         -- ``clk'' (entrée du composant lfsr).
-                d       => q0,          -- Connexion du port ``d'' du
+                d       => d0,          -- Connexion du port ``d'' du
                                         -- composant ``bascule_D'' au signal
                                         -- ``q0'' 
                 q       => q0,          -- Connexion du port ``q'' du

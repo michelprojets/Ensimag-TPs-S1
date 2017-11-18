@@ -32,33 +32,15 @@ begin
 --    lfsr_o <= lfsr_gen;
 
     lfsr_1: lfsr
-    port map (  clk     => clk,         -- Connexion du port ``clk'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``clk'' (entrée du composant lfsr). 
-                s       => lfsr_gen,      -- Connexion du port ``q'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``q3''
-                reset   => reset);      -- Connexion du port ``reset'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``reset'' (entrée du composant lfsr).
-                                        --
+    port map (  clk     => clk,          
+                s       => lfsr_gen,     
+                reset   => reset);      
 
     auto_1: auto
-    port map (  clk     => clk,         -- Connexion du port ``clk'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``clk'' (entrée du composant lfsr).
-                e       => lfsr_gen,      -- Connexion du port ``d'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``d2'' 
-                s       => s,          -- Connexion du port ``q'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``q2''
-                reset   => reset);      -- Connexion du port ``reset'' du
-                                        -- composant ``bascule_D'' au signal
-                                        -- ``reset'' (entrée du composant lfsr).
-                                        --
-
-
+    port map (  clk     => clk,        
+                e       => lfsr_gen,     
+                s       => s,        
+                reset   => reset);     
 
 end structural;
 
