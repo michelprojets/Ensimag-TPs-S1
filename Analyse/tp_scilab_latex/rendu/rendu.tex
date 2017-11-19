@@ -116,8 +116,28 @@ On peut donc en conclure que la série de Fourier converge vers une fonction $ s
 \section{Théorème de Gerschgörin.}
 %======================================
 
-\begin{exo} \ \\ \\
-aaa
+\begin{exo} \ \\
+\begin{enumerate}
+\item Soit A une matrice d'ordre $ N \in \mathbb{N} $ et $ \lambda $ une valeur propre de A, alors il existe un vecteur propre X tel que $ AX = \lambda X $. \ \\
+Comme les coordonnées $ x_1,...,x_N \ne 0 $ de X sont en nombre fini, alors $ \exists k \in 1,...,N $ tel que $ \abs{x_k} = max(\abs{x_i}, i \in 1,...,N) $ et $ \abs{x_k} > 0 $. \ \\
+Si on considère la k-ième ligne de $ MX = \lambda X $, on a : \ \\
+\begin{equation}
+\begin{aligned}
+\sum_{j=1}^{N} a_{kj}x_j = \lambda x_k & \Rightarrow \sum_{j=1,j\ne k}^{N} a_{kj}x_j = x_k(\lambda - a_{kk}) \ \\
+& \Rightarrow \abs{x_k}\abs{\lambda-a_{kk}} = \abs{\sum_{j=1,j\ne k}^{N} a_{kj}x_j} \le \sum_{j=1,j\ne k}^{N} \abs{a_{kj}x_j} \ \\
+& \Rightarrow \abs{\lambda-a_{kk}} \le \sum_{j=1,j\ne k}^{N} \abs{a_{kj}}\frac{\abs{x_j}}{\abs{x_k}}
+ \le \sum_{j=1,j\ne k}^{N} \abs{a_{kj}} \ \\
+\end{aligned}
+\end{equation}
+car $ x_k \ne 0 $ et $ \forall j \in 1,...,N, \abs{x_k} \ge \abs{x_j} $. \ \\
+On a donc $ \lambda \in D_k \subset \bigcup_{k=1}^ND_k $.
+\item En écrivant une fonction sur Scilab (probleme3.sce > disques(A)), on peut visualiser les disques de Gerschgörin pour une matrice carrée A donnée en paramètre.
+\item
+\begin{figure}[h]
+\includegraphics[scale=0.6]{../annexes/images/disques.PNG}
+\end{figure} \ \\
+En représentant graphiquement les disques de Gerschgörin de la matrice A avec ses valeurs propres dans le plan complexe sur Scilab (probleme3.sce > valeurs\_propres(A)), on peut voir et vérifier que ces valeurs propres sont bien toutes dans l'union des disques.
+\end{enumerate}
 \end{exo}
 
 % =============

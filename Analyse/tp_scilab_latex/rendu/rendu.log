@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.6.22)  15 NOV 2017 21:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.6.22)  19 NOV 2017 16:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,41 +439,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 98--107
 [3 <../annexes/images/fourier_0.PNG> <../annexes/images/fourier_10.PNG> <../ann
 exes/images/fourier_25.PNG> <../annexes/images/fourier_35.PNG> <../annexes/imag
 es/fourier_100.PNG> <../annexes/images/fourier_100000.PNG>]
-Underfull \hbox (badness 10000) in paragraph at lines 119--121
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
-[4] (./rendu.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 121--124
+
+ []
+
+<../annexes/images/disques.PNG, id=44, 612.2875pt x 461.725pt>
+File: ../annexes/images/disques.PNG Graphic file (type png)
+
+<use ../annexes/images/disques.PNG>
+Package pdftex.def Info: ../annexes/images/disques.PNG used on input line 137.
+(pdftex.def)             Requested size: 367.37534pt x 277.03714pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4] [5 <../annexes/images/disques.PNG>] (./rendu.aux) ) 
 Here is how much of TeX's memory you used:
- 6231 strings out of 493014
- 85853 string characters out of 6133336
+ 6236 strings out of 493014
+ 85999 string characters out of 6133336
  164354 words of memory out of 5000000
- 9660 multiletter control sequences out of 15000+600000
+ 9664 multiletter control sequences out of 15000+600000
  16522 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,8n,32p,395b,537s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super
-/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pf
-b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></
-usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on rendu.pdf (4 pages, 265301 bytes).
+{/usr/local/texlive/2016
+/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fon
+ts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
+ype1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/cm-super/sfrm1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
+ublic/cm-super/sfti0800.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
+lic/cm-super/sfti1095.pfb>
+Output written on rendu.pdf (5 pages, 293681 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
- 63 compressed objects within 1 object stream
+ 106 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
