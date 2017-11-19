@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.6.22)  19 NOV 2017 16:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.6.22)  19 NOV 2017 18:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -355,17 +355,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 63--64
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--70
+Underfull \hbox (badness 10000) in paragraph at lines 69--73
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--78
+Underfull \hbox (badness 10000) in paragraph at lines 77--81
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--95
+Underfull \hbox (badness 10000) in paragraph at lines 87--98
 
  []
 
@@ -373,7 +373,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 84--95
 File: ../annexes/images/fourier_0.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_0.PNG>
-Package pdftex.def Info: ../annexes/images/fourier_0.PNG used on input line 100
+Package pdftex.def Info: ../annexes/images/fourier_0.PNG used on input line 103
 .
 (pdftex.def)             Requested size: 217.5312pt x 172.84456pt.
 
@@ -382,7 +382,7 @@ File: ../annexes/images/fourier_10.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_10.PNG>
 Package pdftex.def Info: ../annexes/images/fourier_10.PNG used on input line 10
-1.
+4.
 (pdftex.def)             Requested size: 217.5312pt x 174.53084pt.
 
 <../annexes/images/fourier_25.PNG, id=31, 310.761pt x 247.52475pt>
@@ -390,7 +390,7 @@ File: ../annexes/images/fourier_25.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_25.PNG>
 Package pdftex.def Info: ../annexes/images/fourier_25.PNG used on input line 10
-2.
+5.
 (pdftex.def)             Requested size: 217.5312pt x 173.26613pt.
 
 <../annexes/images/fourier_35.PNG, id=32, 311.36325pt x 248.127pt>
@@ -398,7 +398,7 @@ File: ../annexes/images/fourier_35.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_35.PNG>
 Package pdftex.def Info: ../annexes/images/fourier_35.PNG used on input line 10
-3.
+6.
 (pdftex.def)             Requested size: 217.95279pt x 173.6877pt.
 
 <../annexes/images/fourier_100.PNG, id=33, 311.36325pt x 247.52475pt>
@@ -406,7 +406,7 @@ File: ../annexes/images/fourier_100.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_100.PNG>
 Package pdftex.def Info: ../annexes/images/fourier_100.PNG used on input line 1
-04.
+07.
 (pdftex.def)             Requested size: 217.95279pt x 173.26613pt.
 
 <../annexes/images/fourier_100000.PNG, id=34, 311.9655pt x 248.72925pt>
@@ -414,82 +414,88 @@ File: ../annexes/images/fourier_100000.PNG Graphic file (type png)
 
 <use ../annexes/images/fourier_100000.PNG>
 Package pdftex.def Info: ../annexes/images/fourier_100000.PNG used on input lin
-e 105.
+e 108.
 (pdftex.def)             Requested size: 218.37436pt x 174.10928pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--106
+Underfull \hbox (badness 10000) in paragraph at lines 103--109
 [][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--106
+Underfull \hbox (badness 10000) in paragraph at lines 103--109
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--107
+Underfull \hbox (badness 10000) in paragraph at lines 101--110
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--107
+Underfull \hbox (badness 10000) in paragraph at lines 101--110
 
  []
 
 [3 <../annexes/images/fourier_0.PNG> <../annexes/images/fourier_10.PNG> <../ann
 exes/images/fourier_25.PNG> <../annexes/images/fourier_35.PNG> <../annexes/imag
 es/fourier_100.PNG> <../annexes/images/fourier_100000.PNG>]
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--124
+Underfull \hbox (badness 10000) in paragraph at lines 125--128
 
  []
 
-<../annexes/images/disques.PNG, id=44, 612.2875pt x 461.725pt>
+<../annexes/images/disques.PNG, id=44, 307.74976pt x 246.9225pt>
 File: ../annexes/images/disques.PNG Graphic file (type png)
 
 <use ../annexes/images/disques.PNG>
-Package pdftex.def Info: ../annexes/images/disques.PNG used on input line 137.
-(pdftex.def)             Requested size: 367.37534pt x 277.03714pt.
+Package pdftex.def Info: ../annexes/images/disques.PNG used on input line 142.
+(pdftex.def)             Requested size: 292.3606pt x 234.57503pt.
+ [4 <../annexes/images/disques.PNG>]
+
+LaTeX Warning: Command \textbackslash invalid in math mode on input line 156.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+Underfull \hbox (badness 10000) in paragraph at lines 146--164
 
-[4] [5 <../annexes/images/disques.PNG>] (./rendu.aux) ) 
+ []
+
+[5] (./rendu.aux) ) 
 Here is how much of TeX's memory you used:
- 6236 strings out of 493014
- 85999 string characters out of 6133336
+ 6250 strings out of 493014
+ 86146 string characters out of 6133336
  164354 words of memory out of 5000000
- 9664 multiletter control sequences out of 15000+600000
- 16522 words of font info for 47 fonts, out of 8000000 for 9000
+ 9672 multiletter control sequences out of 15000+600000
+ 18498 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,8n,32p,395b,537s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016
-/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2016/texmf
--dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2016/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/font
-s/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fon
-ts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
-e1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
-/public/cm-super/sfrm1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
-ublic/cm-super/sfti0800.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
-lic/cm-super/sfti1095.pfb>
-Output written on rendu.pdf (5 pages, 293681 bytes).
+ 40i,10n,32p,395b,537s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super
+/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb>
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on rendu.pdf (5 pages, 302018 bytes).
 PDF statistics:
- 106 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 114 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
