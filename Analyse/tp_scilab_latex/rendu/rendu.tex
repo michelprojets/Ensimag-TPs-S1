@@ -163,12 +163,12 @@ Comme les coordonnées de {\it X} sont en nombre fini non nul et sont non toutes
 En considérant la k-ième ligne de ${\it MX} = 0$, on a : \ \\
 \begin{equation}
 \begin{aligned}
-\sum\limits_{k=1}^n a_{i_0j}x_k = 0 & \Rightarrow \sum\limits_{k=1,kj\neq i_0}^n a_{i_0k}x_k = a_{i_0k}x_{i_0} \ \\
+\sum\limits_{k=1}^n a_{i_0k}x_k = 0 & \Rightarrow \sum\limits_{k=1,k\neq i_0}^n a_{i_0k}x_k = a_{i_0k}x_{i_0} \ \\
 & \Rightarrow \abs{a_{i_0k}}\abs{x_{i_0}} = \abs{\sum\limits_{k=1,k\neq i_0}^n a_{i_0k}x_k} \le \sum\limits_{k=1,k\neq i_0}^n \abs{a_{i_0k}x_k} \ \\
-& \Rightarrow \abs{a_{i_0k}} \le \sum\limits_{k=1,k\neq i_0}^n \abs{a_{i_0k}}\frac{\abs{x_i_0}}{\abs{x_{i_0}}}  \le \sum\limits_{k=1,k\neq i_0}^n \abs{a_{i_0k}}
+& \Rightarrow \abs{a_{i_0k}} \le \sum\limits_{k=1,k\neq i_0}^n \abs{a_{i_0k}}\frac{\abs{x_{k}}}{\abs{x_{i_0}}}  \le \sum\limits_{k=1,k\neq i_0}^n \abs{a_{i_0k}}
 \end{aligned}
 \end{equation}
-Car $x_{i_0} \ne 0 $ et  $\forall k \in 1,...,n$, $\abs{x_{i_0}} \ge \abs{x_k}$. \ \\
+Car $x_{i_0} \ne 0 $ et  $\forall i \in 1,...,n$, $\abs{x_{i_0}} \ge \abs{x_i}$. \ \\
 {\it M} n'est donc pas à diagonale strictement dominante.
 \end{enumerate}
 \end{exo}
