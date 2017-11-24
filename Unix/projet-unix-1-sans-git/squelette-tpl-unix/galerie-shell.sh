@@ -76,7 +76,7 @@ while test $# -ne 0; do
             shift
             verif_existence_argument $1
             rep_dest=$1
-            if ! [ -d $rep_dest ]; then
+            if ! [ -d $rep_dest ]; then # si le repertoire destination n'existe pas encore
                 mkdir $rep_dest
             fi
             normaliser_nom_repertoires

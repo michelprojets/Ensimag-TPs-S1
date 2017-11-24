@@ -39,9 +39,6 @@ generate_img_fragment () {
 
 # genere un fichier index.html dans le repertoire cible
 galerie_main () {
-    if ! [ -d $2 ]; then  # si le repertoire destination n'existe pas encore
-        mkdir $2
-    fi
     cd $2
     fichier=""
     if [[ $3 != "" ]]; then # si un fichier a ete specifie pour remplacer index.html
