@@ -29,15 +29,40 @@ generate_img_fragment () {
         ?*.jpg)
             echo "<div style=\"float:left\">"
             echo "<img src=\"$nom_fich\" alt=\"$nom_fich\"><br>"
+            echo "<span>$nom_fich</span>"
             echo "</div>"
             ;;
         *)
-            echo "Vous devez mettre un fichier .jpg"
             ;;
     esac
 }
 
 # genere un fichier index.html dans le repertoire cible
 galerie_main () {
-    echo "appel de la fonction galerie_main avec les parametres $1 et $2"
+    if ! [ -d $2 ]; then  # si le repertoire destination n'existe pas encore
+        mkdir $2
+    fi
+    cd $2
+    fichier=""
+    if [ $3 != "" ]; then # si un fichier a ete specifie pour remplacer index.html
+        fichier=$3
+        html_head "projet-unix-1" > $fichier
+    else  # sinon on cree un fichier index.html pour ecrire dedans
+        fichier="index.html"
+        html_head "projet-unix-1" > $fichier
+    fi
+    # generation des vignettes
+    for fic in $1/*
+    do
+        case "$fic" in
+            ?*.jpg)
+                echo $fic
+                gmic $fic -cubism , -resize 400,400 -output $2/$(basename $fic)
+                generate_img_fragment $2/$(basename $fic) >> $fichier
+                ;;
+            *)
+                ;;
+        esac
+    done
+    html_tail >> $fichier
 }
