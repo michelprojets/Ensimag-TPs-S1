@@ -44,7 +44,7 @@ galerie_main () {
     fi
     cd $2
     fichier=""
-    if [ $3 != "" ]; then # si un fichier a ete specifie pour remplacer index.html
+    if [[ $3 != "" ]]; then # si un fichier a ete specifie pour remplacer index.html
         fichier=$3
         html_head "projet-unix-1" > $fichier
     else  # sinon on cree un fichier index.html pour ecrire dedans
@@ -56,8 +56,7 @@ galerie_main () {
     do
         case "$fic" in
             ?*.jpg)
-                echo $fic
-                gmic $fic -cubism , -resize 400,400 -output $2/$(basename $fic)
+                gmic $fic -drawing , -resize 200,200 -output $2/$(basename $fic)
                 generate_img_fragment $2/$(basename $fic) >> $fichier
                 ;;
             *)

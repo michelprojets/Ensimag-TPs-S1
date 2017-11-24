@@ -15,7 +15,7 @@ EOF
 
 # fonction qui verifie l'existence de l'argument liees aux options de la commande
 verif_existence_argument () {
-    if [ "$1" = "" ]; then
+    if [[ "$1" = "" ]]; then
         echo -e "\n\nIl manque un argument\n\n"
         usage; exit 1
     fi
@@ -23,7 +23,7 @@ verif_existence_argument () {
 
 # fonction qui vérifie l'existence du repertoire donne en argument
 verif_repertoire_argument () {
-    if [ ! -d "$1" ]; then
+    if ! [ -d "$1" ]; then
         echo -e "\n\nLe repertoire $1 n'existe pas\n\n"
         usage; exit 1
     fi
@@ -76,6 +76,9 @@ while test $# -ne 0; do
             shift
             verif_existence_argument $1
             rep_dest=$1
+            if ! [ -d $rep_dest ]; then
+                mkdir $rep_dest
+            fi
             normaliser_nom_repertoires
             shift
             ;;
