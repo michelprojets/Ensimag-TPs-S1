@@ -29,7 +29,9 @@ generate_img_fragment () {
         ?*.jpg)
             echo "<div style=\"float:left\">"
             echo "<img src=\"$nom_fich\" alt=\"$nom_fich\"><br>"
-            echo "<span>$nom_fich</span>"
+            echo "<span>Nom de l'image : $nom_fich</span><br>"
+            echo "<span>Date de prise de vue : "$(identify -format "%[EXIF:DateTimeOriginal]" $2/$nom_fich)"</span><br>"
+            echo "<span>Resolution : "$(identify -format "%wx%h" $nom_fich)"</span>"
             echo "</div>"
             ;;
         *)
@@ -39,22 +41,22 @@ generate_img_fragment () {
 
 # genere un fichier index.html dans le repertoire cible
 galerie_main () {
+  echo $1
+  echo $2
     cd $2
-    fichier=""
-    if [[ $3 != "" ]]; then # si un fichier a ete specifie pour remplacer index.html
-        fichier=$3
-        html_head "projet-unix-1" > $fichier
-    else  # sinon on cree un fichier index.html pour ecrire dedans
-        fichier="index.html"
-        html_head "projet-unix-1" > $fichier
-    fi
+    fichier=$5
+    html_head "projet-unix-1" > $fichier
     # generation des vignettes
+    echo -e "\nworking..."
     for fic in $1/*
     do
         case "$fic" in
             ?*.jpg)
-                gmic $fic -drawing , -resize 200,200 -output $2/$(basename $fic)
-                generate_img_fragment $2/$(basename $fic) >> $fichier
+                if [[ $3 = true ]]; then # mode verbeux
+                    echo -e "\n$fic -> $2/$(basename $fic)..."
+                fi
+                gmic $fic -drawing , -resize 200,200 -output $2/$(basename $fic) 2> /dev/null
+                generate_img_fragment $2/$(basename $fic) $1 >> $fichier
                 ;;
             *)
                 ;;

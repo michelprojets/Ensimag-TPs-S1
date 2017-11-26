@@ -50,8 +50,9 @@ verif_fichier_argument () {
 # les variables concernant l'etat de la commande
 rep_source=""
 rep_dest=""
-index=""
+verb=false
 force=false
+index="index.html"
 
 # chargement de la bibliotheque de fonction
 DIR=$(pwd)
@@ -83,8 +84,8 @@ while test $# -ne 0; do
             shift
             ;;
         "--verb")
-            echo "argument --verb"
-            exit 0
+            verb=true
+            shift
             ;;
         "--force")
             force=true
@@ -107,4 +108,4 @@ while test $# -ne 0; do
 done
 
 # appel de la fonction galerie_main() avec les parametres adequats
-galerie_main $rep_source $rep_dest $index $force
+galerie_main $rep_source $rep_dest $verb $force $index
