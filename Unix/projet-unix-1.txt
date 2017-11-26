@@ -1,0 +1,3 @@
+- option --force (?)
+- ajout de tests plus complets
+- rapport en html
