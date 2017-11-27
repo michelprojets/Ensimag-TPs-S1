@@ -31,7 +31,7 @@ generate_img_fragment () {
             echo "<img src=\"$nom_fich\" alt=\"$nom_fich\"><br>"
             echo "<span>Nom de l'image : $nom_fich</span><br>"
             echo "<span>Date de prise de vue : "$(identify -format "%[EXIF:DateTimeOriginal]" $2/$nom_fich)"</span><br>"
-            echo "<span>Resolution : "$(identify -format "%wx%h" $nom_fich)"</span>"
+            echo "<span>Resolution : "$(identify -format "%wx%h" $2/$nom_fich)"</span>"
             echo "</div>"
             ;;
         *)
@@ -41,8 +41,6 @@ generate_img_fragment () {
 
 # genere un fichier index.html dans le repertoire cible
 galerie_main () {
-  echo $1
-  echo $2
     cd $2
     fichier=$5
     html_head "projet-unix-1" > $fichier
@@ -55,7 +53,7 @@ galerie_main () {
                 if [[ $3 = true ]]; then # mode verbeux
                     echo -e "\n$fic -> $2/$(basename $fic)..."
                 fi
-                gmic $fic -drawing , -resize 200,200 -output $2/$(basename $fic) 2> /dev/null
+                gmic $fic -resize 200,200 -output $2/$(basename $fic) 2> /dev/null
                 generate_img_fragment $2/$(basename $fic) $1 >> $fichier
                 ;;
             *)
