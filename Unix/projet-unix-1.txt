@@ -1,2 +1,4 @@
-- ajout de tests plus complets
-- rapport en html
+- ajout de tests plus complets (*****)
+- prendre en compte shellcheck (***)
+- rapport en html (*)
+- ré-organisation dans le répertoire (*)

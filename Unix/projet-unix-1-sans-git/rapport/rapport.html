@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rapport projet unix</title>
+  </head>
+
+  <body>
+    <h1 style="text-align:center;text-decoration:underline;">Rapport du projet unix</h1>
+    <h2 style="text-align:center;text-decoration:underline;">Génération d'une galerie d'images</h1>
+    <div style="margin-top:10%">
+      <h3 style="text-decoration:underline;">Vue d'ensemble du programme.</h3>
+      <div>
+        <section>
+          <h4 style="text-decoration:underline;">Fonctionnement général de la commande.</h3>
+          <blockquote>
+            <em>
+              Le but du projet est d'écrire un programme réunissant plusieurs scripts shell afin de
+              pouvoir miniaturiser tous les images .jpg d'un répertoire source dans un répertoire
+              destination, pour ensuite les intégrer en html dans un fichier .html (code html qui pourra
+              ensuite être interprếté par le navigateur).</br>
+              Le projet comporte deux scripts : <b>galerie_shell.sh</b> qui est le script principal (il traite
+              les arguments de la commande) et <b>utilities.sh</b> qui contient les fonctions destinés à
+              générer le code html.
+            </em>
+          </blockquote>
+        </section>
+        <section>
+          <h4 style="text-decoration:underline;">La commande et les arguments.</h3>
+          <blockquote>
+            <em>
+              La commande principale est <b>./galerie_shell.sh</b>. Elle prend en argument le chemin
+              (relatif ou absolu) vers un répertoire source, ainsi qu'un chemin (relatif ou absolu)
+              vers un répertoire destination. La commande prend aussi en argument des options qui
+              peuvent être placés à gauche, à droite, ou entre les arguments obligatoires
+              (en l'occurrence les répertoires source et destination).</br>
+              Voici un modèle : <b>./galerie_shell.sh [option_1] --source <small>./rep_source</small>
+              [option_2] --dest <small>./rep_dest</small> [option_3]</small></b>.</br>
+              Voici une liste exhaustive des arguments obligatoires et des options :</br>
+            <h5>Arguments obligatoires :</h5>
+            <ul>
+              <li>
+                <b>--source <small>rep_source</small></b> : Choix du chemin (relatif ou absolu) vers
+                le répertoire qui contient les images JPEG à miniaturiser.
+              </li>
+              <li>
+                <b>--dest <small>rep_dest</small></b> : Choix du chemin (relatif ou absolu) vers
+                le répertoire (déjà existant ou non) qui va contenir les images miniaturisées ainsi
+                que le fichier .html à l'issue de la commande.
+              </li>
+            </ul>
+            <h5>Options :</h5>
+              <ul>
+                <li>
+                  <b>--help</b> : Permet d'obtenir sur la sortie standard le guide d'utilisation de la
+                  commande.
+                </li>
+                <li>
+                  <b>--verb</b> : Permet de passer en mode "verbeux" : affichage des opérations de transfert
+                  de fichier (par exemple les copies, les déplacements etc.) sous la forme :
+                  <b>fichier_1 -> fichier_2</b>.
+                </li>
+                <li>
+                  <b>--force</b> : Permet de forcer la convertion des images sources en images miniaturisées
+                  même si l'image miniaturisée existe déjà dans le répertoire destination.
+                </li>
+                  <b>--index <small>fichier_html</small></b> : Choix du nom du fichier .html dans lequel on veut
+                  générer le code html (par défaut, c'est index.html le fichier correspondant).
+                </li>
+              </ul>
+            </em>
+          </blockquote>
+        </section>
+      </div>
+      <h3 style="text-decoration:underline;">Les tests associés.</h3>
+      <div>
+
+      </div>
+  </body>
+
+</html>
