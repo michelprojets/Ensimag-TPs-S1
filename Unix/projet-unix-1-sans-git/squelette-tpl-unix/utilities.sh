@@ -27,8 +27,8 @@ generate_img_fragment () {
     nom_fich=$(basename $1)
     case "$nom_fich" in
         ?*.jpg)
-            echo "<div style=\"float:left\">"
-            echo "<img src=\"$nom_fich\" alt=\"$nom_fich\"><br>"
+            echo "<div style =\"float:left\">"
+            echo "<img src=\"$nom_fich\" alt=\"IMAGE : $nom_fich INTROUVABLE\"><br>"
             echo "<span>Nom de l'image : $nom_fich</span><br>"
             echo "<span>Date de prise de vue : "$(identify -format "%[EXIF:DateTimeOriginal]" $2/$nom_fich)"</span><br>"
             echo "<span>Resolution : "$(identify -format "%wx%h" $2/$nom_fich)"</span>"
@@ -37,6 +37,14 @@ generate_img_fragment () {
         *)
             ;;
     esac
+}
+
+# miniaturise les fichiers mis dans le répertoire destination
+miniaturisation(){
+  if [[ $3 = true ]]; then # mode verbeux
+      echo -e "\n$1 -> $2/$(basename $1)..."
+  fi
+  gmic $1 -resize 200,200 -output $2/$(basename $1) 2> /dev/null
 }
 
 # genere un fichier index.html dans le repertoire cible
@@ -50,10 +58,14 @@ galerie_main () {
     do
         case "$fic" in
             ?*.jpg)
-                if [[ $3 = true ]]; then # mode verbeux
-                    echo -e "\n$fic -> $2/$(basename $fic)..."
+                if [[ $4 = true ]]; then  # on force la miniaturisation
+                    miniaturisation $fic $2 $3
+                else
+                    if [ ! -f "$2/$(basename $fic)" ]; then
+                        # on miniaturise seulement lorsque le fichier n'existe pas encore dans le fichier destination
+                        miniaturisation $fic $2 $3
+                    fi
                 fi
-                gmic $fic -resize 200,200 -output $2/$(basename $fic) 2> /dev/null
                 generate_img_fragment $2/$(basename $fic) $1 >> $fichier
                 ;;
             *)

@@ -23,7 +23,7 @@ verif_existence_argument () {
 
 # fonction qui vérifie l'existence du repertoire donne en argument
 verif_repertoire_argument () {
-    if ! [ -d "$1" ]; then
+    if [ ! -d "$1" ]; then
         echo -e "\n\nLe repertoire $1 n'existe pas\n\n"
         usage; exit 1
     fi
