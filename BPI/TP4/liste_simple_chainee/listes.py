@@ -109,7 +109,8 @@ class Liste:
                 for cel in self.cellules():
                     if cel.suivant is not None: # pour éviter les erreurs
                         if cel.suivant.valeur == valeur:
-                            if cel.suivant.suivant is not None: # si la cellule à supprimer n'est pas la dernière
+                            # si la cellule à supprimer n'est pas la dernière
+                            if cel.suivant.suivant is not None:
                                 cel.suivant = cel.suivant.suivant
                                 self.taille -= 1
                                 break

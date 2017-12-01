@@ -2,6 +2,7 @@
 """
 listes triees, circulaires avec sentinelle.
 """
+from tycat import trace
 
 class Cellule:
     """
@@ -22,6 +23,9 @@ class Liste:
         'sentinelle' precise la valeur de la cellule sentinelle
         pre-condition: l'iterable donne est trie.
         """
+        # ATTENTION : comme on suppose que la liste est initialement triée, on ne doit pas utiliser
+        # la méthode self.ajouter(valeur) car cette dernière ne suppose pas que la liste soit
+        # initialiement triée
         self.tete = Cellule(sentinelle)
         courant = self.tete
         if iterable is None:
@@ -55,6 +59,7 @@ class Liste:
             courant = suivant
             suivant = courant.suivant   # sauvegarde itérée du suivant
 
+    #@trace
     def decoupe(self):
         """
         coupe la liste en 2 (une cellule sur 2).
@@ -108,6 +113,7 @@ class Liste:
                 flag = True
         return (liste_indices_impaires, liste_indices_paires)
 
+    @trace
     def ajouter(self, valeur):
         """
         ajoute la valeur donnee a la bonne place dans la liste.
@@ -115,19 +121,26 @@ class Liste:
         if self.est_vide():
             self.tete.suivant = Cellule(valeur, self.tete)
         else:
-            for cel in self.cellules(True):
+            for cel in self.cellules(True): # pour commencer à partir de l'élément -1
                 if valeur <= cel.suivant.valeur:
                     cel.suivant = Cellule(valeur, cel.suivant)
+                    break   # pour ne pas ajouter plusieurs fois et pour éviter d'itérer pour rien
             # pas besoin de traiter le cas où on doit ajouter en fin de liste
             # car on a mis une valeur de la sentinelle = inf pour nous arranger
             # vu que valeur sera toujours inférieure à inf
 
+    @trace
     def supprimer(self, valeur):
         """
         supprime la premiere cellule contenant la valeur donnee.
         """
-        # TODO
-        pass
+        if self.est_vide():
+            return
+        else:   # liste à au moinx un élément
+            for cel in self.cellules(True): # pour commencer à partir de l'élément -1
+                if cel.suivant != self.tete: # si ce n'est pas la fin de la liste
+                    if cel.suivant.valeur == valeur:
+                        cel.suivant = cel.suivant.suivant
 
     def __str__(self):
         """
@@ -144,7 +157,6 @@ class Liste:
                 liste_str += ", "
         return liste_str
 
-
 def test():
     """
     tests simples des differentes methodes.
@@ -158,6 +170,7 @@ def test():
     pairs.supprimer(6)
     impairs.ajouter(6)
     impairs.ajouter(0)
+    print(pairs, impairs)
 
 if __name__ == "__main__":
     test()
