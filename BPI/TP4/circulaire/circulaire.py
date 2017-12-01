@@ -2,7 +2,7 @@
 """
 listes triees, circulaires avec sentinelle.
 """
-from tycat import trace
+#from tycat import trace
 
 class Cellule:
     """
@@ -113,7 +113,6 @@ class Liste:
                 flag = True
         return (liste_indices_impaires, liste_indices_paires)
 
-    @trace
     def ajouter(self, valeur):
         """
         ajoute la valeur donnee a la bonne place dans la liste.
@@ -129,7 +128,6 @@ class Liste:
             # car on a mis une valeur de la sentinelle = inf pour nous arranger
             # vu que valeur sera toujours inférieure à inf
 
-    @trace
     def supprimer(self, valeur):
         """
         supprime la premiere cellule contenant la valeur donnee.
