@@ -7,7 +7,7 @@ UTILISATION: $(basename "$0") [OPTIONS] --source REP [OPTIONS] --dest REP [OPTIO
 INFOS:   --source REP    Choisir le repertoire contenant les images JPEG a miniaturiser
          --dest REP      Choisir le repertoire cible (ou on va generer les vignettes et le fichier HTML)
 OPTIONS: --help          Ce message d'aide
-         --verb          Mode \"verbeux\" pour mise au point
+         --verb          Mode "verbeux" pour mise au point
          --force         Forcer la creation de vignette, meme si la vignette existe deja
          --index FICHIER Generer la galerie dans le fichier .html specifie au lieu de generer un fichier index.html
 EOF
@@ -15,7 +15,7 @@ EOF
 
 # fonction qui verifie l'existence de l'argument liees aux options de la commande
 verif_existence_argument () {
-    if [[ "$1" = "" ]]; then
+    if [ "$1" = "" ]; then
         echo -e "\n\nIl manque un argument\n\n"
         usage; exit 1
     fi

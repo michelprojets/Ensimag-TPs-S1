@@ -19,7 +19,8 @@ mkdir -p source dest
 make-img.sh source/image1.jpg
 make-img.sh source/image2.jpg
 
-galerie-shell.sh --source source --dest dest
+
+galerie-shell.sh --source source --dest dest --verb
 
 if [ -f dest/index.html ]
 then

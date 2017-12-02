@@ -2,10 +2,12 @@
 # We need bash for $RANDOM
 
 if [ "$1" != "" ]; then
+
     target=$1
 else
+
     target=image.png
-fi	
+fi
 
 # Dummy sample text
 dummy_text () {
@@ -32,10 +34,11 @@ bg=$(printf "#%02x%02x%02x" $((RANDOM % 100 + 155)) $((RANDOM % 100 + 155)) $((R
 # Dark text
 fg=$(printf "#%02x%02x%02x" $((RANDOM % 155)) $((RANDOM % 155)) $((RANDOM % 155)))
 
-dummy_text | convert -background "$bg" -fill "$fg" \
-    -pointsize 36 \
-    -page 800x600 \
-    -flatten \
-    text:- "$target"
+# dummy_text | convert -background "$bg" -fill "$fg" \
+#     -pointsize 36 \
+#     -page 800x600 \
+#     -flatten \
+#     text: "$target"
+convert -background $bg -fill $fg -size 200x200 label:Alea $target
 
 echo "$target created"

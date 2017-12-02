@@ -10,18 +10,21 @@
 
   <body>
     <h1 style="text-align:center;text-decoration:underline;">Rapport du projet unix</h1>
-    <h2 style="text-align:center;text-decoration:underline;">Génération d'une galerie d'images</h1>
-    <div style="margin-top:10%">
+    <h2 style="text-align:center;text-decoration:underline;">Génération d'une galerie d'images</h2>
+    <h3 style="text-align:center;">Michel Yoeung et Billy Ndihokubwayo (groupe 2)</h3>
+    <div style="margin-top:5%">
       <h3 style="text-decoration:underline;">Vue d'ensemble du programme.</h3>
       <div>
         <section>
-          <h4 style="text-decoration:underline;">Fonctionnement général de la commande.</h3>
+          <h4 style="text-decoration:underline;">Fonctionnement général de la commande.</h4>
           <blockquote>
             <em>
               Le but du projet est d'écrire un programme réunissant plusieurs scripts shell afin de
               pouvoir miniaturiser tous les images .jpg d'un répertoire source dans un répertoire
               destination, pour ensuite les intégrer en html dans un fichier .html (code html qui pourra
               ensuite être interprếté par le navigateur).</br>
+              Le navigateur affichera les vignettes successives de gauche à droite (et de haut en bas)
+              avec une <a href="#legende">légende plus ou moins détaillée</a> en dessous de chaque vignette</br>
               Le projet comporte deux scripts : <b>galerie_shell.sh</b> qui est le script principal (il traite
               les arguments de la commande) et <b>utilities.sh</b> qui contient les fonctions destinés à
               générer le code html.
@@ -29,7 +32,7 @@
           </blockquote>
         </section>
         <section>
-          <h4 style="text-decoration:underline;">La commande et les arguments.</h3>
+          <h4 style="text-decoration:underline;">La commande et les arguments.</h4>
           <blockquote>
             <em>
               La commande principale est <b>./galerie_shell.sh</b>. Elle prend en argument le chemin
@@ -49,7 +52,8 @@
               <li>
                 <b>--dest <small>rep_dest</small></b> : Choix du chemin (relatif ou absolu) vers
                 le répertoire (déjà existant ou non) qui va contenir les images miniaturisées ainsi
-                que le fichier .html à l'issue de la commande.
+                que le fichier .html à l'issue de la commande. Si le répertoire n'existe pas, la commande
+                va créer le répertoire spécifié.
               </li>
             </ul>
             <h5>Options :</h5>
@@ -74,11 +78,80 @@
             </em>
           </blockquote>
         </section>
+        <section>
+          <h4 style="text-decoration:underline;">Les extensions</h4>
+          <blockquote id="legende">
+            <em>
+              Nous avons seulement traité l'ajout d'une légende en dessous de chaque image.</br>
+              La légende comporte en tout :</br>
+              <ul>
+                <li>
+                  Le nom de l'image source .jpg
+                </li>
+                <li>
+                  La résolution de l'image source (avant la miniaturisation) en pixels
+                </li>
+                <li>
+                  La date de prise de vue de l'image source (si cette donnée existait)
+              </ul>
+            </em>
+          </blockquote>
+        </section>
       </div>
       <h3 style="text-decoration:underline;">Les tests associés.</h3>
       <div>
-
+        <section>
+          <h4 style="text-decoration:underline;">La commande et les arguments.</h4>
+          <blockquote>
+            <em>
+              Pour tester nos scripts, nous avons créé des scripts associés pour tester les fonctionnalités
+              de notre commande. Mis à part les tests donnés avant le commencement du projet, en l'occurrence
+              <b>test-html.sh</b>, <b>star.sh</b> et <b>simple.sh</b> voici les différents scripts de test
+              que nous avons réalisés et qui sont présents dans le répertoire <b>/scripts/tests</b> du projet:
+            </em>
+            <h5>Scripts de test :</h5>
+            <ul>
+              <li>
+                <b>selection_images_jpg_uniquement.sh</b> : Teste le bon fonctionnement de la sélection des
+                fichiers images .jpg uniquement du répertoire source.
+              </li>
+              <li>
+                <b>argument_et_options_desordre.sh</b> : Teste l'appel de la commande avec les arguments et
+                les options dans un ordre queconque (par exemple on spécifie le fichier de l'option --index
+                avant le répertoire destination dont ce dernier est spécifié avant le répertoire source et
+                en mettant entre les deux l'option --force : <b>galerie-shell.sh --index test.html --dest dest
+                --force --source source --verb</b>) ce qui devrait quand même fonctionner.
+              </li>
+              <li>
+                <b>entrer_nom_fich_html_en_argument.sh</b> : Teste l'option <b>--index</b> de la commande en passant
+                en argument un fichier .html (donc valide) dans un premier temps, puis un fichier .htm (donc non
+                valide) dans un second temps.
+              </li>
+              <li>
+                <b>forcer_la_creation_de_vignettes.sh</b> : Teste l'option <b>--force</b> de la commande en cherchant à
+                ajouter des vignettes qui existent déjà dans le répertoire source en écrasant celles qui existent
+                déjà (car on regénère les vignettes).
+              </li>
+              <li>
+                <b>generation_meme_vignette.sh</b> : Teste le <b>contraire</b> de l'option <b>--force</b>, donc si on exécute
+                deux fois d'affilé la commande, on ne doit générer les vignettes qu'une seule fois (visible avec
+                l'affichage de l'option --verb).
+              <li>
+              <li>
+                <b>ajout_vignette_apres_les_premieres.sh</b> : Teste la même chose que <b>generation_meme_vignette.sh</b>
+                sauf qu'ici, on créé une nouvelle image dans le répertoire source entre les deux exécutions de la
+                commande pour constater qu'il n'y a que cette nouvelle vignette qui doit être générée (visible avec
+                l'affichage de l'option --verb).
+              </li>
+            </ul>
+            Nous n'avons pas testé les options <b>--verb</b> et <b>--help</b> car <b>--verb</b> est supposé marcher vu qu'on
+            l'utilise pour les autres tests et <b>--help</b> peut se tester à main nue.
+            </em>
+          </blockquote>
+        </section>
       </div>
+    <footer style="margin-top:5%;"
+    </footer>
   </body>
 
 </html>

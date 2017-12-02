@@ -41,10 +41,13 @@ generate_img_fragment () {
 
 # miniaturise les fichiers mis dans le répertoire destination
 miniaturisation(){
-  if [[ $3 = true ]]; then # mode verbeux
+  if [ $3 = true ]; then # mode verbeux
       echo -e "\n$1 -> $2/$(basename $1)..."
   fi
+
   gmic $1 -resize 200,200 -output $2/$(basename $1) 2> /dev/null
+
+
 }
 
 # genere un fichier index.html dans le repertoire cible
@@ -58,7 +61,7 @@ galerie_main () {
     do
         case "$fic" in
             ?*.jpg)
-                if [[ $4 = true ]]; then  # on force la miniaturisation
+                if [ $4 = true ]; then  # on force la miniaturisation
                     miniaturisation $fic $2 $3
                 else
                     if [ ! -f "$2/$(basename $fic)" ]; then

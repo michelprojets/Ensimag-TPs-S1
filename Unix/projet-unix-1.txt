@@ -1,4 +1,3 @@
-- ajout de tests plus complets (*****)
 - prendre en compte shellcheck (***)
-- rapport en html (*)
-- ré-organisation dans le répertoire (*)
+- tout tester : exécuter tous les tests (***)
++ problème appel à partir d'un autre répertoire (chargement de la librairie utilities.sh)
