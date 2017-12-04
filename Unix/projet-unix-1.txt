@@ -1,3 +1,0 @@
-- prendre en compte shellcheck (***)
-- tout tester : exécuter tous les tests (***)
-+ problème appel à partir d'un autre répertoire (chargement de la librairie utilities.sh)
