@@ -16,7 +16,7 @@ EOF
 # fonction qui verifie l'existence de l'argument liees aux options de la commande
 verif_existence_argument () {
     if [ "$1" = "" ]; then
-        echo -e "\n\nIl manque un argument\n\n"
+        printf "\n\nIl manque un argument\n\n"
         usage; exit 1
     fi
 }
@@ -24,7 +24,7 @@ verif_existence_argument () {
 # fonction qui vérifie l'existence du repertoire donne en argument
 verif_repertoire_argument () {
     if [ ! -d "$1" ]; then
-        echo -e "\n\nLe repertoire $1 n'existe pas\n\n"
+        printf "\n\nLe repertoire \"%s\" n'existe pas\n\n" "$1"
         usage; exit 1
     fi
 }
@@ -41,7 +41,7 @@ verif_fichier_argument () {
         ?*.html)
             ;;
         *)
-            echo -e "\n\nLe fichier \"$1\" specifie dans l'option --index doit etre un fichier .html\n\n"
+            printf "\n\nLe fichier \"%s\" specifie dans l'option --index doit etre un fichier .html\n\n" "$1"
             usage; exit 1
             ;;
     esac
@@ -54,9 +54,9 @@ verb=false
 force=false
 index="index.html"
 
-# chargement de la bibliotheque de fonction
-DIR=$(pwd)
-. "$DIR/utilities.sh"
+# chargement de la bibliotheque de fonction (possible depuis n'importe quel repertoire car conversion en chemin absolu)
+DIR="$(cd "$(dirname "$0")" && pwd)"
+. "$DIR"/utilities.sh
 
 # traitement des arguments
 while test $# -ne 0; do
@@ -67,18 +67,18 @@ while test $# -ne 0; do
             ;;
         "--source")
             shift
-            verif_existence_argument $1
-            verif_repertoire_argument $1
-            rep_source=$1
+            verif_existence_argument "$1"
+            verif_repertoire_argument "$1"
+            rep_source="$1"
             normaliser_nom_repertoires
             shift
             ;;
         "--dest")
             shift
-            verif_existence_argument $1
-            rep_dest=$1
-            if ! [ -d $rep_dest ]; then # si le repertoire destination n'existe pas encore
-                mkdir $rep_dest
+            verif_existence_argument "$1"
+            rep_dest="$1"
+            if ! [ -d "$rep_dest" ]; then # si le repertoire destination n'existe pas encore
+                mkdir "$rep_dest"
             fi
             normaliser_nom_repertoires
             shift
@@ -93,13 +93,14 @@ while test $# -ne 0; do
             ;;
         "--index")
             shift
-            verif_existence_argument $1
-            verif_fichier_argument $1
-            index=$1
+            verif_existence_argument "$1"
+            verif_fichier_argument "$1"
+            index="$1"
             shift
             ;;
         *)
-            echo -e "\n\nArgument non reconnu : $1\n\n"
+            # echo -e "\n\nArgument non reconnu : $1\n\n"
+            printf "\n\nArgument non reconnu : %s\n\n" "$1"
             usage
             exit 1
             ;;
@@ -108,4 +109,4 @@ while test $# -ne 0; do
 done
 
 # appel de la fonction galerie_main() avec les parametres adequats
-galerie_main $rep_source $rep_dest $verb $force $index
+galerie_main "$rep_source" "$rep_dest" "$verb" "$force" "$index"

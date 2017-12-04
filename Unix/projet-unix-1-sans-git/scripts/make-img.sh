@@ -39,6 +39,6 @@ fg=$(printf "#%02x%02x%02x" $((RANDOM % 155)) $((RANDOM % 155)) $((RANDOM % 155)
 #     -page 800x600 \
 #     -flatten \
 #     text: "$target"
-convert -background $bg -fill $fg -size 200x200 label:Alea $target
+convert -background "$bg" -fill "$fg" -size 200x200 label:Alea "$target"
 
 echo "$target created"

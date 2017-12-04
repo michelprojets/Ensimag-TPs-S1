@@ -16,7 +16,6 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 (
 html_head "Test de la génération de HTML"
 html_title 'Ceci est un gros titre'
-generate_img_fragment $1
 html_tail
 ) > index.html
 
