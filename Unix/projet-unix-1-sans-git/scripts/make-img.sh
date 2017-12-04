@@ -34,11 +34,11 @@ bg=$(printf "#%02x%02x%02x" $((RANDOM % 100 + 155)) $((RANDOM % 100 + 155)) $((R
 # Dark text
 fg=$(printf "#%02x%02x%02x" $((RANDOM % 155)) $((RANDOM % 155)) $((RANDOM % 155)))
 
-# dummy_text | convert -background "$bg" -fill "$fg" \
-#     -pointsize 36 \
-#     -page 800x600 \
-#     -flatten \
-#     text: "$target"
-convert -background "$bg" -fill "$fg" -size 200x200 label:Alea "$target"
+dummy_text | convert -background "$bg" -fill "$fg" \
+    -pointsize 36 \
+    -page 800x600 \
+    -flatten \
+    text: "$target"
+convert -background "$bg" -fill "$fg" -size 200x200 label:Alea "$target" 2> /dev/null
 
 echo "$target created"
