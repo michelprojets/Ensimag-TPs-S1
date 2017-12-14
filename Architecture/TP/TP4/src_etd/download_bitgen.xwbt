@@ -1,8 +1,8 @@
-INTSTYLE=ise
-INFILE=/user/9/.base/mullero/home/cours/archi1/TP/tp4/src_prof/PGCDFPGA.ncd
-OUTFILE=/user/9/.base/mullero/home/cours/archi1/TP/tp4/src_prof/download.bit
+INTSTYLE=xflow
+INFILE=/user/6/.base/yoeungm/home/ensimag_1/Architecture/TP/TP4/src_etd/PGCDFPGA.ncd
+OUTFILE=/user/6/.base/yoeungm/home/ensimag_1/Architecture/TP/TP4/src_etd/download.bit
 FAMILY=Zynq
 PART=xc7z010-1clg400
-WORKINGDIR=/user/9/.base/mullero/home/cours/archi1/TP/tp4/src_prof
+WORKINGDIR=/user/6/.base/yoeungm/home/ensimag_1/Architecture/TP/TP4/src_etd
 LICENSE=WebPack
 USER_INFO=211048036_0_0_210
