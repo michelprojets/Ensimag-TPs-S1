@@ -77,8 +77,6 @@ class Liste:
                             self.tete = cel_double
                         else:   # cas général
                             prec.suivant = cel_double
-                            print(prec.valeur)
-                            print(prec.suivant.valeur)
                     else:   # cas itératif
                         prec.suivant = cel_double
                     prec = cel_double
@@ -96,15 +94,16 @@ class Liste:
 
         self.taille += autre.taille
 
-    def __del__(self):  # PROBLEME SUPPRESSION (on a pas d'information sur le nb d'antécédents)
-                        # car on n'a pas d'information sur les autres listes
-                        # IMPOSSIBLE ??
+    def __del__(self):
         """
         destructeur.
         """
         for cel in self.cellules():
             if cel.utilisation > 1: # cellule utilisée par d'autres listes
                 cel.utilisation -= 1
+                break   # pour ne pas modifier les autres utilisation
+            else:   # nettoyage (facultatif)
+                cel.suivant = None
         self.tete = None
 
 def test_listes():
@@ -128,18 +127,11 @@ def test_listes():
     del listes[3]
     data_tycat(listes)
     _ = input()
-
     # # test dans le cas où le doublage ne se fait pas à la tête de la liste
     # print("on efface 'DEPASSE'")
     # del listes[2]
     # data_tycat(listes)
     # _ = input()
-    # print("on modifie le nombre d'utilisation du second S à 2 pour valider ce test")
-    # print("car del ne fonctionne pas parfaitement")
-    # listes[1].tete.suivant.suivant.suivant.utilisation = 2
-    # data_tycat(listes)
-    # _ = input()
-
     print("on ajoute 'NT' apres 'PASSE'")
     listes[1].suffixe(Liste("NT"))
     data_tycat(listes)
