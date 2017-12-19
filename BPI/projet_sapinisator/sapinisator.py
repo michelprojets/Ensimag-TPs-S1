@@ -80,7 +80,8 @@ def facteur_aggrandissement(coord):
     fonction qui à la coordonnée coord retourne son facteur d'aggrandissement
     """
     param_s = 100 # paramètre s fixé
-    return coord*fabs(sin(param_s*coord))
+    # return coord*fabs(sin(param_s*coord))
+    return fabs(sin(param_s*coord))
 
 def fonction_aggrandissement(point, facteur):
     """
@@ -133,19 +134,24 @@ def ecriture_fichier(fichier_stl, triangles):
     """
     strct = struct.Struct("<l")
     entete = bin(0)
+    nb_triangles = 0
 
     with open(fichier_stl, "rb") as fichier_bin:
         entete = fichier_bin.read(80)
-        _ = strct.unpack(fichier_bin.read(4))
+        nb_triangles = fichier_bin.read(4)
 
     with open(fichier_stl, "wb") as fichier_bin:
         fichier_bin.write(entete)
+        fichier_bin.write(nb_triangles)
         for triangle in triangles:
+            for _ in range(2):
+                fichier_bin.write(strct.pack(int(0)))
             for sommet in triangle.sommets:
-                fichier_bin.write(strct.pack(sommet.coord_x))
-                fichier_bin.write(strct.pack(sommet.coord_y))
-                fichier_bin.write(strct.pack(sommet.coord_z))
-            fichier_bin.write(struct.pack("<h", 0))
+                fichier_bin.write(strct.pack(int(sommet.coord_x)))
+                fichier_bin.write(strct.pack(int(sommet.coord_y)))
+                fichier_bin.write(strct.pack(int(sommet.coord_z)))
+                print(sommet.coord_x, sommet.coord_y, sommet.coord_z)
+            fichier_bin.write(struct.pack("<h", int(0)))
 
 def main():
     """
