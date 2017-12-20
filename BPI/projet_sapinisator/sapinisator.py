@@ -11,12 +11,19 @@ class Triangle:
     """
     classe Triangle
     """
-    def __init__(self, vect_norm, sommets):
+    def __init__(self, vect_norm, sommets, bits_controle):
         """
         constructeur d'un Triangle
         """
         self.vect_norm = vect_norm
         self.sommets = sommets
+        self.bits_controle = bits_controle
+        self.centre = Point((self.sommets[0].coord_x + self.sommets[1].coord_x +
+                             self.sommets[2].coord_x)/3,
+                            (self.sommets[0].coord_y + self.sommets[1].coord_y +
+                             self.sommets[2].coord_y)/3,
+                            (self.sommets[0].coord_z + self.sommets[1].coord_z +
+                             self.sommets[2].coord_z)/3)
 
     def __str__(self):
         return ("(" + str(self.vect_norm) + ", " + str([str(sommet) for sommet in self.sommets])
@@ -64,23 +71,12 @@ class Point:
         """
         return "(" + str(self.coord_x) + ", " + str(self.coord_y) + ", " + str(self.coord_z) + ")"
 
-def moyenne_points(triangle):
-    """
-    fonction qui calcul et qui retourne un centre approximatif (moyenne des points) du triangle
-    """
-    return Point((triangle.sommets[0].coord_x + triangle.sommets[1].coord_x +
-                  triangle.sommets[2].coord_x)/3,
-                 (triangle.sommets[0].coord_y + triangle.sommets[1].coord_y +
-                  triangle.sommets[2].coord_y)/3,
-                 (triangle.sommets[0].coord_z + triangle.sommets[1].coord_z +
-                  triangle.sommets[2].coord_z)/3)
-
 def facteur_aggrandissement(coord):
     """
     fonction qui à la coordonnée coord retourne son facteur d'aggrandissement
     """
-    param_s = 1000 # paramètre s fixé
-    return coord*fabs(sin(param_s*coord))
+    param_s = 100 # paramètre s fixé
+    return coord*fabs(sin(param_s*coord))  # doit être inversement proportionnel à coord normalement
 
 def fonction_aggrandissement(point, facteur):
     """
@@ -93,12 +89,11 @@ def sapinisation(triangles):
     fonction qui va pour chaque point des triangles calcule le point de sapinisation associé
     """
     for triangle in triangles:
-        centre = moyenne_points(triangle)
         for sommet in triangle.sommets:
             facteur = facteur_aggrandissement(sommet.coord_z)
-            _ = sommet - centre
+            _ = sommet - triangle.centre
             fonction_aggrandissement(sommet, facteur)
-            _ = sommet + centre
+            _ = sommet + triangle.centre
 
 def lecture_fichier(fichier_stl):
     """
@@ -123,8 +118,8 @@ def lecture_fichier(fichier_stl):
             sommet_3 = Point(strct.unpack(fichier_bin.read(4))[0],
                              strct.unpack(fichier_bin.read(4))[0],
                              strct.unpack(fichier_bin.read(4))[0])
-            _ = struct.unpack("<h", fichier_bin.read(2))    # 2 bytes de contrôle
-            triangles.append(Triangle(vect_norm, [sommet_1, sommet_2, sommet_3]))
+            bits_controle = fichier_bin.read(2) # 2 bytes de contrôle
+            triangles.append(Triangle(vect_norm, [sommet_1, sommet_2, sommet_3], bits_controle))
     return triangles
 
 def ecriture_fichier(fichier_stl, triangles):
@@ -149,7 +144,7 @@ def ecriture_fichier(fichier_stl, triangles):
                 fichier_bin.write(strct.pack(sommet.coord_x))
                 fichier_bin.write(strct.pack(sommet.coord_y))
                 fichier_bin.write(strct.pack(sommet.coord_z))
-            fichier_bin.write(struct.pack("<h", int(0)))    # 2 bytes de contrôle
+            fichier_bin.write(triangle.bits_controle)    # 2 bytes de contrôle
 
 def main():
     """
