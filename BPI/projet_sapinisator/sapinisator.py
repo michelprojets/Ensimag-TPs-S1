@@ -79,7 +79,7 @@ def facteur_aggrandissement(coord):
     """
     fonction qui à la coordonnée coord retourne son facteur d'aggrandissement
     """
-    param_s = 100 # paramètre s fixé
+    param_s = 1000 # paramètre s fixé
     return coord*fabs(sin(param_s*coord))
 
 def fonction_aggrandissement(point, facteur):

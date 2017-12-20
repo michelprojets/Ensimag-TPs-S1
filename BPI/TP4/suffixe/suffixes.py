@@ -139,6 +139,11 @@ def test_listes():
     print("on ajoute 'SE' apres elle-meme")
     listes[0].suffixe(listes[0])
     data_tycat(listes)
+    # # supression de SE
+    # _ = input()
+    # print("on efface 'SE'")
+    # del listes[0]
+    # data_tycat(listes)
 
 if __name__ == "__main__":
     test_listes()
