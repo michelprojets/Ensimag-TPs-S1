@@ -13,7 +13,7 @@ class Triangle:
     """
     def __init__(self, vect_norm, sommets):
         """
-        construuteur d'un Triangle
+        constructeur d'un Triangle
         """
         self.vect_norm = vect_norm
         self.sommets = sommets
@@ -80,8 +80,7 @@ def facteur_aggrandissement(coord):
     fonction qui à la coordonnée coord retourne son facteur d'aggrandissement
     """
     param_s = 100 # paramètre s fixé
-    # return coord*fabs(sin(param_s*coord))
-    return fabs(sin(param_s*coord))
+    return coord*fabs(sin(param_s*coord))
 
 def fonction_aggrandissement(point, facteur):
     """
@@ -108,9 +107,9 @@ def lecture_fichier(fichier_stl):
     triangles = list()
 
     with open(fichier_stl, "rb") as fichier_bin:
-        strct = struct.Struct("<l")
+        strct = struct.Struct("<f")
         _ = fichier_bin.read(80)
-        nb_triangles = strct.unpack(fichier_bin.read(4))[0]
+        nb_triangles = struct.unpack("<l", fichier_bin.read(4))[0]
         for _ in range(nb_triangles):
             vect_norm = Point(strct.unpack(fichier_bin.read(4))[0],
                               strct.unpack(fichier_bin.read(4))[0],
@@ -124,7 +123,7 @@ def lecture_fichier(fichier_stl):
             sommet_3 = Point(strct.unpack(fichier_bin.read(4))[0],
                              strct.unpack(fichier_bin.read(4))[0],
                              strct.unpack(fichier_bin.read(4))[0])
-            _ = struct.unpack("<h", fichier_bin.read(2))
+            _ = struct.unpack("<h", fichier_bin.read(2))    # 2 bytes de contrôle
             triangles.append(Triangle(vect_norm, [sommet_1, sommet_2, sommet_3]))
     return triangles
 
@@ -132,9 +131,9 @@ def ecriture_fichier(fichier_stl, triangles):
     """
     écrit dans un fichier stl les triangles (tous les points) préalablements modifiés
     """
-    strct = struct.Struct("<l")
+    strct = struct.Struct("<f")
     entete = bin(0)
-    nb_triangles = 0
+    nb_triangles = bin(0)
 
     with open(fichier_stl, "rb") as fichier_bin:
         entete = fichier_bin.read(80)
@@ -144,14 +143,13 @@ def ecriture_fichier(fichier_stl, triangles):
         fichier_bin.write(entete)
         fichier_bin.write(nb_triangles)
         for triangle in triangles:
-            for _ in range(2):
-                fichier_bin.write(strct.pack(int(0)))
+            for _ in range(3):
+                fichier_bin.write(strct.pack(float(0)))
             for sommet in triangle.sommets:
-                fichier_bin.write(strct.pack(int(sommet.coord_x)))
-                fichier_bin.write(strct.pack(int(sommet.coord_y)))
-                fichier_bin.write(strct.pack(int(sommet.coord_z)))
-                print(sommet.coord_x, sommet.coord_y, sommet.coord_z)
-            fichier_bin.write(struct.pack("<h", int(0)))
+                fichier_bin.write(strct.pack(sommet.coord_x))
+                fichier_bin.write(strct.pack(sommet.coord_y))
+                fichier_bin.write(strct.pack(sommet.coord_z))
+            fichier_bin.write(struct.pack("<h", int(0)))    # 2 bytes de contrôle
 
 def main():
     """
