@@ -18,12 +18,12 @@ class Triangle:
         self.vect_norm = vect_norm
         self.sommets = sommets
         self.bits_controle = bits_controle
-        self.centre = Point((self.sommets[0].coord_x + self.sommets[1].coord_x +
-                             self.sommets[2].coord_x)/3,
-                            (self.sommets[0].coord_y + self.sommets[1].coord_y +
-                             self.sommets[2].coord_y)/3,
-                            (self.sommets[0].coord_z + self.sommets[1].coord_z +
-                             self.sommets[2].coord_z)/3)
+        # self.centre = Point((self.sommets[0].coord_x + self.sommets[1].coord_x +
+        #                      self.sommets[2].coord_x)/3,
+        #                     (self.sommets[0].coord_y + self.sommets[1].coord_y +
+        #                      self.sommets[2].coord_y)/3,
+        #                     (self.sommets[0].coord_z + self.sommets[1].coord_z +
+        #                      self.sommets[2].coord_z)/3)
 
     def __str__(self):
         return ("(" + str(self.vect_norm) + ", " + str([str(sommet) for sommet in self.sommets])
@@ -71,12 +71,40 @@ class Point:
         """
         return "(" + str(self.coord_x) + ", " + str(self.coord_y) + ", " + str(self.coord_z) + ")"
 
+def calcul_centre(triangles):
+    """
+    fonction qui calcule le centre (moyenne de tous les points) de tous les triangles
+    """
+    nb_triangles = 0
+    moyenne_x = 0
+    moyenne_y = 0
+    moyenne_z = 0
+    for triangle in triangles:
+        for sommet in triangle.sommets:
+            moyenne_x += sommet.coord_x
+            moyenne_y += sommet.coord_y
+            moyenne_z += sommet.coord_z
+        nb_triangles += 1
+    return Point(moyenne_x/nb_triangles, moyenne_y/nb_triangles, moyenne_z/nb_triangles)
+
+def z_max(triangles):
+    """
+    fonction qui retourne la hauteur z max parmi tous les triangles
+    """
+    zmax = float("-inf")
+    for triangle in triangles:
+        for sommet in triangle.sommets:
+            if sommet.coord_z > zmax:
+                zmax = sommet.coord_z
+    return zmax
+
 def facteur_aggrandissement(coord):
     """
     fonction qui à la coordonnée coord retourne son facteur d'aggrandissement
     """
     param_s = 100 # paramètre s fixé
-    return coord*fabs(sin(param_s*coord))  # doit être inversement proportionnel à coord normalement
+    return coord*fabs(sin(param_s*coord))
+    # doit être inversement proportionnel à coord normalement, sinon sapin à l'envers
 
 def fonction_aggrandissement(point, facteur):
     """
@@ -88,12 +116,14 @@ def sapinisation(triangles):
     """
     fonction qui va pour chaque point des triangles calcule le point de sapinisation associé
     """
+    centre = calcul_centre(triangles)
+    zmax = z_max(triangles)
     for triangle in triangles:
         for sommet in triangle.sommets:
-            facteur = facteur_aggrandissement(sommet.coord_z)
-            _ = sommet - triangle.centre
+            facteur = facteur_aggrandissement(sommet.coord_z/zmax)
+            _ = sommet - centre
             fonction_aggrandissement(sommet, facteur)
-            _ = sommet + triangle.centre
+            _ = sommet + centre
 
 def lecture_fichier(fichier_stl):
     """
