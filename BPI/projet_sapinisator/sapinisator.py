@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 """
 module sapiniser
+NB : projet à optimiser en faisant la lecture, le calcul et l'écriture en un seul parcours
+     pour avoir un coût mémoire constant (mais moins bien structuré)
 """
 
 import sys
@@ -18,12 +20,6 @@ class Triangle:
         self.vect_norm = vect_norm
         self.sommets = sommets
         self.bits_controle = bits_controle
-        # self.centre = Point((self.sommets[0].coord_x + self.sommets[1].coord_x +
-        #                      self.sommets[2].coord_x)/3,
-        #                     (self.sommets[0].coord_y + self.sommets[1].coord_y +
-        #                      self.sommets[2].coord_y)/3,
-        #                     (self.sommets[0].coord_z + self.sommets[1].coord_z +
-        #                      self.sommets[2].coord_z)/3)
 
     def __str__(self):
         return ("(" + str(self.vect_norm) + ", " + str([str(sommet) for sommet in self.sommets])
@@ -104,7 +100,6 @@ def facteur_aggrandissement(coord):
     """
     param_s = 100 # paramètre s fixé
     return coord*fabs(sin(param_s*coord))
-    # doit être inversement proportionnel à coord normalement, sinon sapin à l'envers
 
 def fonction_aggrandissement(point, facteur):
     """
@@ -120,7 +115,8 @@ def sapinisation(triangles):
     zmax = z_max(triangles)
     for triangle in triangles:
         for sommet in triangle.sommets:
-            facteur = facteur_aggrandissement(sommet.coord_z/zmax)
+            # inversement proportionnel
+            facteur = facteur_aggrandissement(fabs(zmax-sommet.coord_z)/zmax)
             _ = sommet - centre
             fonction_aggrandissement(sommet, facteur)
             _ = sommet + centre
