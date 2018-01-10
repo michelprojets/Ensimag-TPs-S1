@@ -20,7 +20,7 @@ def pivote(tableau, indice_pivot):
                 tab_sup.append(elem)
     return (tab_inf_eg, tab_sup)
 
-def pivote_enplace(tableau, indice_pivot):
+def pivote_enplace(tableau, indice_pivot):  # COMPORTE PLUSIEURS FAILLES (A CHANGER)
     """
     fonction qui retourne un tableau dont les éléments inférieurs au pivot
     sont "à gauche" du pivot et les éléments strictement supérieurs au pivot
@@ -37,7 +37,7 @@ def pivote_enplace(tableau, indice_pivot):
                 if tableau[j] > pivot:
                     (tableau[i], tableau[j]) = (tableau[j], tableau[i])   # permutation
     return tableau
-    
+
 def main():
     """
     programme principal
