@@ -1,0 +1,24 @@
+<svg width='420' height='320'>
+<rect width='420' height='320' fill='white'/>
+<rect x='0' y='320' width='20' height='0' fill='red'/>
+<rect x='20' y='300' width='20' height='20' fill='red'/>
+<rect x='40' y='320' width='20' height='0' fill='red'/>
+<rect x='60' y='300' width='20' height='20' fill='red'/>
+<rect x='80' y='320' width='20' height='0' fill='red'/>
+<rect x='100' y='260' width='20' height='60' fill='red'/>
+<rect x='120' y='180' width='20' height='140' fill='red'/>
+<rect x='140' y='180' width='20' height='140' fill='red'/>
+<rect x='160' y='120' width='20' height='200' fill='red'/>
+<rect x='180' y='100' width='20' height='220' fill='red'/>
+<rect x='200' y='180' width='20' height='140' fill='red'/>
+<rect x='220' y='320' width='20' height='0' fill='red'/>
+<rect x='240' y='280' width='20' height='40' fill='red'/>
+<rect x='260' y='300' width='20' height='20' fill='red'/>
+<rect x='280' y='320' width='20' height='0' fill='red'/>
+<rect x='300' y='320' width='20' height='0' fill='red'/>
+<rect x='320' y='320' width='20' height='0' fill='red'/>
+<rect x='340' y='320' width='20' height='0' fill='red'/>
+<rect x='360' y='320' width='20' height='0' fill='red'/>
+<rect x='380' y='320' width='20' height='0' fill='red'/>
+<rect x='400' y='320' width='20' height='0' fill='red'/>
+</svg>
