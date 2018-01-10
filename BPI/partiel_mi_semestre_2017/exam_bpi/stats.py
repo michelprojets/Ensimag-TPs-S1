@@ -69,9 +69,8 @@ def etudiants_brillants(etudiants):
     itere sur les etudiants ayant au moins un 20.
     a implementer si possible a l'aide de la fonction "filter".
     """
-    # FB : etu.notes[i] sont des int (voir parcours_notes).
     for etu in etudiants:
-        if etu.notes[0] == 20.0 or etu.notes[0] == 20.0 or etu.notes[1] == 20.0:
+        if etu.notes[0] == 20 or etu.notes[0] == 20 or etu.notes[1] == 20:
             yield etu
 
 def min_et_max(etudiants):
