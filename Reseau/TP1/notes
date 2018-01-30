@@ -1,0 +1,56 @@
+TCP : SYN -> SYN,ACK -> ACK −> transfert des données -> FIN,ACK -> FIN,ACK
+
+taille totale ethernet (couche 2 - liaison) : 14+60=74 octets
+taille totale ipv4 (couche 3 - réseau) : 20+40=60 octets
+taille totale tcp (couche 4- transport) : 20+20=40 octets
+
+ping utilise le protocole ICMP
+ping ne fait que tester la connectivité entre la machine source et destination en envoyant plusieurs paquets avec un contenu quelconque et en recevant de la machine destination le même paquet avec le même contenu (mais l'entête change à cause des adresses)
+
+ping utilise l'adresse IP 128.32.203.137 du site web de Berkeley
+temps aller-retour entre mon pc et le site web Berkeley : environ 165ms
+temps aller-retour entre mon pc et le pc d'un voisin : environ 0.350ms
+
+le temps de transmission aller-retour augmente avec le taille des paquets
+
+ping -c 1 -s 25000 <ip> : ping avec 1 paquet de 25000 octets à l'adresse ip correspondante
+
+ping -t N www.iij.ad.jp s'exécute correctement à partir de N=20, donc on traverse 19 routeurs (aller)
+
+différence du TTL entre le paquet envoyé par le serveur le le paquet reçu par nous 64-41=23 donc on traverse 22 routeurs (retour)
+
+différence entre l'aller retour car pas le même chemin
+
+traceroute : permet d'envoyer des ensembles de 3 paquets (pour faire une statistique dessus) avec un TTL croissant pour chaque ensemble (de 1 au nombre de routeurs) pour qu'ils soient jetés par les routeurs successifs afin de connaître l'identité des routeurs traversés (leur ip)
+
+traceroute --max-hops=N <ip> : traceroute avec un ttl de valeur N
+
+21 * * *
+22 * * *
+who has <ip> ? tell <ip>
+car protégé
+
+mtr mieux de traceroute
+
+www.traceroute.org : pour utiliser un des seveurs de traceroute répartis dans le monde (permet de faire un traceroute)
+
+échanges niveau http : le navigateur ne fait que des requêtes GET pour obtenir les fichiers html/css/javascript/images et le serveur ne fait que répondre avec OK
+
+telnet duda.imag.fr 80 : exécution du protocole HTTP à la main - ouverture du dialogue pour récupérer la page à l'adresse duda.imag.fr sur le port 80 (serveur web qui comprend donc le HTTP) avec l'outil telnel
+on peut donc utiliser des commandes : PDU pour communiquer avec le serveur web :
+dans le cas de la version 1.0 de HTTP (car le serveur utilise cette version) :
+GET / HTTP/1.0 avec 2 retours à la ligne pour récupérer la page
+HEAD / HTTP/1.0 avec 2 retours à la ligne pour récupérer l'entête HTTP seulement
+dans le cas de la version 1.1 de HTTP :
+telnet lig-membres.imag.fr 80
+GET /morine/ HTTP/1.1
+Host: lig-membres.imag.fr
+comme les deux sites sont hébergés sur le même serveur (même machine), alors on se connecte en utilisant la même adresse IP :
+telnet 129.88.12.18 80
+GET /morine/ HTTP/1.0 (avec la version 1.0)
+GET /morine/ HTTP/1.1 (avec la version 1.1)
+Host: lig-membres.imag.fr
+on n'obtient pas le même contenu de page entre ces deux versions
+
+
+
