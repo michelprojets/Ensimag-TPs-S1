@@ -39,6 +39,7 @@ void init_interactive(int32_t tab[], uint32_t taille){
 }
 
 void init_aleatoire(int32_t tab[], uint32_t taille){
+    srand(time(NULL));
     for (uint32_t i=0; i<taille; ++i){
         tab[i] = rand()%MAX;
     }
