@@ -3,10 +3,14 @@ CFLAGS=-std=c99 -Wall -Wextra -g
 LDFLAGS=
 EXEC=test_morse
 
-# Makefile a completer
-.PHONY: clean enonce
-enonce:
-	@echo "Completez d'abord le Makefile pour compiler cet exercice."
+$(EXEC): morse.o test_morse.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+morse.o: morse.c
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+test_morse.o: test_morse.c
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 	rm -f *~ *.o $(EXEC)

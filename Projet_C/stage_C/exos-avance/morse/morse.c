@@ -7,7 +7,7 @@
 
   Attention : cet exercice comporte des notions de base et des notions
   avancees.
-  
+
   La liste des caracteres a prendre en compte est la suivante :
   - l'ensemble des lettres minuscules de a a z compris ;
   - l'ensemble des chiffres de 0 a 9 compris ;
@@ -24,7 +24,7 @@
   "..---","...--","....-",".....","-....","--...","---..","---.",
   "-----","//"
 
-  
+
   Directives de codage :
 
   - Completez le fichier entete morse.h
@@ -53,25 +53,75 @@
 
   - Un fichier test_morse.c est fourni pour illustrer le
     fonctionnement desire des fonctions de morse.c ;
-  
+
   Competences : 19,23,43,44,45,66,72,73,74,77,79
   Difficulte : 3
 */
 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-/* help : fonction affichant tout le tableau du code morse pouvant
-   etre code ou decode par ce programme*/
-void help()
-{
+#define NB_LETTRES_ALPHA 26
+#define NB_CARAC 37
+#define NB_CARAC_MAX_MORSE 5
+
+static const char texte_ref[NB_CARAC + 1] = {"abcdefghijklmnopqrstuvwxyz0123456789 "};
+static const char morse_ref[NB_CARAC][NB_CARAC_MAX_MORSE + 1] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",
+                                                                 ".---","-.-",".-..","--","-.","---",".--.","--.-",".-.",
+                                                                 "...","-","..-","...-",".--","-..-","-.--","--..",".----",
+                                                                 "..---","...--","....-",".....","-....","--...","---..","---.",
+                                                                 "-----","//"};
+
+void help(){
+    for (unsigned int i=0; i<strlen(texte_ref); ++i){
+        printf("%c -> %s\n", texte_ref[i], morse_ref[i]);
+    }
 }
 
-/* affiche_texte : fonction affichant le texte correspondant au code morse passe en parametre */
-void affiche_texte(char *morse)
-{
+void affiche_texte(char *morse){
+    int indice;
+    char copy[strlen(morse+1)];
+    strcpy(copy, morse);  // pour ne pas modiffier le pramètre d'entrée
+    char* token = strtok(copy, " ");
+    while(token != NULL){
+      for (indice=0; indice < NB_CARAC; ++indice){
+          if (strcmp(token, morse_ref[indice]) == 0){
+              break;
+          }
+      }
+      printf("%c", texte_ref[indice]);
+      token = strtok(NULL, " ");
+    }
+    printf("\n");
 }
 
-/* affiche_morse : fonction affichant le code Morse correspondant au texte passe en parametre */
-void affiche_morse(char *texte)
-{
+void affiche_morse(char *texte){
+    int indice=0;
+    char carac;
+    char minuscule;
+    char ascii_a = texte_ref[0];
+    char ascii_z = texte_ref[NB_LETTRES_ALPHA - 1];
+    char ascii_0 = texte_ref[NB_LETTRES_ALPHA];
+    char ascii_9 = texte_ref[NB_CARAC - 2];
+    char ascii_space = texte_ref[NB_CARAC - 1];
+    // pour éviter de faire une double boucle
+    while (texte[indice] != '\0'){
+        carac = texte[indice];
+        minuscule = tolower(texte[indice]);
+        if (carac >= ascii_a && carac <= ascii_z){ // entre 'a' et 'z'
+            printf(" %s ", morse_ref[carac - ascii_a]);
+        }
+        else if (minuscule >= ascii_a && minuscule <= ascii_z){ // entre 'A' et 'Z'
+            printf(" %s ", morse_ref[minuscule - ascii_a]);
+        }
+        else if (carac >= ascii_0 && carac <= ascii_9){ // entre '0' et '9'
+            printf(" %s ", morse_ref[NB_LETTRES_ALPHA - 1 + carac - ascii_0]);
+        }
+        else if (carac == ascii_space){ // caractère ' '
+            printf(" %s ", morse_ref[NB_CARAC - 1]);
+        }
+        indice++;
+    }
+    printf("\n");
 }
-

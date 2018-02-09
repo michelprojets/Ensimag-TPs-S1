@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "morse.h"
 
 /* main */
@@ -7,9 +7,8 @@ int main()
 {
     help(); // Affiche la correspondance des caracteres pris en charge et des codes Morse
     printf("Affichage du code Morse de la phrase : \"RMS Titanic SOS\"\n");
-    affiche_morse("RMS Titanic SOS");
+    affiche_morse("RMS Titanic SOS5");
     printf("Affichage de la traduction du code Morse : \".-. -- ... // - .. - .- -. .. -.-. // ... --- ... // .---- ..... // .- ...- .-. .. .-.. // .---- ---. .---- ..---\"\n");
     affiche_texte(".-. -- ... //  - .. - .- -. .. -.-. // ... --- ... // .---- ..... // .- ...- .-. .. .-.. // .---- ---. .---- ..---");
-    
     return EXIT_SUCCESS;
 }

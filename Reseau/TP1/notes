@@ -51,6 +51,3 @@ GET /morine/ HTTP/1.0 (avec la version 1.0)
 GET /morine/ HTTP/1.1 (avec la version 1.1)
 Host: lig-membres.imag.fr
 on n'obtient pas le même contenu de page entre ces deux versions
-
-
-
