@@ -9,8 +9,8 @@ $(EXEC): morse.o test_morse.o
 morse.o: morse.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-test_morse.o: test_morse.c
-	$(CC) -o $@ -c $< $(CFLAGS)
+test_morse.o: test_morse.c morse.h
+	$(CC) -o $@ -c $^ $(CFLAGS)
 
 clean:
 	rm -f *~ *.o $(EXEC)
