@@ -54,36 +54,75 @@ struct cellule
     Affiche sur la sortie standard les valeurs des cellules de la liste
     pointee par l.
 */
-static void afficher(struct cellule *l)
-{
-    /* A implementer! */
+static void afficher(struct cellule *l){
+    printf("[");
+    while (l != NULL){
+        printf("%u", l->val);
+        l = l->suiv;
+        if (l != NULL){
+            printf(", ");
+        }
+    }
+    printf("]\n");
 }
 
 /*
     Cree une nouvelle cellule contenant la valeur v et l'insere en tete
     de la liste pointee par pl.
 */
-static void inserer_tete(struct cellule **pl, uint32_t v)
-{
-    /* A implementer! */
+static void inserer_tete(struct cellule **pl, uint32_t v){
+    struct cellule* premiere = malloc(sizeof(struct cellule));
+    premiere->val = v;
+    if (*pl == NULL){  // liste vide
+        premiere->suiv = NULL;
+        *pl = premiere;
+    }
+    else {
+        premiere->suiv = *pl;
+        *pl = premiere;
+    }
 }
 
 /*
     Cree une nouvelle cellule contenant la valeur v et l'insere en queue
     de la liste pointee par pl.
 */
-static void inserer_queue(struct cellule **pl, uint32_t v)
-{
-    /* A implementer! */
+static void inserer_queue(struct cellule **pl, uint32_t v){
+    struct cellule* derniere = malloc(sizeof(struct cellule));
+    derniere->val = v;
+    derniere->suiv = NULL;
+
+    struct cellule tmp = {-1, *pl}; // sentinelle
+    struct cellule* courant = &tmp;
+    while (courant->suiv != NULL){  // on avance jusqu'a la derniere cellule
+        courant = courant->suiv;
+    }
+    courant->suiv = derniere;
+    *pl = tmp.suiv;
 }
 
 /*
     Supprime de la liste pointee par pl la premiere occurrence de cellule
     contenant la valeur v.
 */
-static void supprimer_premiere_occurrence(struct cellule **pl, uint32_t v)
-{
-    /* A implementer! */
+static void supprimer_premiere_occurrence(struct cellule **pl, uint32_t v){
+    if (*pl == NULL){ // liste vide
+        return;
+    }
+    else{
+        struct cellule tmp = {-1, *pl}; // sentinelle
+        struct cellule* courant = &tmp;
+        while (courant->suiv != NULL){
+            if (courant->suiv->val == v){
+                struct cellule* save = courant->suiv->suiv;
+                free(courant->suiv);
+                courant->suiv = save;
+                break;
+            }
+            courant = courant->suiv;
+        }
+        *pl = tmp.suiv;
+    }
 }
 
 int main(void)
@@ -109,5 +148,6 @@ int main(void)
         supprimer_premiere_occurrence(&liste, rand() % 10);
         afficher(liste);
     }
+
     return EXIT_SUCCESS;
 }
