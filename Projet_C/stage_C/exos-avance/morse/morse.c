@@ -66,12 +66,13 @@
 #define NB_CARAC 37
 #define NB_CARAC_MAX_MORSE 5
 
-static const char texte_ref[NB_CARAC + 1] = {"abcdefghijklmnopqrstuvwxyz0123456789 "};
+static const char texte_ref[NB_CARAC + 1] = {"abcdefghijklmnopqrstuvwxyz0123456789 "}; // ou bien {'a', 'b', ..., ' '};
 static const char morse_ref[NB_CARAC][NB_CARAC_MAX_MORSE + 1] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",
                                                                  ".---","-.-",".-..","--","-.","---",".--.","--.-",".-.",
                                                                  "...","-","..-","...-",".--","-..-","-.--","--..",".----",
                                                                  "..---","...--","....-",".....","-....","--...","---..","---.",
                                                                  "-----","//"};
+                                                                 // ou bien {",-", {"-..."}, ..., {"//"}};
 
 void help(){
     for (unsigned int i=0; i<strlen(texte_ref); ++i){
@@ -81,17 +82,25 @@ void help(){
 
 void affiche_texte(char *morse){
     int indice;
-    char copy[strlen(morse+1)];
-    strcpy(copy, morse);  // pour ne pas modiffier le pramètre d'entrée
+
+    // ON FAIT UNE COPIE CAR ON A PASSE UNE CHAINE CONSTANTE EN PARAMETRE (ON A PAS UTILISE DE VARIABLE POINTEUR POUR STOCKER LA CHAINE),
+    // DONC ON A PAS LE DROIT DE MODIFIER (CAR CONST IMPLICITE DANS LE PARAMETRE FORMEL : "const char * morse") D'OU LE "SEGMENTATION FAULT"
+    char copy[strlen(morse)+1];
+    strcpy(copy, morse);
+    // "On the first call to strtok() the string to be parsed should be specified in str"
     char* token = strtok(copy, " ");
+
+    // "If no more tokens are found, strtok() returns NULL"
     while(token != NULL){
-      for (indice=0; indice < NB_CARAC; ++indice){
-          if (strcmp(token, morse_ref[indice]) == 0){
-              break;
-          }
-      }
-      printf("%c", texte_ref[indice]);
-      token = strtok(NULL, " ");
+        for (indice=0; indice < NB_CARAC; ++indice){
+            if (strcmp(token, morse_ref[indice]) == 0){
+                break;
+            }
+        }
+        printf("%c", texte_ref[indice]);
+        // "In each subsequent call that should parse the same string, str must be NULL"
+        // "Each call to strtok() returns a pointer to a null-terminated string containing the next token"
+        token = strtok(NULL, " ");
     }
     printf("\n");
 }
