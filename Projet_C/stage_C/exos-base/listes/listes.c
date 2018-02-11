@@ -92,7 +92,7 @@ static void inserer_queue(struct cellule **pl, uint32_t v){
     derniere->val = v;
     derniere->suiv = NULL;
 
-    struct cellule tmp = {-1, *pl}; // sentinelle
+    struct cellule tmp = {-1, *pl}; // sentinelle (pour faciliter la gestion des differents cas et pour pouvoir zauvergarder la tete de liste)
     struct cellule* courant = &tmp;
     while (courant->suiv != NULL){  // on avance jusqu'a la derniere cellule
         courant = courant->suiv;
@@ -110,7 +110,7 @@ static void supprimer_premiere_occurrence(struct cellule **pl, uint32_t v){
         return;
     }
     else{
-        struct cellule tmp = {-1, *pl}; // sentinelle
+        struct cellule tmp = {-1, *pl}; // sentinelle (pour faciliter la gestion des differents cas et pour pouvoir zauvergarder la tete de liste)
         struct cellule* courant = &tmp;
         while (courant->suiv != NULL){
             if (courant->suiv->val == v){
