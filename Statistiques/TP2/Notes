@@ -37,9 +37,9 @@ hist2<-hist(donnees, prob=T, breaks=bornes2)
 Fx(x)=P(X>x)=p
 pnorm(x)=p / qnorm(p)=x
 pexp() / qexp()
-plot(donnees,qnorm(i/n))
+
 graphe de probabilité de la loi normale :
 i=c(1:n)
-
-régression linéaire pour calculer avoir le graphe de probabilités
-
+plot(donnees,qnorm(i/n)) (en pratique en utilisant qnorm())
+plot(donnees,((i/n)/ecart_type)-(moyenne/ecart_type)) (on ne connait normalement pas ça avant d'avoir tracé la courbe mais le cours nous dit que dans ce cas là, le coeff directeur = 1/ecart_type et l'ordonnée à l'origine = -moyenne/ecart_type)
+=> on obtient bien une droite donc on peut en conclure que ça respecte une loi normale 
