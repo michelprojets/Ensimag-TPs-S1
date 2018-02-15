@@ -1,0 +1,45 @@
+help(<function>)
+x<-val
+vec<-c(val1,val2,val3)
+sum(vec)
+length(vec)
+
+1)
+
+donnees<-c(54.8,55.4,57.7,59.6,60.1,61.2,62.0,63.1,63.5,64.2,65.2,65.4,65.9,66,67.6,68.1,69.5,70.6,71.5,73.4)
+sort(donnees)
+n=20
+k=log2(n)+1 = 5.321928 = 5 (partie entière)
+moyenne=sum(donnees)/n = 64.24
+mediane=sum(donnees[n/2],donnees[(n/2)+1])/2 = 64.7
+variance=(1/n)*sum((donnees-moyenne)^2) = 25.1924
+var(donnees) = 26.51832 (car R utilise l'espérance et non la moyenne empirique)
+ecart_type=sqrt(variance) = 5.019203
+coef_var=ecart_type/moyenne = 0.07813205
+quartile1=sum(donnees[n/4],donnees[(n/4)+1])/2 = 60.65
+quartile2=sum(donnees[(3*n)/4],donnees[((3*n)/4)+1])/2 = 67.85
+
+2)
+
+histogramme à classes de même largeur :
+a0<-donnees[1]-(0.025*(donnees[n]-donnees[1])) = 54.335
+a5<-donnees[n]+(0.025*(donnees[n]-donnees[1])) = 73.865
+h=(a5-a0)/5 (largeur classes)
+bornes<-seq(a0,a5,h)
+hist1<-hist(donnees, prob=T, breaks=bornes)
+plot(hist1)
+
+histogramme à classes de même effectif :
+b<-c(4,8,12,16)
+bornes2<-c(a0,(donnees[b]+donnees[b+1])/2,a5)
+hist2<-hist(donnees, prob=T, breaks=bornes2)
+
+Fx(x)=P(X>x)=p
+pnorm(x)=p / qnorm(p)=x
+pexp() / qexp()
+plot(donnees,qnorm(i/n))
+graphe de probabilité de la loi normale :
+i=c(1:n)
+
+régression linéaire pour calculer avoir le graphe de probabilités
+
