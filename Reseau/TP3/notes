@@ -1,0 +1,66 @@
+I)
+1)
+la connextion a échoué car lorsqu'on lance "localhost" sans préciser le port, par défaut c'est 80 ("well-known port") mais il n'y a rien sur ce port là. Mais comme on a lancé notre serveur sur le port 8080, il faut préciser "localhost:8080"
+2)
+dans ~/www/logs/access_log, il semble que ce fichier comporte les requêtes et les infos les concernant, effectués par les clients sur ce serveur
+Dans ~/www/logs/error_log, il semble que ce fichier comporte les erreurs d'authentification en démarrant le serveur
+
+II)
+1)
+protocole : http
+machine : localhost (nom)
+port : 8080
+cgi-bin : fichier contenant les scripts
+test : script (service)
+parametre : les différents paramètres (séparés par des '+')
+2)
+ce script obtient l'adresse du site grâce à la méthode POST (on ne passe pas les paramètres par l'url, c'est "caché", on passe les paramètres par des variables uniquement)
+mieux car on peut passer des plus gros formats, par ex des fichiers, fichiers images etc. au lieu de se limiter à quelques chaines de caractères
+script utilisé : ping
+3)
+ce script obtient l'adresse du site grâce à la méthode GET (on passe les paramètres par l'url)
+script utilisé : fping
+
+III)
+1)
+virtual host : le premier hôte virtuel est l'hôte par défaut (le site web qui est utilisé lorsque la requête effectuée par le client ne correspond à aucun des hôtes virtuels, mais si sur la requête, au lieu de "localhost", on a un autre nom qui correspond à un des hôtes virtuels, le serveur http va chercher dans ce fichier là)
+chaque hôte correspond à un site web hébergé sur le même serveur web
+2)
+pour indiquer dans quel site le serveur doit prendre les fichiers, la variable d'environnement SERVER_NAME est modifiée (et d'autres également)
+pour voir la différence :
+http://localhost:8080/cgi-bin/printenv
+http://ensipc36:8080/cgi-bin/printenv
+on n'a pas l'adresse IP lorsqu'on fait avec localhost
+cgi-bin est située à la racine, donc utilisable par tous les virtual hosts
+
+IV)
+3 directives possibles : redirection / alias / réécriture
+1) redirection
+Redirect /ensiwikiFAQ http://ensiwiki.ensimag.fr/index.php/FAQ : si on cherche ensiwikiFAQ sur notre serveur, on va rediriger la requête vers l'url suivante
+la redirection permet de rediriger la requête vers le destinataire qui contient réellement le fichier demandé par le client (vers ensiwiki au lieu de nous même)
+erreurs 301 / 302 / 304
+2) alias
+Alias /logfiles "${HOME}/www/logs"
+<Directory "${HOME}/www/logs">
+Require all granted
+Options Indexes
+</Directory>
+on dit que logfiles va être l'alias du répertoire ~/www/logs
+autrement, on ne peut pas accéder au contenu du répertoire logs juste avec une requête http
+3) réécriture
+RewriteEngine on
+RewriteRule ^/?fping/([^/]*) /cgi-bin/fping?$1 [L,PT]
+on dit que la requête .../cgi-bin/fping?param va maintenant se réécrire de la manière .../fping/param (param étant l'adresse à laquelle faire le ping)
+
+V)
+1)
+"Avant de stocker le mot de passe de l’utilisateur, on génère un sel aléatoire.
+On stocke, sur le serveur, à la fois l’empreinte de (sel + motdepasse), et le sel lui-même.
+Lorsque l’utilisateur fournit un mot de passe pour tenter de s’authentifier, on concatène le sel (stocké sur le serveur), et le mot de passe (fourni par l’utilisateur)
+Puis on calcule l’empreinte du tout
+Enfin, on compare l’empreinte à celle stockée sur le serveur. Le mot de passe est correct si et seulement si les deux correspondent."
+création d'un fichier stockant des mots de passe générés automatiquement par la fonction de hachage
+htpasswd -c fichier_passwords nom_utilisateur
+puis entrer le mdp (à retenir) associé à ce nom_utilisateur
+htpasswd fichier_passwords nom-utilisateur2
+puis entrer le mdp (à retenir) associé à ce nom_utilisateur2 pour rajouter un autre mdp pour un autre utilisateur
