@@ -1,6 +1,18 @@
 #ifndef _ANNUAIRE_H_
 #define _ANNUAIRE_H_
 
+#define NB_CASES_TAB 10 // nombre de cases dans la table de hachage
+
+struct cellule{ // une liste chainee
+    char * nom; // chaine de caracteres representant le nom de la personne
+    char * numero; // chaine de caracteres representant le numero de telephone de la personne
+    struct cellule * suiv; // entree (nom/numero) suivante
+};
+
+struct annuaire{  // un annuaire
+    struct cellule * table[NB_CASES_TAB]; // tableau de listes chainees
+};
+
 /**
  *Creation d'un annuaire initialement vide
  */
