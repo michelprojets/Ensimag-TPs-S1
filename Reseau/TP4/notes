@@ -1,0 +1,84 @@
+PC ----(http)---- Zimbra ----(imap/pop/smtp)---- Serveur_de_Zimbra(serveur_courriel)
+
+Thunderbird (sans passer par http) :
+PC ----(imap/pop/smtp)---- Serveur_de_Zimbra(serveur_courriel)
+
+imap : consultation de mails et manipulation des messages
+smtp : seulement envoi de mails
+
+----------
+
+principe de HTTPS :
+
+HTTP
+(SSL) [==============] (canal chiffré et sans perte)
+TCP
+IP
+Ethernet
+
+sinon, si juste HTTP :
+
+HTTP ===== non chiffré =====
+
+TCP
+IP
+Ethernet
+
+----------
+
+I)
+1)
+telnel : non sécurisé
+openssl : sécurisé
+openssl s_client -connect webmail.grenoble-inp.org:993
+connexion intéractive sécurisée entre notre machine et le serveur imap de Zimbra
+a001 LOGIN <login> <mdp>
+a001 désigne le nom de la commande LOGIN qu'on donne
+2)
+dig MX grenoble-inp.org
+etu.viallet.grenoble-inp.fr (moins prioritaire)
+etu3.viallet.grenoble-inp.fr
+etu4.viallet.grenoble-inp.fr (plus prioritaire)
+3)
+ports utilisés par smtp :
+25 (sans chiffrement)
+587 (avec chiffrement)
+465 (SSL)
+587 (TLS)
+4)
+telnet etu.viallet.grenoble-inp.fr 25
+5)
+HELO test.com
+mail from: <adresse_source>
+rcpt to: <adresse_destination>
+data
+<ligne1>
+<ligne2>
+.
+quit
+6)
+sur wireshark :
+filtre avec smtp ou tcp.port == 25 (on sait qu'on fait du tcp dans tous les cas, et sur le port par défaut de smtp 25, dans le cas ou wireshark ne devine pas qu'on fait du smtp)
+on voit que ce n'est pas sécurisé (messages/infos en clair)
+7)
+dig MX univ-grenoble-alpes.fr
+mxd.relay.renater.fr
+mxc.relay.renater.fr
+mxa.relay.renater.fr
+mxb.relay.renater.fr
+(tous de même priorité)
+--
+HELO test.com
+mail from: michel.yoeung@grenoble-inp.org
+rcpt to: michel.yoeung@grenoble-inp.org
+data
+aaaa
+aaa
+.
+quit
+8)
+openssl s_client -starttls smtp -connect etu.viallet.grenoble-inp.fr:25
+connexion sécurisé avec openssl avec l'option -starttls smtp pour avoir une session sécurisée
+on ne peut pas faire de connexion sécurisée avec etu.viallet.grenoble-inp.fr 25
+
+
