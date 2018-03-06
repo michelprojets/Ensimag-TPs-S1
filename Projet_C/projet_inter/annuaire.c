@@ -13,12 +13,13 @@ struct annuaire * creer(){
 }
 
 /**
- *Calcule la valeur de hachage associee a une cle (nom de la personne)
+ *@brief Calcule la valeur de hachage associee a une cle (nom de la personne)
  *@param[in] nom : le nom de la personne
  *@return la valeur de hachage associee a la cle (nom de la personne)
  *@pre nom != ""
  */
 u_int32_t hachage(const char * nom){
+    // preconditions
     assert(nom != NULL);
     assert(strcmp(nom, "") != 0);
 
@@ -34,6 +35,7 @@ u_int32_t hachage(const char * nom){
 }
 
 char * inserer(struct annuaire * an, const char * nom, const char * numero){
+    // preconditions
     assert(an != NULL);
     assert(nom != NULL);
     assert(numero != NULL);
@@ -42,12 +44,12 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
 
     bool trouve = false;
     u_int32_t index = hachage(nom)%NB_CASES_TAB;
-    struct cellule * courant = an[index];
+    struct cellule * courant = (an->table)[index];
     if (courant->nom == NULL){  // liste vide
         char * copy_nom;
         char * copy_num;
         strcpy(copy_nom, nom);
-        strcpy(copy_num, num);
+        strcpy(copy_num, numero);
         courant->nom = copy_nom;
         courant->numero = copy_num;
     }
@@ -61,7 +63,7 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
         char * copy_nom;
         char * copy_num;
         strcpy(copy_nom, nom);
-        strcpy(copy_num, num);
+        strcpy(copy_num, numero);
         struct cellule nouvelle = {copy_nom, copy_num, NULL};
         courant->suiv = (cellule *)malloc(sizeof(struct cellule));
         courant->suiv = &nouvelle;
@@ -71,6 +73,7 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
 }
 
 char * rechercher_numero(struct annuaire * an, const char * nom){
+    // preconditions
     assert(an != NULL);
     assert(nom != NULL);
     assert(strcmp(nom, "") != 0);
@@ -79,6 +82,7 @@ char * rechercher_numero(struct annuaire * an, const char * nom){
 }
 
 void supprimer(struct annuaire * an, const char * nom){
+    // preconditions
     assert(an != NULL);
     assert(nom != NULL);
     assert(strcmp(nom, "") != 0);
@@ -87,6 +91,7 @@ void supprimer(struct annuaire * an, const char * nom){
 }
 
 void liberer(struct annuaire * an){
+    // preconditions
     assert(an != NULL);
 
     return;
