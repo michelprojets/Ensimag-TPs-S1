@@ -1,7 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <assert.h>
 
 #include "annuaire.h"
@@ -42,42 +40,71 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
     assert(strcmp(nom, "") != 0);
     assert(strcmp(numero, "") != 0);
 
-    bool trouve = false;
+    char * copy_nom = NULL;
+    char * copy_num = NULL;
+    char * ancien_num = NULL;
+    strcpy(copy_nom, nom);
+    strcpy(copy_num, numero);
+    // valeur de l'index calculee par la fonction de hachage
     u_int32_t index = hachage(nom)%NB_CASES_TAB;
     struct cellule * courant = (an->table)[index];
-    if (courant->nom == NULL){  // liste vide
-        char * copy_nom;
-        char * copy_num;
-        strcpy(copy_nom, nom);
-        strcpy(copy_num, numero);
-        courant->nom = copy_nom;
-        courant->numero = copy_num;
-    }
-    while (courant != NULL){
+    // liste vide ou a un element
+    if (courant->suiv == NULL){
         if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
-            trouve = true;
+            ancien_num = courant->numero;
+            courant->nom = copy_nom;
+            courant->numero = copy_num;
+            return ancien_num;
+        }
+        else{
+            return NULL;
+        }
+    }
+    // liste a plusieurs elements
+    while (courant->suiv != NULL){
+        if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
+            ancien_num = courant->numero;
+            courant->nom = copy_nom;
+            courant->numero = copy_num;
+            return ancien_num;
         }
         courant = courant->suiv;
     }
-    if (trouve == true){  // si on a trouve un nom deja existant
-        char * copy_nom;
-        char * copy_num;
-        strcpy(copy_nom, nom);
-        strcpy(copy_num, numero);
-        struct cellule nouvelle = {copy_nom, copy_num, NULL};
-        courant->suiv = (cellule *)malloc(sizeof(struct cellule));
-        courant->suiv = &nouvelle;
-    }
-
+    // ici, on n'a pas trouve pas le nom
+    struct cellule nouvelle = {copy_nom, copy_num, NULL};
+    courant->suiv = (cellule *)malloc(sizeof(struct cellule));
+    courant->suiv = &nouvelle;
     return NULL;
 }
 
-char * rechercher_numero(struct annuaire * an, const char * nom){
+const char * rechercher_numero(struct annuaire * an, const char * nom){
     // preconditions
     assert(an != NULL);
     assert(nom != NULL);
     assert(strcmp(nom, "") != 0);
 
+    char * copy_num = NULL;
+    // valeur de l'index calculee par la fonction de hachage
+    u_int32_t index = hachage(nom)%NB_CASES_TAB;
+    struct cellule * courant = (an->table)[index];
+    // liste vide ou a un element
+    if (courant->suiv == NULL){
+        if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
+            strcpy(copy_num, courant->numero);
+            return copy_num;
+        }
+        else{
+            return NULL;
+        }
+    }
+    // liste a plusieurs elements
+    while (courant->suiv != NULL){
+        if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
+            strcpy(copy_num, courant->numero);
+            return copy_num;
+        }
+        courant = courant->suiv;
+    }
     return NULL;
 }
 
@@ -87,12 +114,53 @@ void supprimer(struct annuaire * an, const char * nom){
     assert(nom != NULL);
     assert(strcmp(nom, "") != 0);
 
-    return;
+    // valeur de l'index calculee par la fonction de hachage
+    u_int32_t index = hachage(nom)%NB_CASES_TAB;
+    struct cellule * courant = (an->table)[index];
+    // liste vide ou a un element
+    if (courant->suiv == NULL){
+        if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
+            courant->nom = NULL;
+            courant->numero = NULL;
+        }
+        return;
+    }
+    // liste a plusieurs elements
+    bool premiere = false;  // true si c'est la premiere cellule qui est supprimee
+    struct cellule sentinelle = {NULL, NULL, courant};
+    courant = &sentinelle;
+    while (courant->suiv != NULL){
+        if (strcmp(courant->suiv->nom, nom) == 0){  // on trouve le nom
+            if (courant->suiv == (an->table)[index]){ // si c'est la premiere cellule
+                premiere = true;
+            }
+            struct cellule * save_suiv = courant->suiv->suiv;
+            free(courant->suiv);
+            courant->suiv = save_suiv;
+            break;
+        }
+        courant = courant->suiv;
+    }
+    if (premiere){  // si c'est la premiere cellule qu'on a supprime
+        (an->table)[index] = courant->suiv;
+    }
 }
 
 void liberer(struct annuaire * an){
     // preconditions
     assert(an != NULL);
 
-    return;
+    struct cellule * courant = NULL;
+    struct cellule * save_suiv = NULL;
+    for(u_int8_t i=0; i<NB_CASES_TAB; ++i){
+        courant = (an->table)[i];
+        save_suiv = courant->suiv;  // sauvegarde du suivant
+        while (save_suiv != NULL){
+            save_suiv = courant->suiv;
+            free(courant);
+            courant = save_suiv;
+        }
+    }
+    free(an);
+    an = NULL;
 }

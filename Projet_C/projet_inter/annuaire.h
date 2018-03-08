@@ -36,7 +36,7 @@ extern char * inserer(struct annuaire * an, const char * nom, const char * numer
  *@return une copie du numero de telephone associe au nom de la personne
  *@pre an != NULL && nom != ""
  */
-extern char * rechercher_numero(struct annuaire * an, const char * nom);
+extern const char * rechercher_numero(struct annuaire * an, const char * nom);
 
 /**
  *@brief Supprime l'entree nom/numero associee au nom, si le nom n'existe pas, ne fait rien

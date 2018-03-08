@@ -1,8 +1,6 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
 #include <string.h>
-
+#include <assert.h>
 
 #include "annuaire.h"
 
@@ -33,6 +31,9 @@ int main(int argc, char *argv[]){
     char * ancien_num = inserer(an, nom_doublon, num_doublon);
     assert(ancien_num != NULL);
     assert(strcmp(ancien_num, numeros[0]) == 0);
+    // post-condition : liberation en memoire de l'ancien numero
+    free(ancien_num);
+    ancien_num = NULL;
 
     // synchronisation avec le tableau de tests (apres l'insertion d'une entree deja existante)
     for (u_int32_t i=0; i< NB_CARAC_MAX; ++i){
