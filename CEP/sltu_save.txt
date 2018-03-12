@@ -1,0 +1,55 @@
+     when S_sltu =>
+        cmd.ALU_X_sel <= UXS_RF_RS;
+        cmd.ALU_Y_sel <= UYS_cst_x00;
+        cmd.ALU_OP    <= AO_PLUS;
+
+        if (status.s = false) then
+          state_d     <= S_rs_pos;
+        else
+          state_d     <= S_rs_neg;
+        end if;
+
+     when S_rs_pos =>
+        cmd.ALU_X_sel <= UXS_cst_x00;
+        cmd.ALU_Y_sel <= UYS_RF_RT;
+        cmd.ALU_OP    <= AO_PLUS;
+
+        if (status.s = false) then
+          state_d     <= S_rs_pos_rt_pos;
+        else
+          state_d     <= S_slt1; --- rs pos et rt neg
+        end if;
+
+     when S_rs_neg =>
+        cmd.ALU_X_sel <= UXS_cst_x00;
+        cmd.ALU_Y_sel <= UYS_RF_RT;
+        cmd.ALU_OP    <= AO_PLUS;
+
+        if (status.s = false) then
+          state_d     <= S_slt2; --- rs neg et rt pos
+        else
+          state_d     <= S_rs_neg_rt_neg;
+        end if;
+
+     when S_rs_pos_rt_pos =>
+        cmd.ALU_X_sel <= UXS_RF_RS;
+        cmd.ALU_Y_sel <= UYS_RF_RT;
+        cmd.ALU_OP    <= AO_moins;
+
+        if (status.s = true) and (status.z = false) then
+          state_d     <= S_slt1;
+        else
+          state_d     <= S_slt2;
+        end if;
+
+     when S_rs_neg_rt_neg =>
+        cmd.ALU_X_sel <= UXS_RF_RS;
+        cmd.ALU_Y_sel <= UYS_RF_RT;
+        cmd.ALU_OP    <= AO_moins;
+
+        if (status.s = true) and (status.z = false) then
+          state_d     <= S_slt2;
+        else
+          state_d     <= S_slt1;
+        end if;
+
