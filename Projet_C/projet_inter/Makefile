@@ -10,7 +10,7 @@ annuaire.o: annuaire.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 test_annuaire.o: test_annuaire.c annuaire.h
-	$(CC) -o $@ -c $^ $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 	rm -f *~ *.o $(EXEC)
