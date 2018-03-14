@@ -7,12 +7,22 @@
 
 #include "annuaire.h"
 
+// pour nos tests
 #define NB_CARAC_MAX 10
 #define NB_TESTS 9
 
-/* fonction d'affichage d'un annuaire pour le debogage */
+/**
+ *@brief Fonction d'affichage de l'annuaire pour le debogage
+ *@param[in] nom : l'annuaire'
+ *@pre an != NULL
+ */
 void afficher_annuaire(struct annuaire * an){
+    // preconditions
+    assert(an != NULL);
+
     printf("\n----- annuaire -----\n");
+    printf("Taille de la table de hachage : %u\n", an->nb_cases);
+    printf("Nombre de cases vides : %u\n", an->nb_cases_vides);
     for (uint8_t i=0; i<NB_CASES_TAB; ++i){
         struct cellule * courant = (an->table)[i];
         if (courant->nom == NULL){  // liste vide
@@ -73,9 +83,18 @@ int main(){
     // synchronisation avec le tableau de tests (apres l'insertion d'une entree deja existante)
     strcpy(numeros[0], num_doublon);
 
+    // liberation en memoire des doublons caracteres (car besoin juste pour la duree de l'insertion)
+    free(nom_doublon);
+    free(num_doublon);
+
     // recherche de numeros associes a des noms existants dans l'annuaires
+    const char * num_recherche = NULL;  // const empeche la modification de la valeur pointée par le pointeur
+                                        // (et non du pointeur)
     for (uint32_t i=0; i<NB_TESTS; ++i){
-        assert(strcmp(rechercher_numero(an, noms[i]), numeros[i]) == 0);
+        num_recherche = rechercher_numero(an, noms[i]);
+        assert(strcmp(num_recherche, numeros[i]) == 0);
+        // post-condition : liberation en memoire de la copie du numero
+        free((void *)num_recherche);  // free ne prend pas de const car free libere la zone memoire pointee par le pointeur
     }
 
     // // suppression d'entrees nom/numero (la moitie)

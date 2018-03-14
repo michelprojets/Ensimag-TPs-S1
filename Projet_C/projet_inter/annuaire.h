@@ -1,7 +1,12 @@
 #ifndef _ANNUAIRE_H_
 #define _ANNUAIRE_H_
 
-#define NB_CASES_TAB 10 // nombre de cases dans la table de hachage
+#include <stdint.h>
+
+#define NB_CASES_TAB 10 // nombre de cases initial dans la table de hachage
+#define REMPLISSAGE_MAX 0.75  // taux de remplissage maximum
+#define REMPLISSAGE_MIN 0.15  // taux de remplissage minimum
+#define RATIO_REDIMENTIONNEMENT 2 // ratio de redimentionnement (on double ou on divise par deux)
 
 struct cellule{ // une liste chainee
     char * nom; // chaine de caracteres representant le nom de la personne
@@ -10,6 +15,8 @@ struct cellule{ // une liste chainee
 };
 
 struct annuaire{  // un annuaire
+    uint8_t nb_cases; // nombre de cases dans la table de hachage
+    uint8_t nb_cases_vides; // nombre de listes vides dans la table de hachage
     struct cellule * table[NB_CASES_TAB]; // tableau de listes chainees
 };
 
@@ -35,6 +42,7 @@ extern char * inserer(struct annuaire * an, const char * nom, const char * numer
  *@param[in,out] an : l'annuaire
  *@return une copie du numero de telephone associe au nom de la personne
  *@pre an != NULL && nom != ""
+ *@pos la chaine retournee doit etre liberee en memoire
  */
 extern const char * rechercher_numero(struct annuaire * an, const char * nom);
 

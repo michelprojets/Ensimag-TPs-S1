@@ -10,7 +10,9 @@
 
 struct annuaire * creer(){
     struct annuaire * an = (struct annuaire *)malloc(sizeof(struct annuaire));
-    for (uint8_t i = 0; i<NB_CASES_TAB; ++i){
+    an->nb_cases = NB_CASES_TAB;
+    an->nb_cases_vides = an->nb_cases;
+    for (uint8_t i = 0; i<an->nb_cases; ++i){
         an->table[i] = (struct cellule *)malloc(sizeof(struct cellule));
         an->table[i]->nom = NULL;
         an->table[i]->numero = NULL;
@@ -41,8 +43,74 @@ uint32_t hachage(const char * nom){
     return hash;
 }
 
-// ATTENTION
-// IL FAUT FREE LES CHAINES COPIEES APRES
+/**
+ *@brief Redimensionne l'annuaire si necessaire
+ *@param[in] nom : l'annuaire'
+ *@pre an != NULL
+ */
+ void maj_annuaire(struct annuaire * an){
+    // preconditions
+    assert(an != NULL);
+
+    float taux_remplissage = 0.0;
+    taux_remplissage = (an->nb_cases_vides)/(an->nb_cases);
+    // dans le cas ou on doit redimentionner la table
+    if ((taux_remplissage <= (float)REMPLISSAGE_MIN) ||
+        (taux_remplissage >= (float)REMPLISSAGE_MAX)){
+        uint8_t nouveau_nb_elems = 0;
+        if (taux_remplissage <= (float)REMPLISSAGE_MIN){  // table trop creuse
+            nouveau_nb_elems = (an->nb_cases)/2;  // on reduit de moitier la taille de la table
+            if (nouveau_nb_elems < NB_CASES_TAB){ // la taille de la table ne descend pas en dessous de 10
+                nouveau_nb_elems = NB_CASES_TAB;
+            }
+        }
+        else if (taux_remplissage >= (float)REMPLISSAGE_MAX){ // table trop remplie
+            nouveau_nb_elems = (an->nb_cases)*2;  // on double la taille de la table
+        }
+        // construction du nouvel annuaire
+        struct annuaire * nouvel_an = (struct annuaire *)malloc(sizeof(struct annuaire));
+        nouvel_an->nb_cases = nouveau_nb_elems;
+        for (uint8_t i = 0; i<nouveau_nb_elems; ++i){
+            nouvel_an->table[i] = (struct cellule *)malloc(sizeof(struct cellule));
+            nouvel_an->table[i]->nom = NULL;
+            nouvel_an->table[i]->numero = NULL;
+            nouvel_an->table[i]->suiv = NULL;
+        }
+        // recopie de toutes les donnees de l'ancien annuaire vers le nouvel annuaire
+        // et on libere en meme temps en memoire toutes les donnees de l'ancien annuaire
+        struct cellule * courant = NULL;
+        struct cellule * save_suiv = NULL;
+        for(uint8_t i=0; i<an->nb_cases; ++i){
+            courant = (an->table)[i];
+            if (courant->nom == NULL){  // liste vide
+                free(courant);
+            }
+            else{ // liste non vide
+                // insertion dans le nouvel annuaire
+                inserer(nouvel_an, courant->nom, courant->numero);
+                save_suiv = courant->suiv;  // sauvegarde du suivant
+                free(courant->nom);
+                free(courant->numero);
+                free(courant);
+                courant = save_suiv;
+                while (courant != NULL){  // liste a plus de deux elements
+                    // insertion dans le nouvel annuaire
+                    inserer(nouvel_an, courant->nom, courant->numero);
+                    save_suiv = courant->suiv;
+                    free(courant->nom);
+                    free(courant->numero);
+                    free(courant);
+                    courant = save_suiv;
+                }
+            }
+        }
+        an->nb_cases = 0;
+        free(an);
+        // on pointe vers le nouvel annuaire
+        an = nouvel_an;
+    }
+ }
+
 char * inserer(struct annuaire * an, const char * nom, const char * numero){
     // preconditions
     assert(an != NULL);
@@ -51,10 +119,8 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
     assert(strcmp(nom, "") != 0);
     assert(strcmp(numero, "") != 0);
 
-    char * copy_nom = NULL;
-    char * copy_num = NULL;
-    copy_nom = calloc(strlen(nom) + 1, sizeof(char));
-    copy_num = calloc(strlen(numero) + 1, sizeof(char));
+    char * copy_nom = calloc(strlen(nom) + 1, sizeof(char));
+    char * copy_num = calloc(strlen(numero) + 1, sizeof(char));
     strcpy(copy_nom, nom);
     strcpy(copy_num, numero);
     char * ancien_num = NULL;
@@ -65,6 +131,7 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
     if (courant->nom == NULL){  // liste vide
         courant->nom = copy_nom;
         courant->numero = copy_num;
+        --(an->nb_cases_vides); // on a insere dans une case anciennement vide de la table
         return NULL;
     }
     else if (strcmp(courant->nom, nom) == 0){ // liste a un élement et on trouve le nom
@@ -92,11 +159,11 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
         courant->suiv->suiv = NULL;
         return NULL;
     }
+    // re-dimensionnement potentiel de l'annuaire
+    maj_annuaire(an);
     return NULL;
 }
 
-// ATTENTION
-// SI ON RETOURNE UNE COPIE, ON DOIT ALLOC, MAIS CONST DONC ON NE PEUT PAS FREE
 const char * rechercher_numero(struct annuaire * an, const char * nom){
     // preconditions
     assert(an != NULL);
@@ -153,6 +220,7 @@ void supprimer(struct annuaire * an, const char * nom){
             courant->numero = NULL;
             free(courant->nom);
             free(courant->numero);
+            ++(an->nb_cases_vides); // une case vide a ete creee suite a la suppression
         }
         return;
     }
@@ -177,6 +245,8 @@ void supprimer(struct annuaire * an, const char * nom){
     if (premiere){  // si c'est la premiere cellule qu'on a supprime
         (an->table)[index] = courant->suiv;
     }
+    // re-dimensionnement potentiel de l'annuaire
+    maj_annuaire(an);
 }
 
 void liberer(struct annuaire * an){
@@ -185,20 +255,28 @@ void liberer(struct annuaire * an){
 
     struct cellule * courant = NULL;
     struct cellule * save_suiv = NULL;
-    for(uint8_t i=0; i<NB_CASES_TAB; ++i){
+    for(uint8_t i=0; i<an->nb_cases; ++i){
         courant = (an->table)[i];
-        save_suiv = courant->suiv;  // sauvegarde du suivant
-        free(courant->nom);
-        free(courant->numero);
-        free(courant);
-        while (save_suiv != NULL){
-            save_suiv = courant->suiv;
+        if (courant->nom == NULL){  // liste vide
+            free(courant);
+        }
+        else{ // liste non vide
+            save_suiv = courant->suiv;  // sauvegarde du suivant
             free(courant->nom);
             free(courant->numero);
             free(courant);
             courant = save_suiv;
+            while (courant != NULL){  // liste a plus de deux elements
+                save_suiv = courant->suiv;
+                free(courant->nom);
+                free(courant->numero);
+                free(courant);
+                courant = save_suiv;
+            }
         }
     }
+    an->nb_cases = 0;
+    an->nb_cases_vides = 0;
     free(an);
     an = NULL;
 }
