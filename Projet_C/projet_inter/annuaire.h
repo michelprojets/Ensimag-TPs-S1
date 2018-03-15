@@ -5,9 +5,6 @@
 #include <stdbool.h>
 
 #define NB_CASES_TAB 10 // nombre de cases initial dans la table de hachage
-#define REMPLISSAGE_MAX 0.75  // taux de remplissage maximum
-#define REMPLISSAGE_MIN 0.15  // taux de remplissage minimum
-#define RATIO_REDIMENTIONNEMENT 2 // ratio de redimentionnement (on double ou on divise par deux)
 
 struct cellule{ // une liste chainee
     char * nom; // chaine de caracteres representant le nom de la personne

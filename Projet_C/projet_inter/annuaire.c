@@ -8,6 +8,13 @@
 
 #include "annuaire.h"
 
+// valeurs constantes pour les fonctions internes
+#define REMPLISSAGE_MAX 0.75  // taux de remplissage maximum
+#define REMPLISSAGE_MIN 0.15  // taux de remplissage minimum
+#define RATIO_REDIMENTIONNEMENT 2 // ratio de redimentionnement (on double ou on divise par deux)
+#define HASH 5381 // valeur de hachage initiale pour la fonction de hachage
+#define FACTEUR_HASH 33 // facteur pour le calcul de la valeur de hachage
+
 struct annuaire * creer(){
     struct annuaire * an = (struct annuaire *)malloc(sizeof(struct annuaire));
     an->nb_cases = NB_CASES_TAB;
@@ -34,10 +41,10 @@ uint32_t hachage(const char * nom){
     assert(strcmp(nom, "") != 0);
 
     uint32_t pos = 0;
-    uint32_t hash = 5381;
+    uint32_t hash = HASH;
     char carac = nom[0];
     while (carac != '\0'){
-        hash = hash * 33 + carac;
+        hash = hash * FACTEUR_HASH + carac;
         pos++;
         carac = nom[pos];
     }
@@ -77,7 +84,7 @@ uint32_t hachage(const char * nom){
         nouvel_an->nb_cases = nouveau_nb_cases;
         nouvel_an->nb_cases_non_vides = 0;
         nouvel_an->maj_en_cours = true; // on lance la copie de l'ancienne table vers la nouvelle
-        for (uint8_t i = 0; i<nouvel_an->nb_cases; ++i){
+        for (uint8_t i = 0; i<(nouvel_an->nb_cases); ++i){
             nouvel_an->table[i] = (struct cellule *)malloc(sizeof(struct cellule));
             nouvel_an->table[i]->nom = NULL;
             nouvel_an->table[i]->numero = NULL;
@@ -87,14 +94,14 @@ uint32_t hachage(const char * nom){
         // et on libere en meme temps en memoire toutes les donnees de l'ancien annuaire
         struct cellule * courant = NULL;
         struct cellule * save_suiv = NULL;
-        for(uint8_t i=0; i<an->nb_cases; ++i){
+        for(uint8_t i=0; i<(an->nb_cases); ++i){
             courant = (an->table)[i];
             if (courant->nom == NULL){  // liste vide
                 free(courant);
             }
             else{ // liste non vide
                 // insertion dans le nouvel annuaire
-                inserer(nouvel_an, courant->nom, courant->numero);  // maj du nombre de cases vides
+                inserer(nouvel_an, courant->nom, courant->numero);
                 save_suiv = courant->suiv;  // sauvegarde du suivant
                 free(courant->nom);
                 free(courant->numero);
@@ -111,7 +118,7 @@ uint32_t hachage(const char * nom){
                 }
             }
         }
-        an->nb_cases = 0;
+        nouvel_an->maj_en_cours = false;  // fin de la copie
         free(an);
         // on pointe vers le nouvel annuaire
         an = nouvel_an;
@@ -141,12 +148,13 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
         courant->numero = copy_num;
         ++(an->nb_cases_non_vides); // on a insere dans une case anciennement vide de la table
         if(an->maj_en_cours == false){  // si on est pas deja en plein redimentionnement
-            //  maj_annuaire(an); // re-dimensionnement potentiel de l'annuaire
+            maj_annuaire(an); // re-dimensionnement potentiel de l'annuaire
+            printf("------00000------\n");
+            printf("------> %s \n\n", (an->table[2])->nom);
         }
         return NULL;
     }
     else if (strcmp(courant->nom, nom) == 0){ // liste a un élement et on trouve le nom
-        ancien_num = calloc(strlen(courant->numero) + 1, sizeof(char));
         ancien_num = courant->numero;
         courant->numero = copy_num;
         return ancien_num;
@@ -154,7 +162,6 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
     else{ // liste a plusieurs elements
         while (courant->suiv != NULL){  // on fait avancer le courant jusqu'au dernier
             if (strcmp(courant->nom, nom) == 0){  // on trouve le nom
-                ancien_num = calloc(strlen(courant->numero) + 1, sizeof(char));
                 ancien_num = courant->numero;
                 courant->numero = copy_num;
                 return ancien_num;
@@ -220,21 +227,21 @@ void supprimer(struct annuaire * an, const char * nom){
     uint32_t index = hachage(nom)%(an->nb_cases);
     struct cellule * courant = (an->table)[index];
     // liste vide ou a un element
-    if (courant->nom == NULL){
+    if (courant->suiv == NULL){
         if (courant->nom == NULL){  // liste vide
             return;
         }
         else if (strcmp(courant->nom, nom) == 0){  // liste a un élement et on trouve le nom
-            courant->nom = NULL;
-            courant->numero = NULL;
             free(courant->nom);
             free(courant->numero);
+            courant->nom = NULL;
+            courant->numero = NULL;
             --(an->nb_cases_non_vides); // une case vide a ete creee suite a la suppression
             if(an->maj_en_cours == false){  // si on est pas deja en plein redimentionnement
-                // maj_annuaire(an); // re-dimensionnement potentiel de l'annuaire
+                maj_annuaire(an); // re-dimensionnement potentiel de l'annuaire
             }
+            return;
         }
-        return;
     }
     // liste a plusieurs elements
     bool premiere = false;  // true si c'est la premiere cellule qui est supprimee
@@ -265,7 +272,7 @@ void liberer(struct annuaire * an){
 
     struct cellule * courant = NULL;
     struct cellule * save_suiv = NULL;
-    for(uint8_t i=0; i<an->nb_cases; ++i){
+    for(uint8_t i=0; i<(an->nb_cases); ++i){
         courant = (an->table)[i];
         if (courant->nom == NULL){  // liste vide
             free(courant);
