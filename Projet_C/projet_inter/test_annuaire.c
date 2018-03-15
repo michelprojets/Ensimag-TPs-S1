@@ -13,16 +13,16 @@
 
 /**
  *@brief Fonction d'affichage de l'annuaire pour le debogage
- *@param[in] nom : l'annuaire'
+ *@param[in] an : l'annuaire'
  *@pre an != NULL
  */
-void afficher_annuaire(struct annuaire * an){
+void afficher_annuaire(const struct annuaire * an){
     // preconditions
     assert(an != NULL);
 
     printf("\n----- annuaire -----\n");
     printf("Taille de la table de hachage : %u\n", an->nb_cases);
-    printf("Nombre de cases vides : %u\n", an->nb_cases_vides);
+    printf("Nombre de cases occupees : %u\n", an->nb_cases_non_vides);
     for (uint8_t i=0; i<NB_CASES_TAB; ++i){
         struct cellule * courant = (an->table)[i];
         if (courant->nom == NULL){  // liste vide
@@ -57,9 +57,11 @@ int main(){
                                         "0602321545", "0640980212", "0664314897",
                                         "0625161432", "0656454631", "0642342345"};
     // insertion des noms et des numeros dans l'annuaire
+    char * ancien_num = NULL;
     for (uint8_t i=0; i<NB_TESTS; ++i){
         // printf("(%s)(%s)\n", noms[i], numeros[i]);
-        inserer(an, noms[i], numeros[i]);
+        ancien_num = inserer(an, noms[i], numeros[i]);
+        assert(ancien_num == NULL);
     }
     // affichage de l'annuaire (pour le debogage)
     printf("\n////////// Apres insertion //////////\n");
@@ -68,14 +70,13 @@ int main(){
     char * nom_doublon = calloc(strlen(noms[0]) + 1, sizeof(char));
     strcpy(nom_doublon, noms[0]); // "paul"
     char * num_doublon = calloc(strlen(numeros[0]) + 1, sizeof(char));
-    num_doublon = "0611111111";
+    strcpy(num_doublon, "0611111111");
     // insertion d'un nom deja existant
-    char * ancien_num = inserer(an, nom_doublon, num_doublon);
+    ancien_num = inserer(an, nom_doublon, num_doublon);
     assert(ancien_num != NULL);
     assert(strcmp(ancien_num, numeros[0]) == 0);
     // post-condition : liberation en memoire de l'ancien numero
     free(ancien_num);
-    ancien_num = NULL;
     // affichage de l'annuaire (pour le debogage)
     printf("\n////////// Apres insertion doublon //////////\n");
     afficher_annuaire(an);

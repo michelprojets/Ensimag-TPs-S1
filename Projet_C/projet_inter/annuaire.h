@@ -2,6 +2,7 @@
 #define _ANNUAIRE_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define NB_CASES_TAB 10 // nombre de cases initial dans la table de hachage
 #define REMPLISSAGE_MAX 0.75  // taux de remplissage maximum
@@ -16,7 +17,8 @@ struct cellule{ // une liste chainee
 
 struct annuaire{  // un annuaire
     uint8_t nb_cases; // nombre de cases dans la table de hachage
-    uint8_t nb_cases_vides; // nombre de listes vides dans la table de hachage
+    uint8_t nb_cases_non_vides; // nombre de listes non vides dans la table de hachage
+    bool maj_en_cours;  // indique si la table est en plein redimentionnement ou pas
     struct cellule * table[NB_CASES_TAB]; // tableau de listes chainees
 };
 
