@@ -149,8 +149,6 @@ char * inserer(struct annuaire * an, const char * nom, const char * numero){
         ++(an->nb_cases_non_vides); // on a insere dans une case anciennement vide de la table
         if(an->maj_en_cours == false){  // si on est pas deja en plein redimentionnement
             maj_annuaire(an); // re-dimensionnement potentiel de l'annuaire
-            printf("------00000------\n");
-            printf("------> %s \n\n", (an->table[2])->nom);
         }
         return NULL;
     }
