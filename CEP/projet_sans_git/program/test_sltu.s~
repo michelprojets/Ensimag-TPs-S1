@@ -1,0 +1,33 @@
+.text
+# Pour les tests ne pas utiliser le registre $1
+ori $24, $23, 0xFFFE
+ori $25, $23, 0xFFFF
+sltu $28, $24, $25
+sltu $28, $25, $24
+	
+ori $24, $23, 0x0001
+ori $25, $23, 0x0002
+slt $28, $24, $25
+slt $28, $25, $24
+
+ori $24, $23, 0xFFFE
+ori $25, $23, 0x0002
+slt $28, $24, $25
+slt $28, $25, $24
+
+# max_cycle 100
+# pout_start
+# 00000001
+# 00000000
+# 00000001
+# 00000000
+# 00000000
+# 00000001
+# pout_end
+
+
+
+
+	
+
+

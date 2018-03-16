@@ -1,0 +1,5 @@
+gdb :
+next : prochaine ligne de C (ne rentre pas dans la fonction)
+step : prochaine instruction de C (en rentrant dans la fonction) qui peut etre une fonction en langage d'assemblage
+stepi : prochaine instruction d'assembleur (à partir de la décomposition de la prochaine instruction de C)
+continue / c : va jusqu'au bout du next / step / stepi concerné

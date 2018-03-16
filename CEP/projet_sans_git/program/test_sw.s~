@@ -1,0 +1,18 @@
+.text
+# Pour les tests ne pas utiliser le registre $1 
+debut:	
+lui $28, 0x1234
+lw $26, toto($0)
+lw $29, vars($0)
+j debut
+
+.data
+vars:	.word 6
+
+toto:	.word 8
+	
+# max_cycle 50
+# pout_start
+# 12340000
+# ABCD0000
+# pout_end
