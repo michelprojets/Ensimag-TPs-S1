@@ -27,6 +27,9 @@ void parse_token(token expected) {
 
 /* A COMPLETER */
 
+// declaration de cette fonction avant parse_exp0() car parse_exp0() l'utilise
+void parse_exp2(list l, int* n);
+
 void parse_exp0(list l, int* n){
         switch (current) {
         case INT:
@@ -35,12 +38,10 @@ void parse_exp0(list l, int* n){
                 break;
         case VAR:
                 parse_token(VAR);
-                *n = att;
-                *n = pick(l, *n);
+                *n = pick(l, att);
                 break;
         case MINUS:
                 parse_token(MINUS);
-                *n = att;
                 *n = 0 - att;
                 break;
         case OPAR:
@@ -49,7 +50,7 @@ void parse_exp0(list l, int* n){
                 parse_token(CPAR);
                 break;
         default:
-                unexpected(current, att, "exp1_X");;
+                unexpected(current, att, "exp0");
         }
 }
 
@@ -75,7 +76,7 @@ void parse_exp1_X(list l, int* n1, int* n){
                 parse_exp1_X(l, &n1_divise_n2, n);
                 break;
         default:
-                unexpected(current, att, "exp1_X");;
+                unexpected(current, att, "exp1_X");
         }
 }
 
@@ -105,7 +106,7 @@ void parse_exp2_X(list l, int* n1, int* n){
                 parse_exp2_X(l, &n1_moins_n2, n);
                 break;
         default:
-                unexpected(current, att, "exp2_X");;
+                unexpected(current, att, "exp2_X");
         }
 }
 
@@ -130,7 +131,7 @@ void parse_input_X(list l){
                 parse_input_X(l);
                 break;
         default:
-                unexpected(current, att, "input_X");;
+                unexpected(current, att, "input_X");
         }
 }
 
