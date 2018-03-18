@@ -121,7 +121,7 @@ uint32_t hachage(const char * nom){
         nouvel_an->maj_en_cours = false;  // fin de la copie
         free(an);
         // on pointe vers le nouvel annuaire
-        an = nouvel_an;
+        an = nouvel_an; // ne marche pas car il faut faire *an = nouvel_an donc passer un annuaire ** au lieu
     }
  }
 
