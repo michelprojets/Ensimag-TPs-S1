@@ -1,0 +1,61 @@
+ifconfig <Interface> <IP address> netmask <Netmask> up, ou de manière plus concise :
+ifconfig <Interface> <IP address>/<Netmask> up en notation CIDR
+
+Couches 1, 2 et 3 : local (branchements physiques)
+Couches 4, 5, 6 et 7 : non local (pas de branchements)
+
+Le protocole de résolution d’adresse ARP (pour Address Resolution Protocol couche 3) permet de déterminer
+l’adresse physique (adresse MAC) à partir de l’adresse logique (adresse IP). Pour ce faire, il crée une
+table de correspondance entre les adresses logiques et physiques, qu’il stocke dans une mémoire cache.
+Lorsqu’un hôte doit communiquer avec un autre hôte connecté sur le même réseau local, il consulte sa
+table de correspondance (appelée aussi cache ARP). Si l’adresse IP s’y trouve, il en récupère l’adresse
+MAC associée. Dans le cas contraire, il envoie une requête d’interrogation sur le réseau et il met à jour
+sa table avec la nouvelle adresse.
+
+arp -a -i <interface> : consultation de la table de correspondance
+
+arp -s <IP address> <MAC address> : pour associer manuellement l'adresse MAC à cette machine
+
+DHCP : pour éviter d'attribuer les adresses à la main
+
+Pour chaque paquet reçu, un routeur doit prendre une décision sur la route à suivre pour atteindre la
+destination indiquée dans l’en-tête IP du paquet. Le routeur ne connait pas d’information globale sur
+les routes de bout en bout, il dispose juste d’une information locale stockée dans une table de routage.
+Cette table est utilisée pour déterminer le prochain routeur de la route, souvent appelé next hop en
+anglais.
+
+netstat -rnf inet
+	afficher la table de routage pour IPv4
+	L’option -n désactive la résolution de noms et permet d’afficher les adresses IP brutes (utile quand aucun serveur
+	DNS n’est présent — cette option est présente pour la plupart des commandes réseau, comme ping). Avec l’option
+	-f inet, affiche uniquement les informations IPv4 — inet6 pour IPv6.
+
+route add|delete [-net|-host] <destination> <gateway>
+	ajoute ou supprime une route, par ex. # route add 192.168.20.0/24 192.168.30.4
+route flush
+	supprime toutes les routes
+	
+sysctl net.inet.ip.forwarding=1
+	active le relayage de paquets, càd. transforme l’hôte en routeur. (sysctl permet de modifier
+	certains paramètres du système. Vous pouvez en avoir la liste avec la commande sysctl -a).
+	
+le temps absolu sur wireshark : clic-droit colonne Time -> Edit Column Details -> UTC time
+
+Routeur par défaut
+La plupart du temps les machines hôtes n’ont qu’une seule entrée dans leur table de routage : une route
+par défaut. Cette route spécifie l’adresse du routeur qui recevra tout le trafic à destination d’adresses
+qui ne sont pas explicitement connues de la machine.
+
+DNS (port 53) :
+dig <type_enregistrement> <nom DNS>
+nslookup [-type=<type_enregistrement>] <nom DNS>
+<type_enregistrement> : 
+— A : enregistrement associant une adresse IPv4 à un nom DNS ;
+— AAAA : enregistrement associant une adresse IPv6 à un nom DNS ;
+— MX : enregistrement associant un serveur de mail à un nom de zone DNS ;
+— NS : enregistrement associant un serveur de noms à un nom de zone DNS ;
+— CNAME : enregistrement associant le nom canonique de la machine à un nom DNS.
+— PTR : reverse DNS.
+— SOA (Start Of Authority) : enregistrement retournant l’adresse IP de la machine DNS qui a
+l’autorité sur le nom de domaine demandé.
+
