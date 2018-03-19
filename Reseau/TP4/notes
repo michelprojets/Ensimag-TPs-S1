@@ -109,3 +109,5 @@ openssl pkcs12 -in trousseau.p12 -out certificat.crt -clcerts
 openssl x509 -text -in certificat.crt
 : lecture du certificat de l'utilisateur sous forme textuelle (à la place du code en hexa)
 
+sauvegarder un certificat : lorsqu'on le récupère, on le sauvegarde dans un dossier en local dans notre machine
+importer un certificat : lorsqu'on a notre trousseau, on récupère notre certificat
