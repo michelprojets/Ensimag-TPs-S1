@@ -1,0 +1,62 @@
+#!/bin/bash
+
+declare -A COOKIES  # Associative array
+IFS='; ' read <<< "$HTTP_COOKIE" -ra cookies
+for cookie in "${cookies[@]}"; do
+    COOKIES["${cookie/=*/}"]="${cookie/*=/}"
+    echo COOKIES["${cookie/=*/}"]="${cookie/*=/}" >/dev/pts/5
+done
+
+declare -A POST_ARGS  # Associative array
+IFS='&' read < /dev/stdin -ra post_args
+for post_arg in "${post_args[@]}"; do
+    echo POST_ARGS[${post_arg/=*/}]="${post_arg/*=/}" >/dev/pts/5
+    POST_ARGS[${post_arg/=*/}]="${post_arg/*=/}"
+done
+
+
+echo "Content-type: text/html"
+echo "Server: ${SERVER_SOFTWARE}"
+if [ ! -z "${POST_ARGS[nom]}" ]; then
+    echo "Set-Cookie: nom=${POST_ARGS[nom]}; Domain=${SERVER_NAME}; Expires=$(date +'%d-%m-%y %T %Z' --date='next week'); Path=/"
+fi
+if [ ! -z "${POST_ARGS[fruit]}" ]; then
+    echo "Set-Cookie: fruit=${POST_ARGS[fruit]}; Domain=${SERVER_NAME}; Expires=$(date +'%d-%m-%y %T %Z' --date='next week'); Path=/"
+fi
+echo
+
+
+cat << EOM
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mise à jour des cookies</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+EOM
+
+if [ ! -z "${COOKIES[nom]}" ] || [ ! -z "${COOKIES[fruit]}" ]; then
+    echo '<h1>Cookies déjà présents</h1>'
+    echo '<ul>'
+    [ -z "${COOKIES[nom]}" ]   || echo "<li>Cookie <em>nom</em> : \"${COOKIES[nom]}\"</li>"
+    [ -z "${COOKIES[fruit]}" ] || echo "<li>Cookie <em>fruit</em> : \"${COOKIES[fruit]}\"</li>"
+    echo '</ul>'
+fi
+
+if [ ! -z "${POST_ARGS[nom]}" ] || [ ! -z "${POST_ARGS[fruit]}" ]; then
+    echo '<h1>Cookies mis à jour</h1>'
+    echo '<ul>'
+    [ -z "${POST_ARGS[nom]}" ]   || echo "<li>Cookie <em>nom</em> : \"${POST_ARGS[nom]}\"</li>"
+    [ -z "${POST_ARGS[fruit]}" ] || echo "<li>Cookie <em>fruit</em> : \"${POST_ARGS[fruit]}\"</li>"
+    echo '</ul>'
+fi
+
+echo "<h1>Heure d'enregistrement de la requête</h1>"
+echo "<p>Requête enregistrée le $(date '+%d/%m/%y %T')</p>"
+
+cat << EOM
+    </body>
+</html>
+EOM
+

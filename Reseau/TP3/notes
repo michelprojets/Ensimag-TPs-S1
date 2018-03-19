@@ -1,4 +1,9 @@
+ici on travail en local donc interface lo0 et pas eth ni enpos
+
 I)
+killall httpd
+httpd -f ~/www/conf/httpd.conf
+: pour lancer le serveur http
 1)
 la connextion a échoué car lorsqu'on lance "localhost" sans préciser le port, par défaut c'est 80 ("well-known port") mais il n'y a rien sur ce port là. Mais comme on a lancé notre serveur sur le port 8080, il faut préciser "localhost:8080"
 2)
@@ -22,6 +27,43 @@ ce script obtient l'adresse du site grâce à la méthode GET (on passe les para
 script utilisé : fping
 
 III)
+Les machines de l’ENSIMAG possèdent deux
+noms :
+— localhost
+— ensipcXXX
+Chaque partie VirtualHost définit un hôte virtuel en fonction de noms définis par ServerName. Le
+premier hôte virtuel est l’hôte par défaut, c’est-à-dire le site web qui est utilisé lorsque la requête
+effectuée par le client ne correspond à aucun des hôtes virtuels. Il remplace donc le site qui était
+auparavant défini dans le fichier de configuration. On peut constater que les racines des sites se situent
+dans deux répertoires distincts.
+--------------------------------------------
+   # <Directory "${HOME}/www/cgi-bin">
+	   # AllowOverride None
+       # Options None
+       # Require all granted
+   # </Directory>
+--------------------------------------------
+# <Directory "${HOME}/www/ensipcXXX">
+   # ... 
+# </Directory>
+--------------------------------------------
+# <VirtualHost *:8080>
+  ## On définit le premier hote virtuel. Ce sera celui choisit par
+  ## défaut par le serveur apache pour répondre aux requêtes client ne
+  ## faisant référence à aucun des hotes virtuels définis (par exemple
+  ## titi.com).
+#   ServerName localhost
+#   DocumentRoot "${HOME}/www/htdocs"
+# </VirtualHost>
+
+# <VirtualHost *:8080>
+  ## Deuxième hote virtuel : la directive ServerName indique par quel
+  ## nom on y accèdera, DocumentRoot indique le répertoire où trouver
+  ## les fichiers HTML du site web correspondant.
+#   ServerName ensipcXXX
+#   DocumentRoot "${HOME}/www/ensipcXXX"
+# </VirtualHost>
+----------------------------------------------
 1)
 virtual host : le premier hôte virtuel est l'hôte par défaut (le site web qui est utilisé lorsque la requête effectuée par le client ne correspond à aucun des hôtes virtuels, mais si sur la requête, au lieu de "localhost", on a un autre nom qui correspond à un des hôtes virtuels, le serveur http va chercher dans ce fichier là)
 chaque hôte correspond à un site web hébergé sur le même serveur web
@@ -29,25 +71,33 @@ chaque hôte correspond à un site web hébergé sur le même serveur web
 pour indiquer dans quel site le serveur doit prendre les fichiers, la variable d'environnement SERVER_NAME est modifiée (et d'autres également)
 pour voir la différence :
 http://localhost:8080/cgi-bin/printenv
-http://ensipc36:8080/cgi-bin/printenv
+http://ensipcXXX:8080/cgi-bin/printenv
 on n'a pas l'adresse IP lorsqu'on fait avec localhost
 cgi-bin est située à la racine, donc utilisable par tous les virtual hosts
 
 IV)
+L’arborescence visible sur un site web ne correspond pas forcément à l’arborescence physique qui existe
+sur le disque dur. Ainsi, le fichier accessible via l’adresse http://localhost:[port]/ensiwikiFAQ peut
+très bien ne pas se situer dans ~/www/htdocs. Cette possibilité est utile à la fois pour mieux organiser
+les fichiers sur le serveur, mais aussi pour cacher certains détails à l’utilisateur, ou tout simplement
+pour faciliter la vie de l’administrateur.
 3 directives possibles : redirection / alias / réécriture
 1) redirection
-Redirect /ensiwikiFAQ http://ensiwiki.ensimag.fr/index.php/FAQ : si on cherche ensiwikiFAQ sur notre serveur, on va rediriger la requête vers l'url suivante
+(A ajouter dans la partie <Directory "~/www/htdocs">)
+# Redirect /ensiwikiFAQ http://ensiwiki.ensimag.fr/index.php/FAQ : si on cherche ensiwikiFAQ sur notre serveur, on va rediriger la requête vers l'url suivante
 la redirection permet de rediriger la requête vers le destinataire qui contient réellement le fichier demandé par le client (vers ensiwiki au lieu de nous même)
 erreurs 301 / 302 / 304
 2) alias
-Alias /logfiles "${HOME}/www/logs"
-<Directory "${HOME}/www/logs">
-Require all granted
-Options Indexes
-</Directory>
+(A ajouter avant la partie <Directory "~/www/htdocs">)
+# Alias /logfiles "${HOME}/www/logs"
+# <Directory "${HOME}/www/logs">
+	# Require all granted
+	# Options Indexes
+# </Directory>
 on dit que logfiles va être l'alias du répertoire ~/www/logs
 autrement, on ne peut pas accéder au contenu du répertoire logs juste avec une requête http
 3) réécriture
+(A ajouter dans la partie <Directory "${HOME}/www/htdocs">)
 RewriteEngine on
 RewriteRule ^/?fping/([^/]*) /cgi-bin/fping?$1 [L,PT]
 on dit que la requête .../cgi-bin/fping?param va maintenant se réécrire de la manière .../fping/param (param étant l'adresse à laquelle faire le ping)
@@ -58,9 +108,37 @@ V)
 On stocke, sur le serveur, à la fois l’empreinte de (sel + motdepasse), et le sel lui-même.
 Lorsque l’utilisateur fournit un mot de passe pour tenter de s’authentifier, on concatène le sel (stocké sur le serveur), et le mot de passe (fourni par l’utilisateur)
 Puis on calcule l’empreinte du tout
-Enfin, on compare l’empreinte à celle stockée sur le serveur. Le mot de passe est correct si et seulement si les deux correspondent."
+Enfin, on compare l’empreinte à celle stockée sur le serveur. Le mot de passe est correct si et seulement si les deux correspondent.
 création d'un fichier stockant des mots de passe générés automatiquement par la fonction de hachage
 htpasswd -c fichier_passwords nom_utilisateur
 puis entrer le mdp (à retenir) associé à ce nom_utilisateur
 htpasswd fichier_passwords nom-utilisateur2
 puis entrer le mdp (à retenir) associé à ce nom_utilisateur2 pour rajouter un autre mdp pour un autre utilisateur
+-------------------------------
+# <Directory "${HOME}/www/htdocs">
+#   AuthType Basic
+#   AuthName "Entrez votre mot de passe svp"
+#   AuthUserFile "${HOME}/www/fichier_passwords.txt"
+#   Require valid-user
+# </Directory>
+-------------------------------
+on sécurise l'accès à nos pages web (avec un mdp à rentrer pour l'utilisateur en question)
+
+VI)
+HTTPS : protocole HTTP secure
+Ce protocole repose sur le concept de certificat.
+Un certificat est un fichier d’authentification d’un site web.
+Il lui est associé une paire de clés de chiffrement SSL (de nature identique à celles manipulées avec ssh)
+qui permet d’échanger des données chiffrées avec le site à protéger. Ce certificat est validé par
+un organisme dédié (il en existe plusieurs, comme Comodo, Thawte, Verisign, etc.), qui a pour fonction
+de garantir l’association entre l’adresse IP d’un site web, son URL et la clé publique de chiffrement qui
+lui est associée. L’organisme est donc garant du fait que l’on communique bien avec l’interlocuteur attendu
+(mais pas de la bonne foi de cet interlocuteur !).
+HTTPS garantit la confidentialité (chiffrement avec SSL) l'authentification (bon site car certificat)
+
+   1) La disponibilité : le système doit fonctionner sans faille durant les plages d'utilisation prévues et garantir l'accès aux services et ressources installées avec le temps de réponse attendu.
+   2) L'intégrité : les données doivent être celles que l'on attend, et ne doivent pas être altérées de façon fortuite, illicite ou malveillante. En clair, les éléments considérés doivent être exacts et complets.
+   3) La confidentialité : seules les personnes autorisées peuvent avoir accès aux informations qui leur sont destinées. Tout accès indésirable doit être empêché.
+   4) La traçabilité (ou « preuve ») : garantie que les accès et tentatives d'accès aux éléments considérés sont tracés et que ces traces sont conservées et exploitables.
+   5) L'authentification: l'identification des utilisateurs est fondamentale pour gérer les accès aux espaces de travail pertinents et maintenir la confiance dans les relations d'échange.
+   6) La non-répudiation et l'imputation : aucun utilisateur ne doit pouvoir contester les opérations qu'il a réalisées dans le cadre de ses actions autorisées et aucun tiers ne doit pouvoir s'attribuer les actions d'un autre utilisateur.

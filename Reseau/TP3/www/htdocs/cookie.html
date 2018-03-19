@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formulaire de test d'insertion de cookies</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <h1>Formulaire de test -- enregistrement de cookies</h1>
+        <form method="post" action="/cgi-bin/setcookie">
+            <fieldset>
+                <legend>Nom</legend>
+                <label for="nom">Entrez votre nom : </label>
+                <input type="text" name="nom" id="nom" autofocus />
+            </fieldset>
+            <fieldset>
+                <legend>Fruit préféré</legend>
+                <label for="fruit">Votre fruit préféré : </label>
+                <select name="fruit" size="3" id="fruit">
+                    <option>Abricot</option>
+                    <option>Pomme</option>
+                    <option>Banane</option>
+                    <option>Citron</option>
+                    <option>Orange</option>
+                    <option>Poire</option>
+                    <option>Mangue</option>
+                    <option>Lichi</option>
+                    <option>Melon</option>
+                </select>
+            </fieldset>
+            <input type="submit" value="Envoyer !" />
+        </form>
+    </body>
+</html>

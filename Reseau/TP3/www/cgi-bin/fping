@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Ping full path (unix path):
+PING=/bin/ping
+
+cat << EOM
+Content-type: text/html
+Server: ${SERVER_SOFTWARE}
+
+EOM
+
+cat << EOM
+<html>
+    <head>
+        <title>ping</title>
+    </head>
+    <body>
+        <h1>ping</h1>
+EOM
+
+ADDR=$(echo ${QUERY_STRING} | cut -d= -f2)
+
+if [ -x $PING ]; then
+	echo "Result for ping to <b>${ADDR}</b>:"
+	echo "<pre>"
+	${PING} -c 10 "${ADDR}" 2>&1
+	echo "</pre>"
+else
+	echo Error: cannot find ping on this system.
+fi
+
+cat << EOM
+    </body>
+</html>
+EOM
+
