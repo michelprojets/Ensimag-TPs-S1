@@ -3,7 +3,7 @@ PC ----(http)---- Zimbra ----(imap/pop/smtp)---- Serveur_de_Zimbra(serveur_courr
 Thunderbird (sans passer par http) :
 PC ----(imap/pop/smtp)---- Serveur_de_Zimbra(serveur_courriel)
 
-imap : consultation de mails et manipulation des messages
+imap / pop : seulement consultation de mails et manipulation des messages (mais imap le fait directement sur le serveur de messagerie contrairement à pop)
 smtp : seulement envoi de mails
 
 ----------
@@ -27,6 +27,25 @@ Ethernet
 ----------
 
 I)
+syntaxe du protocole IMAP : index COMMANDE PARAMETRES
+index : permet de créer une sorte d'alias pour la commande en question (mettre n'importe quoi)
+-->openssl s_client -crlf -connect imap.gmail.com:993
+>a0 LOGIN "heloompoe@gmail.com" "Mmail883" // connexion au serveur
+>a1 SELECT "inbox" // affichage du nombre de messages contenus dans le dossier (boîte aux lettres en l'occurrence) "inbox"
+>a2 STATUS "inbox" (unseen) // nombre de messages non-lus
+>a3 FETCH 1:10 all // affichage du contenu + des flags des messages 1 à 10
+>a4 STORE 2:3 flags \Deleted // ajout du flag (marquage) deleted pour les messages 2 et 3
+>a5 EXPUNGE 2:3 // suppression définitive des messages 2 et 3
+>a6 CREATE "archive" // création d'un dossier archive
+>a7 COPY 1:4 "archive" // on copie les messages 1 à 4 dans le dossier "archive" (mais toujours présents dans la boîte aux lettres : dossier "inbox")
+>a8 SELECT "archive" // affichage du nombre de messages contenus dans le dossier "archive"
+>a9 FETCH 1:10 all // affichage du contenu + des flags des messages 1 à 10
+>a10 FETCH 1:10 flags  // affichage des flags des messages 1 à 10
+>a11 STORE 5:6 flags \SEEN // ajout du flag (marquage) lu pour les messages 2 et 3
+>a12 LIST "" "*" // liste de tout ce qui est sur le serveur IMAP
+> QUIT // deconnexion
+
+II)
 1)
 telnel : non sécurisé
 openssl : sécurisé
@@ -39,7 +58,6 @@ dig MX grenoble-inp.org
 etu.viallet.grenoble-inp.fr (moins prioritaire)
 etu3.viallet.grenoble-inp.fr
 etu4.viallet.grenoble-inp.fr (plus prioritaire)
-3)
 ports utilisés par smtp :
 25 (sans chiffrement)
 587 (avec chiffrement)
@@ -81,4 +99,13 @@ openssl s_client -starttls smtp -connect etu.viallet.grenoble-inp.fr:25
 connexion sécurisé avec openssl avec l'option -starttls smtp pour avoir une session sécurisée
 on ne peut pas faire de connexion sécurisée avec etu.viallet.grenoble-inp.fr 25
 
+III)
+Dans le but d’assurer une sécurité des échanges de messagerie de bout-en-bout, c’est-à-dire entre un émetteur et un destinataire, nous allons utiliser le standard S/MIME. Il s’agit d’une extension du format de message qui permet d’introduire des procédés cryptographiques tels que le chiffrement ou la signature. S/MIME repose sur l’utilisation de chiffrement asymétrique de sorte que chaque utilisateur dispose d’une clé privée et d’une clé publique. Cette dernière est certifiée par un tiers de confiance, appelée autorité de certification (AC).
+Garantit l’integrité, l’autentification, la non-répudiation et la confidentialité
+trousseau.p12 : type du fichier après export du certificat
+Un trousseau de clés sous forme de fichier .p12 est une archive sécurisée contenant la clé publique, la clé privé et le certificat de l’utilisateur. Parfois le certificat de l’autorité de certification se trouve dans l’archive.
+openssl pkcs12 -in trousseau.p12 -out certificat.crt -clcerts
+: extraction de l'archive "trousseau.p12" du certificat d'utilisateur "certificat.crt"
+openssl x509 -text -in certificat.crt
+: lecture du certificat de l'utilisateur sous forme textuelle (à la place du code en hexa)
 

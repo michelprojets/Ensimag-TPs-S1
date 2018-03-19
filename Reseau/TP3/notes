@@ -134,7 +134,7 @@ un organisme dédié (il en existe plusieurs, comme Comodo, Thawte, Verisign, et
 de garantir l’association entre l’adresse IP d’un site web, son URL et la clé publique de chiffrement qui
 lui est associée. L’organisme est donc garant du fait que l’on communique bien avec l’interlocuteur attendu
 (mais pas de la bonne foi de cet interlocuteur !).
-HTTPS garantit la confidentialité (chiffrement avec SSL) l'authentification (bon site car certificat)
+HTTPS garantit la confidentialité (chiffrement avec SSL), l'authentification (bon site car certificat), l'intégrité (bits de contrôle), et la non-répudiation
 
    1) La disponibilité : le système doit fonctionner sans faille durant les plages d'utilisation prévues et garantir l'accès aux services et ressources installées avec le temps de réponse attendu.
    2) L'intégrité : les données doivent être celles que l'on attend, et ne doivent pas être altérées de façon fortuite, illicite ou malveillante. En clair, les éléments considérés doivent être exacts et complets.
@@ -142,3 +142,23 @@ HTTPS garantit la confidentialité (chiffrement avec SSL) l'authentification (bo
    4) La traçabilité (ou « preuve ») : garantie que les accès et tentatives d'accès aux éléments considérés sont tracés et que ces traces sont conservées et exploitables.
    5) L'authentification: l'identification des utilisateurs est fondamentale pour gérer les accès aux espaces de travail pertinents et maintenir la confiance dans les relations d'échange.
    6) La non-répudiation et l'imputation : aucun utilisateur ne doit pouvoir contester les opérations qu'il a réalisées dans le cadre de ses actions autorisées et aucun tiers ne doit pouvoir s'attribuer les actions d'un autre utilisateur.
+
+Dans ~/www/conf/
+/usr/bin/openssl genrsa > privkey.pem
+: Générer la clé de chiffrement privée du site
+/usr/bin/openssl req -new -key privkey.pem -out cert.csr
+et rentrer les données nécessaires à l'examination de notre dossier (pour savoir si on dit juste)
+: Générer le certificat (requête de certificat)
+openssl x509 -req -in cert.csr -extensions v3_ca -signkey privkey.pem -out cacert.pem
+-trustout
+: Signer cette requête nous-même (normalement par l'authorité en question afin de nous le renvoyer)
+
+Pour activer HTTPS et ajouter un port d'écoute pour les connexions SSL (car on avait 8080 pour notre HTTP) :
+# Include ${HOME}/www/conf/00-ssl.conf
+# listen 8443
+
+7)
+Un cookie est un enregistrement d’informations par le serveur dans un fichier situé sur l’ordinateur client (le vôtre), informations que ce même serveur peut aller relire et modifier ultérieurement. Un cookie se compose d’un ensemble de variables (ou de champs) que le client et le serveur s’échangent lors de transactions HTTP, stockées sur la machine cliente soit dans un simple fichier texte, soit représenté comme une entrée d’une base de données. Un cookie est obligatoirement rattaché à un nom de domaine et un ensemble d’URL de telle sorte que seule une requête provenant du même serveur pourra y accéder. Grâce à un programme CGI, le serveur a la possibilité de mettre à jour ou d’effacer un cookie. Un même “client” peut stocker environ un maximum de 300 cookies, dont 20 maximum pour un même serveur, chaque cookie pouvant environ atteindre jusqu’à 4000 octets
+
+
+
