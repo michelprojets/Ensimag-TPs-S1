@@ -1,5 +1,7 @@
 ici on travail en local donc interface lo0 et pas eth ni enpos
 
+/etc/services : contient les well known ports
+
 I)
 killall httpd
 httpd -f ~/www/conf/httpd.conf

@@ -6,11 +6,16 @@ I)
 1)
 Tattente = temps de traitement
 Tpropagation = temps que 1 paquet arrive à destination
-Temission = envoi du premier jusqu'au dernier paquet (relatif à la longueur du paquet) (permet de calculer débit avec lequel on communique)
-ping de 64 octets : temps min = 0.193/2 ms pour 512 b => 5 Mb/s
-ping de 10008 octets : temps min = 0.468/2 ms pour 80064 b => 326 Mb/s
-le seul T qui dépend de la longueur du paquet est Temission, donc pour le calculer, on fait la différence entre ces deux essais : Temission = (0.468-0.193)/2=0.1375 pour 10008-64=9944 octets
-comparaison avec le débit indiqué par "ethtool enp0s31f6" qui indique 10000Mb/s
+Temission = mise sur le canal du premier jusqu'au dernier paquet (relatif à la longueur du paquet) (permet de calculer débit du canal)
+/2 car aller retour
+on prend le temps min car on veut le débit max
+si on ne prend que le temps de latence indiqué par le ping, on trouve 5.05 Mb/s (pas assez précis)
+ping de 64 octets : temps min = 0.193/2 ms pour 512 b
+ping de 10008 octets : temps min = 0.468/2 ms pour 80064 b
+le seul T qui dépend de la longueur du paquet est Temission, donc pour le calculer, on fait la différence entre ces deux essais : Temission = (0.468-0.193)/2 = 0.1375 ms pour 10008-64=9944 octets
+Tpropagation + Tattente = Tlatence - Temission = 0.722 - 0.1375 = 0.5845 ms pour 9944 octets
+débit = (9944*8)/0.0005845 = 136102652 b/s = 130 Mb/s (un peu plus précis)
+comparaison avec le débit indiqué par "ethtool enp0s31f6" qui indique 1000 Mb/s
 
 2)
 udptarget -p <port> : lancement d'un serveur d'écoute UDP dans un port donné (si on veut recevoir de 3 machines simultanément pour le test de débit, on lance sur 3 ports différents)
@@ -26,6 +31,12 @@ difference car temps de propagation different (à cause de la distance) (et le t
 10)
 tc qdisc add dev eth0 root netem delay 1s : augmentation volontaire du délai de 1s
 différence lors du ping (ajout de 1000 ms)
+
+11)
+Si on veut regarder une vidéo, la latence n'est pas génante, car on recevra la vidéo mais juste un peu plus tard que si on avait pas de latence
+
+12)
+Si on veut faire une vidéoconférence, la latence sera un problème car s'il n'a pas de latence, on recevra les informations en décalé
 
 NAT > port forwarding > écoute sur port 13000 (celui de UDP par défaut) et envoi à partir de 13000 (guest) : pour permettre à la VM de recevoir les paquets (si on veut le ping, on ping sa machine physique hôte)
 
