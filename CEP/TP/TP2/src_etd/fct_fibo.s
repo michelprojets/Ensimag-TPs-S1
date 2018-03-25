@@ -42,7 +42,7 @@ Conventions utilisées
     sp(n-1)  $a0(n)             12 ____
              $ra(n)             8   |
              $fibo_temps(n)     4   | place réservée par fibo(n)
-    sp(n)    $a0(n-1)           0  _|__
+    sp(n)    $a0(n+1)           0  _|__
 
     fibo(n) peut écrire dans sp+12 s'il en a envie
 */
