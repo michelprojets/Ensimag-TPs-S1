@@ -13,35 +13,3 @@ if (i<1){
 } else {
  ...
 }
-
-# intervalles pour seuil 50%
-I_a=qchisq(alphas[1]/2)/(2*n*moy)
-I_b=qchisq(1-(alphas[1]/2))/(2*n*moy)
-Imin_a=0
-Imin_b=qchisq(1-alphas[1])/(2*n*moy)
-Imax_a=qchisq(alphas[1])/(2*n*moy)
-Imax_b=Inf
-
-# intervalles pour seuil 10%
-I_a=qchisq(alphas[2]/2)/(2*n*moy)
-I_b=qchisq(1-(alphas[2]/2))/(2*n*moy)
-Imin_a=0
-Imin_b=qchisq(1-alphas[2])/(2*n*moy)
-Imax_a=qchisq(alphas[2])/(2*n*moy)
-Imax_b=Inf
-
-# intervalles pour seuil 5%
-I_a=qchisq(alphas[3]/2)/(2*n*moy)
-I_b=qchisq(1-(alphas[3]/2))/(2*n*moy)
-Imin_a=0
-Imin_b=qchisq(1-alphas[3])/(2*n*moy)
-Imax_a=qchisq(alphas[3])/(2*n*moy)
-Imax_b=Inf
-
-# intervalles pour seuil 1%
-I_a=qchisq(alphas[4]/2)/(2*n*moy)
-I_b=qchisq(1-(alphas[4]/2))/(2*n*moy)
-Imin_a=0
-Imin_b=qchisq(1-alphas[1])/(2*n*moy)
-Imax_a=qchisq(alphas[1])/(2*n*moy)
-Imax_b=Inf

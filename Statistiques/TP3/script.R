@@ -6,15 +6,28 @@ estim_vrai<-1/moy
 estim_opti<-(n-1)/sum(donnees)
 alphas<-c(0.5, 0.1, 0.5, 0.1)
 
-intervalles<-matrix(c(0, 0, 0, 0, 0, 0), 4, 6)
+intervalles<-matrix(nrow=4, ncol=6)
 for (i in 1:4){
-    intervalles[i][1]=qchisq(alphas[i]/2, df=2)/(2*n*moy)
-    intervalles[i][2]=qchisq(1-(alphas[i]/2), df=2)/(2*n*moy)
-    intervalles[i][3]=0
-    intervalles[i][4]=qchisq(1-alphas[i], df=2)/(2*n*moy)
-    intervalles[i][5]=qchisq(alphas[i], df=2)/(2*n*moy)
-    intervalles[i][6]=Inf
+    intervalles[i,1]=qchisq(alphas[i]/2, 2*n)/(2*n*moy)
+    intervalles[i,2]=qchisq(1-(alphas[i]/2), 2*n)/(2*n*moy)
+    intervalles[i,3]=0
+    intervalles[i,4]=qchisq(1-alphas[i], 2*n)/(2*n*moy)
+    intervalles[i,5]=qchisq(alphas[i], 2*n)/(2*n*moy)
+    intervalles[i,6]=Inf
 }
 
-pexp(x, 10)
-rexp(5)
+m<-5  # faire varier le nombre d'échantillon m
+taille<-20  # faire varier la taille de l'échantillon taille
+pourcentages<-seq(1:m)
+for (i in 1:m){
+    cpt<-0
+    realisations<-rexp(taille)
+    for (j in 1:taille){
+        # faire varier la ligne de intervalles pour faire varier alpha
+        if (intervalles[1,1]<=realisations[j] && realisations[j]<=intervalles[1,2]){
+            cpt<-cpt+1
+        }
+    }
+    pourcentages[i]=(cpt/taille)*100
+}
+pourcentage_moy<-sum(pourcentages)/m
