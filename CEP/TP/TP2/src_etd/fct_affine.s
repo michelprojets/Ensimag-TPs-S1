@@ -17,8 +17,8 @@ uint32_t affine(uint32_t a,uint32_t b,uint32_t x)
   place registre ra : nr=1
   => N=3*4 donc pile +3*4
   PILE:
-  sp+0 : place pour x ($a0 de mult)
-  sp+4 : place pour a ($a1 de mult)
+  sp+0 : place pour a ($a1) de mult
+  sp+4 : place pour x ($a0) de mult
   sp+8 : place pour $ra
 
   (on pouvait juste sauvegarder une place pour a car on réutilise que b)
@@ -30,19 +30,22 @@ affine:
     addiu $sp,$sp,-3*4
     /* on y sauvegarde l'adresse de retour */
     sw $ra, 2*4($sp)
-    /* sauvegarde de a et b ()*/
-    sw $a1, 0*4($sp)
-    sw $a0, 1*4($sp)
     /* on place les bons $a0 et $a1 pour mult */
-    /* utiliser une var temporaire */
+    /* on fait en sorte que a0 contienne x, a1 contienne a et a2 contienne b */
+    move $t0, $a0 /* variable temporaire */
     move $a0, $a2
-    move $a1, $a0
+    move $a2, $a1
+    move $a1, $t0
+    /* sauvegarde de x ($a0) et a ($a1) dans la place allouée par la fonction appelante */
+    sw $a0, 3*4($sp)
+    sw $a1, 5*4($sp)
       /* return mult(x,a)+b; */
       jal mult
-      /* on remet les valeurs initiales de a et b */
-      lw $a1, 0*4($sp)
-      lw $a0, 1*4($sp)
-      addu $v0, $v0, $a1
+      /* on remet les valeurs initiales de b et a */
+      lw $a0, 3*4($sp)
+      lw $a1, 5*4($sp)
+      /* ici, a0 contient x, a1 contient a et a2 contient b */
+      addu $v0, $v0, $a2
     /* on récupère l'adresse de retour' */
     lw $ra, 2*4($sp)
     /* on replace le pointeur de pile */
