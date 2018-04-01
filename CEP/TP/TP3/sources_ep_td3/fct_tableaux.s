@@ -38,57 +38,57 @@ tri_min:
     lui $t2, 0
     /* int32_t tmp; */
     li $t3, 0
+
     /* for (i = 0; */
+    and $t0, $t0, $zero
 for1 :
-      and $t0, $t0, $zero
       /* i < taille - 1; */
       addi $t4, $a1, -1
       bge $t0, $t4, fin_for1
 
       /* for (ix_min = i, j = i + 1; */
-for2 :
-      and $t2, $t2, $zero
-      or $t2, $t2, $t0
+      or $t2, $t0, $zero
       addu $t1, $t0, 1
+for2 :
       /* j < taille; */
       bge $t1, $a1, fin_for2
-      /* j++) */
-      addu $t1, $t1, 1
       /* if (tab[j] < tab[ix_min]) { */
-      addu $t5, $a0, $t1
-      lui $t6, 4 /* uint32_t fait 4 octets */
-      mult $t5, $t6 /* $t5 : &tab[j] */
-      ld $t7, 0($t5) /* t7 : tab[j] */
-      addu $t5, $a0, $t2
-      lui $t6, 4 /* uint32_t fait 4 octets */
-      mult $t5, $t6 /* $t5 : &tab[ix_min] */
-      ld $t8, 0($t5) /* t8 : tab[ix_min] */
-      bge $t7, $t8, fin_si
+      or $t5, $t1, $zero
+      sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+      addu $t5, $a0, $t5 /* $t5 : &tab[j] */
+      lw $t6, 0($t5) /* $t6 : tab[j] */
+      or $t5, $t2, $zero
+      sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+      addu $t5, $a0, $t5 /* $t5 : &tab[ix_min] */
+      lw $t7, 0($t5) /* $t7 : tab[ix_min] */
+      bge $t6, $t7, fin_si
       /* ix_min = j; */
       or $t2, $t1, $zero
 fin_si :
+      /* j++) */
+      addu $t1, $t1, 1
       /* } */
       j for2
 
 fin_for2 :
           /* tmp = tab[i]; */
-          addu $t5, $a0, $t0
-          lui $t6, 4 /* uint32_t fait 4 octets */
-          mult $t5, $t6 /* $t5 : &tab[i] */
-          ld $t3, 0($t5)
+          or $t5, $t0, $zero
+          sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+          addu $t5, $a0, $t5 /* $t5 : &tab[j] */
+          lw $t3, 0($t5)
           /* tab[i] = tab[ix_min]; */
-          addu $t5, $a0, $t2
-          lui $t6, 4 /* uint32_t fait 4 octets */
-          mult $t5, $t6 /* $t5 : &tab[ix_min] */
-          ld $t7, 0($t5) /* t7 : tab[ix_min] */
-          addu $t8, $a0, $t0
-          lui $t6, 4 /* uint32_t fait 4 octets */
-          mult $t8, $t6 /* $t8 : &tab[i] */
-          sw $t7, 0($t8)
+          or $t5, $t2, $zero
+          sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+          addu $t5, $a0, $t5 /* $t5 : &tab[ix_min] */
+          lw $t6, 0($t5) /* $t6 : tab[ix_min] */
+          or $t5, $t0, $zero
+          sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+          addu $t5, $a0, $t5 /* $t5 : &tab[i] */
+          sw $t6, 0($t5)
           /* tab[ix_min] = tmp; */
-          addu $t5, $a0, $t2
-          lui $t6, 4 /* uint32_t fait 4 octets */
-          mult $t5, $t6 /* $t5 : &tab[ix_min] */
+          or $t5, $t2, $zero
+          sll $t5, $t5, 2 /* uint32_t fait 4 octets */
+          addu $t5, $a0, $t5 /* $t5 : &tab[ix_min] */
           sw $t3, 0($t5)
           /* i++) */
           addu $t0, $t0, 1
