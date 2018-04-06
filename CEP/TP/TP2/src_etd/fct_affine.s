@@ -36,6 +36,11 @@ affine:
     move $a0, $a2
     move $a2, $a1
     move $a1, $t0
+
+    /* ON AURAIT PU JUSTE SAUVEGARDER LES 3 PARAMETRES DANS LEUR PLACE ALLOUEE PAR LA FONCTION
+    APPELANTE PUIS PLACER x ET a POUR LE PROCHAIN APPEL DE FONCTION AVEC DES sw AU LIEU
+    D'UTILISER DES VARIABLES TEMPORAIRES ETC. !!!!! */
+
     /* sauvegarde de x ($a0) et a ($a1) dans la place allouée par la fonction appelante */
     sw $a0, 3*4($sp)
     sw $a1, 5*4($sp)

@@ -51,4 +51,3 @@ modification:
     sw $a1, 4($a2)
     /*}*/
     jr $ra
-

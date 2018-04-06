@@ -17,7 +17,7 @@ static struct cellule_t *cree_liste(int32_t tab[])
 {
     struct cellule_t *liste = NULL;
     for (uint32_t i = 0; tab[i] != -1; i++) {
-        struct cellule_t *cell = malloc(sizeof(struct cellule_t)); 
+        struct cellule_t *cell = malloc(sizeof(struct cellule_t));
         assert(cell != NULL);
         cell->val = tab[i];
         cell->suiv = liste;
@@ -58,16 +58,16 @@ static void test(int32_t tableau[])
     printf("Liste inversee : ");
     inverse(&liste);
     affiche_liste(liste);
-    liste = decoupe(liste, &l1, &l2);
-    printf("Liste initiale apres le decoupage : ");
-    affiche_liste(liste);
-    printf("Liste des elements impairs : ");
-    affiche_liste(l1);
-    printf("Liste des elements pairs : ");
-    affiche_liste(l2);
-    detruit_liste(liste);
-    detruit_liste(l1);
-    detruit_liste(l2);
+    // liste = decoupe(liste, &l1, &l2);
+    // printf("Liste initiale apres le decoupage : ");
+    // affiche_liste(liste);
+    // printf("Liste des elements impairs : ");
+    // affiche_liste(l1);
+    // printf("Liste des elements pairs : ");
+    // affiche_liste(l2);
+    // detruit_liste(liste);
+    // detruit_liste(l1);
+    // detruit_liste(l2);
 }
 
 int main(void)
@@ -98,4 +98,3 @@ int main(void)
     test(tableau);
     return 0;
 }
-
