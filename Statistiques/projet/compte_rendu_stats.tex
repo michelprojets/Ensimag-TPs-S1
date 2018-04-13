@@ -94,13 +94,13 @@ Donc l'estimateur des moments (d'ordre 1) vaut $\tilde{\theta_{n}}=\frac{n_{0}*n
 Estimateur de maximum de vraisemblance : \ \\ \\
 \begin{equation}
 \begin{aligned}
-$ \mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta) & = \prod_{i=1}^{n}\textsc{P}(X_{i}=x_{i}, \theta) \ \\
+\mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta) & = \prod_{i=1}^{n}\textsc{P}(X_{i}=x_{i}, \theta) \ \\
 & = p^{\sum_{i=1}^{n} x_{i}}(1-p)^{n-\sum_{i=1}^{n} x_{i}} \ \\ 
 & = (\frac{n_{0}}{\theta})^{\sum_{i=1}^{n}
 x_{i}}(1-\frac{n_{0}}{\theta})^{n-\sum_{i=1}^{n} x_{i}} \ \\
 \end{aligned}
 \end{equation} \ \\
-$\ln(\mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta)) = (\sum_{i=1}^{n}x_{i})(\ln(n_{0})-\ln(\theta)})+(n-\sum_{i=1}^{n} x_{i})\ln(1-\frac{n_{0}}{\theta})$ \ \\ \\
+$\ln(\mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta)) = (\sum_{i=1}^{n}x_{i})(\ln(n_{0})-\ln(\theta))+(n-\sum_{i=1}^{n} x_{i})\ln(1-\frac{n_{0}}{\theta})$ \ \\ \\
 En dérivant par rapport à $\theta$ : \ \\
 \begin{equation}
 \begin{aligned}
@@ -115,7 +115,7 @@ On calcule ainsi sur R la valeur de ces estimateurs sur notre échantillon de do
 \begin{figure}[h]
 \includegraphics[scale=0.7]{images/Q1_3.png}
 \end{figure} \ \\
-Sur l'échantillon simulée, on observe un estimateur de $\theta$ qui vaut $750$ soit $25%$ de moins que la vraie valeur de $\theta$ pour al simulation ($1000$). \ \\
+Sur l'échantillon simulée, on observe un estimateur de $\theta$ qui vaut $750$ soit $25\%$ de moins que la vraie valeur de $\theta$ pour la simulation ($1000$). \ \\
 Cet estimateur n'est pas très précis.
 \end{exo1}
 
@@ -124,7 +124,7 @@ intervalle de confiance exact de seuil $\alpha$ pour $\theta$ : \ \\
 On a $p=\frac{n_{0}}{\theta} \Rightarrow \theta=\frac{n_{0}}{p}$ donc en estimant $p$ (avec la formule du cours), on obtient directement une estimation de $\theta$.
 \begin{equation}
 \begin{aligned}
-\left{[}n_{0}(1+\frac{n-T}{T+1}f_{2(n-T),2(T+1),1-\frac{\alpha}{2}}),n_{0}(1+\frac{n-T+1}{T}f_{2(n-T+1),2T,\frac{\alpha}{2}})\right{]}
+\left[ n_{0}(1+\frac{n-T}{T+1}f_{2(n-T),2(T+1),1-\frac{\alpha}{2}}),n_{0}(1+\frac{n-T+1}{T}f_{2(n-T+1),2T,\frac{\alpha}{2}})\right]
 \end{aligned}
 \end{equation} \ \\
 avec $T=n\overline{X_{n}}=\sum_{i=1}^{n} x_{i}$ et $f_{\nu_{1},\nu_{2},\alpha} = F_{\mathscr{F}}^{-1}(1-\alpha,\nu_{1},\nu_{2})$, $F_{\mathscr{F}}^{-1}$ étant ici la fonction quantile de la loi de Fisher-Snedecor. \ \\
@@ -132,7 +132,7 @@ intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$ : \ \\
 On obtient l'intervalle associée avec la même démarche que précédement.
 \begin{equation}
 \begin{aligned}
-\left{[}\frac{n_{0}}{\overline{X_{n}}+u_{\alpha}\sqrt{\frac{\overline{X_{n}}(1-\overline{X_{n}})}{n}}},\frac{n_{0}}{\overline{X_{n}}-u_{\alpha}\sqrt{\frac{\overline{X_{n}}(1-\overline{X_{n}})}{n}}}\right{]}
+\left[ \frac{n_{0}}{\overline{X_{n}}+u_{\alpha}\sqrt{\frac{\overline{X_{n}}(1-\overline{X_{n}})}{n}}},\frac{n_{0}}{\overline{X_{n}}-u_{\alpha}\sqrt{\frac{\overline{X_{n}}(1-\overline{X_{n}})}{n}}}\right]
 \end{aligned}
 \end{equation} \ \\
 avec $u_{\alpha}=F_{\mathscr{N}}^{-1}(1-\frac{\alpha}{2})$, $F_{\mathscr{N}}^{-1}$ étant ici la fonction quantile de la loi normale. \ \\
@@ -150,7 +150,7 @@ On remarque que les intervalles exacts fournissent un encadrement plus précis d
 $\textsc{P}(\hat{\theta_{n}}=+\infty) = \textsc{P}(\frac{n_{0}*n}{\sum_{i=1}^{n} x_{i}}=+\infty) = \textsc{P}(\sum_{i=1}^{n} x_{i}=0) = \textsc{P}(T=0) = (1-p)^n = (1-\frac{n_{0}}{\theta})^n$ \ \\
 Cet estimateur n'est pas convergent. \ \\
 $Biais(\hat{\theta_{n}}) = E[\hat{\theta_{n}}]-\theta$ \ \\
-Comme $\hat{\theta_{n}}$ a une probabilité non nulle de valoir $+\infty$ alors $E[\hat{\theta_{n}}]=+\infty$ \Rightarrow $E[$\hat{\theta_{n}}$]-\theta = +\infty$ (car $\theta$ est une constante) \Rightarrow $Biais(\hat{\theta_{n}}) = +\infty$. \ \\
+Comme $\hat{\theta_{n}}$ a une probabilité non nulle de valoir $+\infty$ alors $E[\hat{\theta_{n}}]=+\infty \Rightarrow $E[$\hat{\theta_{n}}$]$-\theta = +\infty$ (car $\theta$ est une constante) $\Rightarrow $Biais$(\hat{\theta_{n}}) = +\infty$. \ \\
 Donc on peut en déduire que le biais de cet estimateur vaut $+\infty$.
 Sur notre échantillon de données, on peut calculer la probabilité $\textsc{P}(\hat{\theta_{n}}=+\infty)$ :
 \begin{figure}[h]
@@ -180,23 +180,85 @@ Toujours avec notre échantillon de données, on calcule sur R cette valeur de n
 %======================================
 
 \begin{exo2} \ \\ \\
-
+    $\forall j = 1,...,m , Y_{j}$ représente le nombre de poissons pêchés entre le $j^{eme}$
+    poisson bagué et le $(j+1)^{eme}$.
+On répète successivement l'expérience "on pêche un poisson" jusqu'à ce qu'il soit bagué,
+de probabilité $\frac{n_0}{\theta}$. Les $Y_i$ suivent donc tous une loi géométrique de paramètre
+$\frac{n_0}{\theta}$.\ \\D'autre part, ils concernent des pêches différentes, donc ils sont
+de plus indépendants.\ \\
+\includegraphics[scale=0.5]{images/Q2_1_1.png}
+\\ \\
+En théorie, la moyenne et la variance d'une loi géométrique $G(p)$ sont données par $\frac{1}{p}$ et $\frac{1-p}{p^2}$, soit pour $n_0 = 50$ et $\theta = 1000$, $\mathbb{E}(Y) = 20$ et Var$(Y) = 380$. \ 
+Pour notre échantillon, nous calculons:\ \\
+\includegraphics[scale=0.5]{images/Q2_1_2.png} \ \\
+Les résultats que nous obtenons sont proches des résultats théoriques.
 \end{exo2}
 
 \begin{exo2} \ \\ \\
-
+En notant N le nombre de poissons pêchés, on a $N = \sum\limits_{j=1}^{m} Y_j$\
+Ici,\ \\
+\includegraphics[scale=0.5]{images/Q2_2.png} \ \\
 \end{exo2}
 
 \begin{exo2} \ \\ \\
-
+L'estimateur par la méthode des moments est $\overline{\theta}'_m = n_0 \bar{Y}$\ \\
+On cherche à annuler la dérivée de la fonction de vraisemblance $\mathcal{L}$:
+\begin{equation}
+\begin{aligned}
+\mathcal{L}(\theta;y_1,...,y_n) & = \prod_{j=1}^{m}P(Y_j = y_j; \theta) \ \\
+& = \prod_{j=1}^{m}(1-\frac{n_0}{\theta})^{y_i - 1}\frac{n_0}{\theta}\ \\
+& = (\frac{n_0}{\theta})^{m} \prod_{j=1}^{m} (1-\frac{n_0}{\theta})^{y_i -1} \ \\
+\end{aligned}
+\end{equation}
+On calcule donc $\frac{\partial{\ln{\mathcal{L}}}}{\partial{t}}$ et on cherche ensuite à l'annuler pour maximiser la log-vraisemblance:
+\begin{equation}
+\begin{aligned}
+    \ln{\mathcal{L}}(\theta;y_1,...,y_n) & = m\ln{\frac{n_0}{\theta}} + \sum_{j=1}^{m} (y_i - 1)\ln{1 - \frac{n_0}{\theta}}\ \\
+    \frac{\ln{\partial{\mathcal{L}}}}{\partial{\theta}} & = \frac{-m}{\theta} + \sum_{j=1}^{m} (y_i - 1)\frac{-\frac{n_0}{\theta^2}}{1-\frac{n_0}{\theta}} \ \\
+    & = \frac{-m}{\theta} - \sum_{j=1}^{m} (y_i - 1)\frac{n_0}{\theta^2-\theta n_0}
+\end{aligned}
+\end{equation}
+Avant simplification, on trouve $\hat{\theta}'_m = n_0 \frac{\sum_{j=1}^{m} (y_i - 1) + m}{m}$, puis le +m au numérateur compense les -1, et on retrouve $\hat{\theta}'_m = n_0 \bar{Y}$ \ \\
+Ainsi, pour notre échantillon, nous calculons: \ \\
+\includegraphics[scale=0.5]{images/Q2_3.png} \ \\
 \end{exo2}
 
 \begin{exo2} \ \\ \\
-
+Les $Y_i$ sont indépendantes et suivent la même loi, on a donc:
+\begin{equation}
+    \begin{aligned}
+    \mathcal{I}_m & = m \mathcal{I}_1 \ \\
+    & = m Var(\frac{\partial}{\partial{\theta}} \ln{\mathcal{L}(\theta, Y_1}))\ \\
+    & = m Var(\frac{\partial}{\partial{\theta}} [\ln{\frac{n_0}{\theta}] + (Y_1 -1)\ln(1 - \frac{n_0}{\theta}))\ \\
+    & = m Var(\frac{-1}{\theta} + (Y_1 -1)\frac{n_0}{\theta^2 - \theta n_0})\ \\
+    & = m(\frac{n_0}{\theta^2 - \theta n_0})^2((\frac{\theta}{n_0})^2 - \frac{\theta}{n_0})
+    \end{aligned}
+\end{equation}
+Finalement, $\mathcal{I}_m = \frac{m}{\theta^2 - \theta n_0}$ \ \\
+$\mathbb{E}({\hat{\theta}}'_m) = n_0 \mathbb{E}(\bar{Y}) = \theta$ donc $\hat{\theta}'_m$ est sans biais. À présent, on déduit de l'inégalité FDCR que cet estimateur est de variance minimale si et seulement si sa variance est égale à $\frac{1}{\mathcal{I}_m(\theta)}$, donc égale à $\frac{\theta^2}{m} - \frac{\theta n_0}{m}$.
+\begin{equation}
+    \begin{aligned}
+    Var(\hat{\theta}'_m) & = Var(\frac{n_0}{m} \sum\limits_{j=1}^{m}Y_i)$ (où les $Y_i$ sont indépendantes)$ \ \\
+    & = \frac{n_0^2}{m} Var(Y_1)\ \\
+    & = \frac{n_0^2}{m} [(\frac{\theta}{n_0})^2 - \frac{\theta}{n_0}] \ \\
+    & = \frac{\theta^2}{m} - \frac{\theta n_0}{m}
+    \end{aligned}
+\end{equation}
+${\hat{\theta}}'_m$ est donc effectivement de variance minimale.
 \end{exo2}
 
-\begin{exo2} \ \\ \\
-
+\begin{exo2}
+On obtient le tableau suivant:\ \\ \\
+\begin{tabular}{|c|c|}
+    \hline
+    \alpha & Intervalle de confiance \\
+    \hline
+    1\% & [à remplir] \\
+    5\% & [à remplir] \\
+    10\% & [à remplir] \\
+    20\% & [à remplir] \\
+    \hline
+\end{tabular}
 \end{exo2}
 
 \newpage
@@ -206,19 +268,33 @@ Toujours avec notre échantillon de données, on calcule sur R cette valeur de n
 %======================================
 
 \begin{exo3} \ \\ \\
-
+La première stratégie consiste à évaluer le ratio $ \frac{nombre de poissons bagués}{nombre total de poisson}$, puis, connaissant le nombre exact de poissons bagués, en déduire une estimation du nombre total de poissons. Sur 1000 poissons pêchés, 35 sont bagués. Il y a donc une proportion $p=\frac{35}{1000}=0.035$ de poissons bagués parmi les poissons pêchés. On peut donc estimer $\theta=0.035$.\newline On calcule les intervalles de confiances :
+\begin{enumerate}
+    \item Intervalle de confiance exact : $[0.02449753 , 0.02533891]$
+    \item Intervalle de confiance asymptotuque de seuil à 5\% : $[0.02544073 , 0.04455927]$
+\end{enumerate}
 \end{exo3}
 
 \begin{exo3} \ \\ \\
-
+La deuxième stratégie repose sur la supposition suivante : le nombre de poissons pêchés avant de tomber sur un poisson bagué suit une loi géométrique de paramètre $\lambda$ à déterminer. Ce paramètre est le ratio précédant, donc :\newline $\lambda=\frac{nombre_de_poissons_bagués}{nombre_total_de_poissons}$. \newline Donc une estimation de $\lambda$ conduira de façon inévitable à une estimation du ratio. La deuxième stratégie consiste à évaluer $\lambda$. \newline On trouve $\lambda=0.03521127$. Calculons l'intervalle de confiance asymptotique de seuil à 5\% : \newline $[0.00000000, 0.08645611]$
 \end{exo3}
 
 \begin{exo3} \ \\ \\
-
+Le logiciel R nous permet de tracer cet histogramme :  \ \\
+\begin{figure}[h]
+\includegraphics[scale=1.2]{images/Histogramme_de_Y_avec_regroupement.jpeg}
+\end{figure} \ \\
+Cet histogramme ressemble fort à la représentation d'une variable aléatoire qui suit une loi géométrique. On peut donc considérer que l'hypothèse d'une loi géometrique est vérifiée. En tout cas, elle n'est pas absurde.
 \end{exo3}
 
 \begin{exo3} \ \\ \\
+Pour décider de la meilleure stratégie, comparons les intervalles de confiance asymptotiques. Intéréssons nous plus particulièrement aux longueurs de ces intervalles : 
+\begin{enumerate}
+    \item Stratégie 1 : 0.01911855
+    \item Stratégie 2 : 0.08645611
+\end{enumerate}
 
+Il apparaît que la longueur pour la deuxième stratégie est presque 5 fois plus important que celui de la première stratégie. \newline \newline Il et donc préférable de choisir la première stratégie.
 \end{exo3}
 
 \newpage
@@ -273,7 +349,7 @@ On remarque que la courbe associée à l'histogramme s'apparente à celle modél
 \begin{figure}[h]
 \includegraphics[scale=1]{images/Q4_3_proba.PNG}
 \end{figure} \ \\
-De même, en traçant les graphes de probabilité $(F_{\mathscr{N}}^{-1}(\overline{x_{i}}), $F_{\mathscr{N}}^{-1}(\frac{i}{m})$ avec $\overline{x_{i}} \forall i=1,...,n$ les moyennes empiriques de l'échantillon de données. On remarque de même que l'apparence d'une droite se forme à partir de $n=50$ ce qui confirme le fait qu'à partir de cette valeur de $n=50$ environ, la moyenne empirique des $x_{i}$ (iid suivant une loi de Bernoulli) suit une loi normale. Le théorème centrale limite est ainsi illustrée.
+De même, en traçant les graphes de probabilité $(F_{\mathscr{N}}^{-1}(\overline{x_{i}})$, $F_{\mathscr{N}}^{-1}(\frac{i}{m})$ avec $\overline{x_{i}} \forall i=1,...,n$ les moyennes empiriques de l'échantillon de données. On remarque de même que l'apparence d'une droite se forme à partir de $n=50$ ce qui confirme le fait qu'à partir de cette valeur de $n=50$ environ, la moyenne empirique des $x_{i}$ (iid suivant une loi de Bernoulli) suit une loi normale. Le théorème centrale limite est ainsi illustrée.
 \end{exo4}
 
 \end{document}
