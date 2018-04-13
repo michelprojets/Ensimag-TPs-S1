@@ -57,7 +57,7 @@
                                   \end{array}
                                 \right.
 \]
-De plus, les résultats des pêches successives sont indépendants et la probabilité que le $i^{ème}$ poisson soit bagué est $p=\frac{n_{0}}{\theta}$. \ \\
+De plus, les résultats des pêches successives sont indépendants et la probabilité que le $i^{eme}$ poisson soit bagué est $p=\frac{n_{0}}{\theta}$. \ \\
 Donc les $X_{i}$ sont indépendants et identiques (iid) car suivent tous une loi de Bernoulli de paramètre de succès $p=\frac{n_{0}}{\theta}$. \ \\
 Soit $\theta=1000$ et $n_{0}=50$. On choisit $n=60$ pour notre simulation sur R. \ \\
 On obtient l'échantillon de données suivant :
@@ -72,7 +72,7 @@ On constate que pour ce jeu de données la moyenne empirique est assez proche de
 \end{exo1}
 
 \begin{exo1} \ \\ \\
-$T$ est une variable aléatoire qui compte le nombre de poissons bagués parmi les $n$ poissons pêchés donc $T=\sum_{i=1}^{n}X_{i}$ avec $X_{i}$ qui suit une loi de Bernoulli. \ \\
+$T$ est une variable aléatoire qui compte le nombre de poissons bagués parmi les $n$ poissons pêchés donc $T=\sum\limits_{i=1}^{n}X_{i}$ avec $X_{i}$ qui suit une loi de Bernoulli. \ \\
 Donc $T$ suit une loi binomiale de paramètres $n$ et $p=\frac{n_{0}}{\theta}$. \ \\
 On donne ainsi avec R $t$ le nombre de poissons pêchés sur notre échantillon de données :
 \begin{figure}[h]
@@ -82,10 +82,10 @@ On donne ainsi avec R $t$ le nombre de poissons pêchés sur notre échantillon 
 
 \begin{exo1} \ \\ \\
 Estimateur des moments : \ \\
-Soit $\overline{X_{n}}$ la moyenne empirique, \ \\
+Soit $\overline{X}_n$ la moyenne empirique, \ \\
 \begin{equation}
 \begin{aligned}
-E[X] \simeq \overline{X_{n}} & \Rightarrow p \simeq \frac{1}{n}\sum_{i=1}^{n} x_{i} \ \\
+E[X] \simeq \overline{X}_n & \Rightarrow p \simeq \frac{1}{n}\sum_{i=1}^{n} x_{i} \ \\
 & \Rightarrow \frac{n_{0}}{\theta} \simeq \frac{1}{n}\sum_{i=1}^{n} x_{i} \ \\
 & \Rightarrow \theta \simeq \frac{n_{0}*n}{\sum_{i=1}^{n} x_{i}} \ \\
 \end{aligned}
@@ -100,7 +100,7 @@ Estimateur de maximum de vraisemblance : \ \\ \\
 x_{i}}(1-\frac{n_{0}}{\theta})^{n-\sum_{i=1}^{n} x_{i}} \ \\
 \end{aligned}
 \end{equation} \ \\
-$\ln(\mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta)) = (\sum_{i=1}^{n}x_{i})(\ln(n_{0})-\ln(\theta))+(n-\sum_{i=1}^{n} x_{i})\ln(1-\frac{n_{0}}{\theta})$ \ \\ \\
+$\ln(\mathscr{L}(X_{1}=x_{1},...,X_{n}=x_{n}, \theta)) = (\sum\limits_{i=1}^{n}x_{i})(\ln(n_{0})-\ln(\theta))+(n-\sum\limits_{i=1}^{n} x_{i})\ln(1-\frac{n_{0}}{\theta})$ \ \\ \\
 En dérivant par rapport à $\theta$ : \ \\
 \begin{equation}
 \begin{aligned}
@@ -127,7 +127,7 @@ On a $p=\frac{n_{0}}{\theta} \Rightarrow \theta=\frac{n_{0}}{p}$ donc en estiman
 \left[ n_{0}(1+\frac{n-T}{T+1}f_{2(n-T),2(T+1),1-\frac{\alpha}{2}}),n_{0}(1+\frac{n-T+1}{T}f_{2(n-T+1),2T,\frac{\alpha}{2}})\right]
 \end{aligned}
 \end{equation} \ \\
-avec $T=n\overline{X_{n}}=\sum_{i=1}^{n} x_{i}$ et $f_{\nu_{1},\nu_{2},\alpha} = F_{\mathscr{F}}^{-1}(1-\alpha,\nu_{1},\nu_{2})$, $F_{\mathscr{F}}^{-1}$ étant ici la fonction quantile de la loi de Fisher-Snedecor. \ \\
+avec $T=n\overline{X}_{n}=\sum\limits_{i=1}^{n} x_{i}$ et $f_{\nu_{1},\nu_{2},\alpha} = F_{\mathscr{F}}^{-1}(1-\alpha,\nu_{1},\nu_{2})$, $F_{\mathscr{F}}^{-1}$ étant ici la fonction quantile de la loi de Fisher-Snedecor. \ \\
 intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$ : \ \\
 On obtient l'intervalle associée avec la même démarche que précédement.
 \begin{equation}
@@ -147,12 +147,12 @@ On remarque que les intervalles exacts fournissent un encadrement plus précis d
 \end{exo1}
 
 \begin{exo1} \ \\ \\
-$\textsc{P}(\hat{\theta_{n}}=+\infty) = \textsc{P}(\frac{n_{0}*n}{\sum_{i=1}^{n} x_{i}}=+\infty) = \textsc{P}(\sum_{i=1}^{n} x_{i}=0) = \textsc{P}(T=0) = (1-p)^n = (1-\frac{n_{0}}{\theta})^n$ \ \\
+$\textsc{P}(\hat{\theta}_{n}=+\infty) = \textsc{P}(\frac{n_{0}*n}{\sum\limits_{i=1}^{n} x_{i}}=+\infty) = \textsc{P}(\sum_{i=1}^{n} x_{i}=0) = \textsc{P}(T=0) = (1-p)^n = (1-\frac{n_{0}}{\theta})^n$ \ \\
 Cet estimateur n'est pas convergent. \ \\
-$Biais(\hat{\theta_{n}}) = E[\hat{\theta_{n}}]-\theta$ \ \\
-Comme $\hat{\theta_{n}}$ a une probabilité non nulle de valoir $+\infty$ alors $E[\hat{\theta_{n}}]=+\infty \Rightarrow $E[$\hat{\theta_{n}}$]$-\theta = +\infty$ (car $\theta$ est une constante) $\Rightarrow $Biais$(\hat{\theta_{n}}) = +\infty$. \ \\
+$Biais(\hat{\theta}_{n}) = E[\hat{\theta_{n}}]-\theta$ \ \\
+Comme $\hat{\theta}_{n}$ a une probabilité non nulle de valoir $+\infty$ alors $E[\hat{\theta}_{n}]=+\infty \Rightarrow $E[$\hat{\theta}_{n}$]$-\theta = +\infty$ (car $\theta$ est une constante) $\Rightarrow $Biais$(\hat{\theta}_{n}) = +\infty$. \ \\
 Donc on peut en déduire que le biais de cet estimateur vaut $+\infty$.
-Sur notre échantillon de données, on peut calculer la probabilité $\textsc{P}(\hat{\theta_{n}}=+\infty)$ :
+Sur notre échantillon de données, on peut calculer la probabilité $\textsc{P}(\hat{\theta}_{n}=+\infty)$ :
 \begin{figure}[h]
 \includegraphics[scale=0.7]{images/Q1_5.png}
 \end{figure} \ \\
@@ -161,7 +161,7 @@ Sur notre échantillon de données, on peut calculer la probabilité $\textsc{P}
 \begin{exo1} \ \\ \\
 \begin{equation}
 \begin{aligned}
-\textsc{P}(\hat{\theta_{n}}=+\infty) > \frac{1}{2} & \Rightarrow (1-\frac{n_{0}}{\theta})^{n} > \frac{1}{2} \ \\
+\textsc{P}(\hat{\theta}_{n}=+\infty) > \frac{1}{2} & \Rightarrow (1-\frac{n_{0}}{\theta})^{n} > \frac{1}{2} \ \\
 & \Rightarrow n\ln(1-\frac{n_{0}}{\theta}) > \ln(\frac{1}{2}) \ \\
 & \Rightarrow n < -\frac{\ln(2)}{\ln(1-\frac{n_{0}}{\theta})} \ \\
 & \Rightarrow n \leq \lfloor-\frac{\ln(2)}{\ln(1-\frac{n_{0}}{\theta})}\rfloor
@@ -195,7 +195,12 @@ Les résultats que nous obtenons sont proches des résultats théoriques.
 \end{exo2}
 
 \begin{exo2} \ \\ \\
-En notant N le nombre de poissons pêchés, on a $N = \sum\limits_{j=1}^{m} Y_j$\
+En notant N le nombre de poissons pêchés, on a $N = \sum\limits_{j=1}^{m} Y_j$\ \\
+$\Omega(N) = [| m, +\infty [|$ \ \\
+Soit $n \geqslant m$, et $x = (x_1, ..., x_n) \in (N = n).$ \ \\
+On sait que $x_n = 1$ (le dernier poisson pêché est bagué par définition de $Y_n$), m-1 des n-1 autres pêches sont des poissons bagués. Ceci justifie que $\#(N=n) = \begin{pmatrix} n-1 \\ m-1\end{pmatrix}$. \ \\
+Chacun des éléments de $(N=n)$ étant de probabilité $(\frac{n_0}{\theta})^m (1 - \frac{n_0}{\theta})^{n-m}$, on obtient finalement: \
+$\forall n \in \mathbb{N}, \mathbb{P}(N = m+n) = \begin{pmatrix} m + n-1 \\ m-1\end{pmatrix}(\frac{n_0}{\theta})^m (1 - \frac{n_0}{\theta})^{n}$ \ \\
 Ici,\ \\
 \includegraphics[scale=0.5]{images/Q2_2.png} \ \\
 \end{exo2}
@@ -235,6 +240,8 @@ Les $Y_i$ sont indépendantes et suivent la même loi, on a donc:
     \end{aligned}
 \end{equation}
 Finalement, $\mathcal{I}_m = \frac{m}{\theta^2 - \theta n_0}$ \ \\
+Pour notre échantillon, on obtient \ \\
+\includegraphics[scale=0.5]{images/Q2_4.png} \ \\ \\
 $\mathbb{E}({\hat{\theta}}'_m) = n_0 \mathbb{E}(\bar{Y}) = \theta$ donc $\hat{\theta}'_m$ est sans biais. À présent, on déduit de l'inégalité FDCR que cet estimateur est de variance minimale si et seulement si sa variance est égale à $\frac{1}{\mathcal{I}_m(\theta)}$, donc égale à $\frac{\theta^2}{m} - \frac{\theta n_0}{m}$.
 \begin{equation}
     \begin{aligned}
@@ -248,15 +255,17 @@ ${\hat{\theta}}'_m$ est donc effectivement de variance minimale.
 \end{exo2}
 
 \begin{exo2}
+Le calcul des intervalles de confiance pour notre échantillon donne les résultats suivants: \ \\
+\includegraphics[scale=0.5]{images/Q2_5.png} \ \\
 On obtient le tableau suivant:\ \\ \\
 \begin{tabular}{|c|c|}
     \hline
     \alpha & Intervalle de confiance \\
     \hline
-    1\% & [à remplir] \\
-    5\% & [à remplir] \\
-    10\% & [à remplir] \\
-    20\% & [à remplir] \\
+    1\% & $[ 919.5, 1643.0 ]$ \\
+    5\% & $[ 1006.0, 1556.5 ]$ \\
+    10\% & $[ 1050.3, 1512.2 ]$ \\
+    20\% & $[ 1101.3, 1461.2 ]$ \\
     \hline
 \end{tabular}
 \end{exo2}
@@ -268,7 +277,7 @@ On obtient le tableau suivant:\ \\ \\
 %======================================
 
 \begin{exo3} \ \\ \\
-La première stratégie consiste à évaluer le ratio $ \frac{nombre de poissons bagués}{nombre total de poisson}$, puis, connaissant le nombre exact de poissons bagués, en déduire une estimation du nombre total de poissons. Sur 1000 poissons pêchés, 35 sont bagués. Il y a donc une proportion $p=\frac{35}{1000}=0.035$ de poissons bagués parmi les poissons pêchés. On peut donc estimer $\theta=0.035$.\newline On calcule les intervalles de confiances :
+La première stratégie consiste à évaluer le ratio $\frac{Nombre De Poissons Bagues}{Nombre Total De Poissons}$, puis, connaissant le nombre exact de poissons bagués, en déduire une estimation du nombre total de poissons. Sur 1000 poissons pêchés, 35 sont bagués. Il y a donc une proportion $p=\frac{35}{1000}=0.035$ de poissons bagués parmi les poissons pêchés. On peut donc estimer $\theta=0.035$.\newline On calcule les intervalles de confiances :
 \begin{enumerate}
     \item Intervalle de confiance exact : $[0.02449753 , 0.02533891]$
     \item Intervalle de confiance asymptotuque de seuil à 5\% : $[0.02544073 , 0.04455927]$
@@ -276,11 +285,11 @@ La première stratégie consiste à évaluer le ratio $ \frac{nombre de poissons
 \end{exo3}
 
 \begin{exo3} \ \\ \\
-La deuxième stratégie repose sur la supposition suivante : le nombre de poissons pêchés avant de tomber sur un poisson bagué suit une loi géométrique de paramètre $\lambda$ à déterminer. Ce paramètre est le ratio précédant, donc :\newline $\lambda=\frac{nombre_de_poissons_bagués}{nombre_total_de_poissons}$. \newline Donc une estimation de $\lambda$ conduira de façon inévitable à une estimation du ratio. La deuxième stratégie consiste à évaluer $\lambda$. \newline On trouve $\lambda=0.03521127$. Calculons l'intervalle de confiance asymptotique de seuil à 5\% : \newline $[0.00000000, 0.08645611]$
+La deuxième stratégie repose sur la supposition suivante : le nombre de poissons pêchés avant de tomber sur un poisson bagué suit une loi géométrique de paramètre $\lambda$ à déterminer. Ce paramètre est le ratio précédent, donc :\newline $\lambda=\frac{Nombre De Poissons Bagues}{Nombre Total De Poissons}$. \newline Donc une estimation de $\lambda$ conduira de façon inévitable à une estimation du ratio. La deuxième stratégie consiste à évaluer $\lambda$. \newline On trouve $\lambda=0.03521127$. Calculons l'intervalle de confiance asymptotique de seuil à 5\% : \newline $[0.00000000, 0.08645611]$
 \end{exo3}
 
 \begin{exo3} \ \\ \\
-Le logiciel R nous permet de tracer cet histogramme :  \ \\
+R nous permet de tracer cet histogramme :  \ \\
 \begin{figure}[h]
 \includegraphics[scale=1.2]{images/Histogramme_de_Y_avec_regroupement.jpeg}
 \end{figure} \ \\
@@ -288,13 +297,13 @@ Cet histogramme ressemble fort à la représentation d'une variable aléatoire q
 \end{exo3}
 
 \begin{exo3} \ \\ \\
-Pour décider de la meilleure stratégie, comparons les intervalles de confiance asymptotiques. Intéréssons nous plus particulièrement aux longueurs de ces intervalles : 
+Pour décider de la meilleure stratégie, comparons les intervalles de confiance asymptotiques. Intéressons nous plus particulièrement aux longueurs de ces intervalles : 
 \begin{enumerate}
     \item Stratégie 1 : 0.01911855
     \item Stratégie 2 : 0.08645611
 \end{enumerate}
 
-Il apparaît que la longueur pour la deuxième stratégie est presque 5 fois plus important que celui de la première stratégie. \newline \newline Il et donc préférable de choisir la première stratégie.
+Il apparaît que la longueur pour la deuxième stratégie est presque 5 fois plus importante que celui de la première stratégie. \newline \newline Il est donc préférable de choisir la première stratégie.
 \end{exo3}
 
 \newpage
@@ -304,7 +313,7 @@ Il apparaît que la longueur pour la deuxième stratégie est presque 5 fois plu
 %======================================
 
 \begin{exo4} \ \\ \\
-On calcule R les différentes proportions d'appartenance de $\theta$ pour les intervalles de confiance établis en variant les paramètres.
+On calcule en R les différentes proportions d'appartenance de $\theta$ pour les intervalles de confiance établis en variant les paramètres.
 \begin{figure}[h]
 \includegraphics[scale=0.85]{images/Q4_1_theta.PNG}
 \end{figure} \ \\
@@ -349,7 +358,9 @@ On remarque que la courbe associée à l'histogramme s'apparente à celle modél
 \begin{figure}[h]
 \includegraphics[scale=1]{images/Q4_3_proba.PNG}
 \end{figure} \ \\
-De même, en traçant les graphes de probabilité $(F_{\mathscr{N}}^{-1}(\overline{x_{i}})$, $F_{\mathscr{N}}^{-1}(\frac{i}{m})$ avec $\overline{x_{i}} \forall i=1,...,n$ les moyennes empiriques de l'échantillon de données. On remarque de même que l'apparence d'une droite se forme à partir de $n=50$ ce qui confirme le fait qu'à partir de cette valeur de $n=50$ environ, la moyenne empirique des $x_{i}$ (iid suivant une loi de Bernoulli) suit une loi normale. Le théorème centrale limite est ainsi illustrée.
+De même, en traçant les graphes de probabilité $(F_{\mathscr{N}}^{-1}(\overline{x_{i}})$, $F_{\mathscr{N}}^{-1}(\frac{i}{m}))$ où  $\forall i=1,...,n$ $\overline{x_{i}}$ est une des $m$ moyennes empiriques de chaque groupe de n $x_{i}$ (avec les $x_{i}$ qui sont iid et suivent chacune une loi de Bernoulli) de l'échantillon de données. On remarque de même l'apparence d'une droite à partir de $n=50$ ce qui confirme le fait qu'à partir d'une certaine valeur, la moyenne empirique des $x_{i}$ suit une loi normale. Le théorème centrale limite est ainsi illustré.
 \end{exo4}
 
 \end{document}
+
+

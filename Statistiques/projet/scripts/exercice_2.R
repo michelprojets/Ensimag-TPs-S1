@@ -1,6 +1,6 @@
 teta <- 1000
 n0   <- 50
-m    <- 100
+m    <- 80
 
 
 # Deuxième stratégie
