@@ -1,7 +1,7 @@
 """
 hashtable structure
 """
-from geo.point import Point
+from itertools import combinations
 from geo.segment import Segment
 
 class Hash:
@@ -9,66 +9,86 @@ class Hash:
     hash class
     """
 
-def insert_into_table(tables, index, hash_key, point):
-    """
-    sub-function for hasher
-    """
-    if hash_key in tables[index].keys():
-        tables[index].add(point)
-    else:
-        tables[index].update({hash_key : list(point)})
+    def __init__(self, points, precision):
+        """
+        constructor
+        """
+        self.tables = list(dict() for _ in range(4))
+        self.hasher(points, precision)
 
-def hasher(points, precision):
-    # on pouvait hasher un par un pour ne pas avoir à faire les 4 à chaque fois même dans le cas ou ce n'est pas nécessaire
-    """
-    hasher function
-    """
-    tables = list(dict() for _ in range(4))
-    for point in points:
-        hash_keys = list((point.coordinates[0]//precision,
+    def insert_into_table(self, index, hash_key, point):
+        """
+        sub-function for hasher
+        """
+        if hash_key not in self.tables[index].keys():
+            self.tables[index][hash_key] = []
+        self.tables[index][hash_key].append(point)
+
+    def hasher(self, points, precision):
+        # on pouvait hasher un par un pour ne pas avoir à faire les 4 à chaque
+        # fois même dans le cas ou ce n'est pas nécessaire
+        """
+        hasher function
+        """
+        for point in points:
+            # les 4 fonctions de hashage directement appliquées
+            hash_keys = [(point.coordinates[0]//precision,
                           point.coordinates[1]//precision),
                          ((point.coordinates[0]+(precision/2))//precision,
                           point.coordinates[1]//precision),
                          (point.coordinates[0]//precision,
                           (point.coordinates[1]+(precision/2))//precision),
                          ((point.coordinates[0]+(precision/2))//precision,
-                          (point.coordinates[1]+(precision/2))//precision))
-        for index in range(len(tables)):
-            insert_into_table(tables, index, hash_keys[index], point)
-    return tables
+                          (point.coordinates[1]+(precision/2))//precision)]
+            for index in range(len(self.tables)):
+                self.insert_into_table(index, hash_keys[index], point)
 
-def has_collision(table):
-    """
-    return true if hash table given has collision, else false
-    """
-    for points in table.values():
-        if len(points) > 1:
-            return True
-    return False
+    def has_collision(self, index):
+        """
+        return true if hash table corresponding to the index given has collision, else false
+        """
+        for points in self.tables[index].values():
+            if len(points) > 1:
+                return True
+        return False
 
-def ordered_segments(points):
+def ordered_segments(hash_points, points):
     """
     iterator for ordered segments
     """
-    precision = 0.5
-    tables_groups = list(hasher(points, precision))
-    while True: # pour simuler un do while
-        collision = False
-        for index in range(len(tables_groups[0])):
-            if has_collision(tables_groups[-1][index]):
-                collision = True
+    # avec hashage
+    if hash_points:
+        precision = 2.0 # valeur arbitraire
+        tables_groups = [Hash(points, precision)]
+        while True: # pour simuler un do while
+            collision = False
+            for index in range(len(tables_groups[0].tables)):
+                if tables_groups[-1].has_collision(index):
+                    collision = True
+                    break
+            if collision:
+                precision = precision/2
+                # on pouvait faire en sorte de ne hasher que les tables
+                # qui possèdent une collision et pas les 4 toujours
+                tables_groups.append(Hash(points, precision))
+            else:
                 break
-        if collision:
-            precision = precision/2
-            # on pouvait faire en sorte de ne hasher que les tables qui possèdent une collision et pas les 4 toujours
-            tables_groups.append(hasher(points, precision))
-        else:
-            break
-    for tables in reversed(tables_groups):
-        for table in tables:
-            for key in table.keys():
-                for points in table[key]:
-                    if len(points) > 1:
-                        for i in range(len(points)):
-                            for j in range(i+1, len(points)):
-                                yield Segment([points[i], points[j]])
+        for hash_tables in reversed(tables_groups):
+            for hash_table in hash_tables.tables:
+                for hash_points in hash_table.values():
+                    if len(hash_points) > 1:
+                        # toutes les combinaisons de points
+                        for point1, point2 in combinations(hash_points, 2):
+                            yield Segment([point1, point2])
+    # sans hachage
+    else:
+        for point1, point2 in combinations(points, 2):
+            yield Segment([point1, point2])
+
+        # # coût asymptôtique trop élevé
+        # segments = list()
+        # for point1, point2 in combinations(points, 2):
+        #     segments.append(Segment([point1, point2]))
+        # segments = sorted(segments, key=segments[0].length())
+        # for segment in segments:
+        #     yield segment
