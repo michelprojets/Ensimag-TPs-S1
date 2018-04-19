@@ -58,12 +58,13 @@ class Graph:
             return False
 
         # création de la structure modélisant les composantes connexes du graphe
-        for i in range(len(points)):
-            related_components.add(points[i])
+        for i, point in enumerate(points):
+            related_components.add(point)
             for j in range(i):
                 if linked(points[i], points[j]):
                     related_components.union(points[i], points[j])
-                    break
+                    # # pas de break sinon créé une nouvelle composante connexe à chaque fois ?
+                    # break
 
         if related_components.size == 1:
             return
@@ -104,8 +105,37 @@ class Graph:
                     return
 
 
+
     def eulerian_cycle(self):
         """
         return eulerian cycle. precondition: all degrees are even.
         """
-        pass
+        # tous les cycles (chaque cycle contient une liste de points)
+        cycles = list()
+        unseen_segments = list()
+        for segments in self.vertices.values():
+            # unseen_segments va posséder des doublons pour chaque segment (à remove)
+            unseen_segments.extend(segments)
+
+        while len(unseen_segments) != 0:
+            cycles.append(list())
+            segment = unseen_segments[0]
+            unseen_segments.remove(segment)
+            unseen_segments.remove(Segment([segment.endpoints[1], segment.endpoints[0]]))   # ne marche pas
+            cycles[-1].append(segment.endpoints[0])
+            last_point = segment.endpoints[1]
+            # tant que le dernier chemin n'a pas formé un cycle (dernier point != premier point)
+            while last_point != cycles[-1][0]:
+                # on prend vertices[last_point][0] car on prend un chemin quelconque
+                any_point = self.vertices[last_point][0].endpoint_not(last_point)
+                cycles[-1].append(any_point)
+                unseen_segments.remove(Segment([last_point, any_point]))    # ne marche pas
+                unseen_segments.remove(Segment([any_point, last_point]))    # ne marche pas
+                last_point = cycles[-1][-1]
+
+        # fusion de tous les cycles précédents
+        # ici, le cycle eulérien (qui passe par tous les sommets) contient une liste de segments
+        # euler_cycle = list(Segment([cycles[0][0], cycles[0][1]]))
+        # for cycle in cycles:
+        #     for point in cycle:
+        #

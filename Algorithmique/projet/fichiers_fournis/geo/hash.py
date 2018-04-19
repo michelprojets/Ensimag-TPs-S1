@@ -14,15 +14,8 @@ class Hash:
         constructor
         """
         self.tables = list(dict() for _ in range(4))
+        # on hash directement lors de l'initialisation
         self.hasher(points, precision)
-
-    def insert_into_table(self, index, hash_key, point):
-        """
-        sub-function for hasher
-        """
-        if hash_key not in self.tables[index].keys():
-            self.tables[index][hash_key] = []
-        self.tables[index][hash_key].append(point)
 
     def hasher(self, points, precision):
         # on pouvait hasher un par un pour ne pas avoir à faire les 4 à chaque
@@ -30,6 +23,14 @@ class Hash:
         """
         hasher function
         """
+        def insert_into_table(index, hash_key, point):
+            """
+            sub-function for hasher
+            """
+            if hash_key not in self.tables[index].keys():
+                self.tables[index][hash_key] = []
+            self.tables[index][hash_key].append(point)
+
         for point in points:
             # les 4 fonctions de hashage directement appliquées
             hash_keys = [(point.coordinates[0]//precision,
@@ -41,7 +42,7 @@ class Hash:
                          ((point.coordinates[0]+(precision/2))//precision,
                           (point.coordinates[1]+(precision/2))//precision)]
             for index in range(len(self.tables)):
-                self.insert_into_table(index, hash_keys[index], point)
+                insert_into_table(index, hash_keys[index], point)
 
     def has_collision(self, index):
         """
@@ -63,6 +64,7 @@ def ordered_segments(hash_points, points):
         while True: # pour simuler un do while
             collision = False
             for index in range(len(tables_groups[0].tables)):
+                # "-1" car dernier jeu de tables
                 if tables_groups[-1].has_collision(index):
                     collision = True
                     break
@@ -85,7 +87,7 @@ def ordered_segments(hash_points, points):
         for point1, point2 in combinations(points, 2):
             yield Segment([point1, point2])
 
-        # # coût asymptôtique trop élevé
+        # # coût asymptôtique trop élevé (si on fait un tri)
         # segments = list()
         # for point1, point2 in combinations(points, 2):
         #     segments.append(Segment([point1, point2]))
