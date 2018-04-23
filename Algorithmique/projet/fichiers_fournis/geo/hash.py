@@ -2,6 +2,7 @@
 hashtable structure
 """
 from itertools import combinations
+from geo.point import Point
 from geo.segment import Segment
 
 class Hash:
@@ -59,7 +60,7 @@ def ordered_segments(hash_points, points):
     """
     # avec hashage
     if hash_points:
-        precision = 2.0 # valeur arbitraire
+        precision = 100.0 # valeur arbitraire
         tables_groups = [Hash(points, precision)]
         while True: # pour simuler un do while
             collision = False

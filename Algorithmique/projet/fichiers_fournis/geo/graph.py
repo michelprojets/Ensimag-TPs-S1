@@ -88,6 +88,7 @@ class Graph:
         else use quadratic segments iterator.
         """
         points = list(self.vertices.keys())
+        segments_vus = set()    # un segment est représenté ici par un couple de points
         unevens = 0
         for vertice in points:
             if len(self.vertices[vertice])%2 != 0:
@@ -96,10 +97,14 @@ class Graph:
             return
         for segment in ordered_segments(hash_points, points):
             if (len(self.vertices[segment.endpoints[0]])%2 != 0 and
-                    len(self.vertices[segment.endpoints[0]])%2 != 0):
+                    len(self.vertices[segment.endpoints[1]])%2 != 0 and
+                    segment not in segments_vus):
                 # ajout du segment aux arêtes du graphe
                 self.vertices[segment.endpoints[0]].append(segment)
                 self.vertices[segment.endpoints[1]].append(segment)
+                # pour éviter les doublons
+                segments_vus.add((segment.endpoints[0], segment.endpoints[1]))
+                segments_vus.add((segment.endpoints[1], segment.endpoints[0]))
                 unevens -= 2
                 if unevens == 0:
                     return
@@ -110,28 +115,30 @@ class Graph:
         """
         return eulerian cycle. precondition: all degrees are even.
         """
-        # tous les cycles (chaque cycle contient une liste de points)
-        cycles = list()
-        unseen_segments = list()
-        for segments in self.vertices.values():
-            # unseen_segments va posséder des doublons pour chaque segment (à remove)
-            unseen_segments.extend(segments)
+        pass
 
-        while len(unseen_segments) != 0:
-            cycles.append(list())
-            segment = unseen_segments[0]
-            unseen_segments.remove(segment)
-            unseen_segments.remove(Segment([segment.endpoints[1], segment.endpoints[0]]))   # ne marche pas
-            cycles[-1].append(segment.endpoints[0])
-            last_point = segment.endpoints[1]
-            # tant que le dernier chemin n'a pas formé un cycle (dernier point != premier point)
-            while last_point != cycles[-1][0]:
-                # on prend vertices[last_point][0] car on prend un chemin quelconque
-                any_point = self.vertices[last_point][0].endpoint_not(last_point)
-                cycles[-1].append(any_point)
-                unseen_segments.remove(Segment([last_point, any_point]))    # ne marche pas
-                unseen_segments.remove(Segment([any_point, last_point]))    # ne marche pas
-                last_point = cycles[-1][-1]
+        # tous les cycles (chaque cycle contient une liste de points)
+        # cycles = list()
+        # unseen_segments = list()
+        # for segments in self.vertices.values():
+        #     # unseen_segments va posséder des doublons pour chaque segment (à remove)
+        #     unseen_segments.extend(segments)
+        #
+        # while len(unseen_segments) != 0:
+        #     cycles.append(list())
+        #     segment = unseen_segments[0]
+        #     unseen_segments.remove(segment)
+        #     unseen_segments.remove(Segment([segment.endpoints[1], segment.endpoints[0]]))   # ne marche pas
+        #     cycles[-1].append(segment.endpoints[0])
+        #     last_point = segment.endpoints[1]
+        #     # tant que le dernier chemin n'a pas formé un cycle (dernier point != premier point)
+        #     while last_point != cycles[-1][0]:
+        #         # on prend vertices[last_point][0] car on prend un chemin quelconque
+        #         any_point = self.vertices[last_point][0].endpoint_not(last_point)
+        #         cycles[-1].append(any_point)
+        #         unseen_segments.remove(Segment([last_point, any_point]))    # ne marche pas
+        #         unseen_segments.remove(Segment([any_point, last_point]))    # ne marche pas
+        #         last_point = cycles[-1][-1]
 
         # fusion de tous les cycles précédents
         # ici, le cycle eulérien (qui passe par tous les sommets) contient une liste de segments
