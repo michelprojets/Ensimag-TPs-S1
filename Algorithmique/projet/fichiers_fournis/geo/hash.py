@@ -58,6 +58,12 @@ def ordered_segments(hash_points, points):
     """
     iterator for ordered segments
     """
+    def segment_length(points):
+        """
+        return the length of the given segment (couple of two points)
+        """
+        return points[0].distance_to(points[1])
+
     # avec hashage
     if hash_points:
         precision = 100.0 # valeur arbitraire
@@ -76,22 +82,27 @@ def ordered_segments(hash_points, points):
                 tables_groups.append(Hash(points, precision))
             else:
                 break
-        for hash_tables in reversed(tables_groups):
+        # inversion de la liste des jeux de tables
+        tables_groups = iter(reversed(tables_groups))
+        # pour éviter d'itérer dans le jeu de table le plus précis car pas de combinaisons
+        next(tables_groups)
+        # pour éviter de proposer des doublons de segment (représenté par un couple de 2 points ici)
+        segments_seen = set()
+        for hash_tables in tables_groups:
             for hash_table in hash_tables.tables:
                 for hash_points in hash_table.values():
                     if len(hash_points) > 1:
                         # toutes les combinaisons de points
                         for point1, point2 in combinations(hash_points, 2):
-                            yield Segment([point1, point2])
+                            # on va payer plus cher dans cet itérateur à tester l'appartenance
+                            # mais moins cher dans les fonctions du graphe car on va éviter
+                            # des parcours inutiles
+                            if ((point1, point2) not in segments_seen and
+                                    (point2, point1) not in segments_seen):
+                                segments_seens.add((point1, point2))
+                                segments_seens.add((point2, point1))
+                                yield Segment([point1, point2])
     # sans hachage
     else:
-        for point1, point2 in combinations(points, 2):
+        for point1, point2 in sorted(combinations(points, 2), key=segment_length):
             yield Segment([point1, point2])
-
-        # # coût asymptôtique trop élevé (si on fait un tri)
-        # segments = list()
-        # for point1, point2 in combinations(points, 2):
-        #     segments.append(Segment([point1, point2]))
-        # segments = sorted(segments, key=segments[0].length())
-        # for segment in segments:
-        #     yield segment
