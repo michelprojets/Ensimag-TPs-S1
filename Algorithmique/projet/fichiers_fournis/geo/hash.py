@@ -87,7 +87,8 @@ def ordered_segments(hash_points, points):
         # pour éviter d'itérer dans le jeu de table le plus précis car pas de combinaisons
         next(tables_groups)
         # pour éviter de proposer des doublons de segment (représenté par un couple de 2 points ici)
-        segments_seen = set()
+        # on considère également ici que le segment [a,b] est un doublon du segment [b,a]
+        seen_segments = set()
         for hash_tables in tables_groups:
             for hash_table in hash_tables.tables:
                 for hash_points in hash_table.values():
@@ -97,12 +98,12 @@ def ordered_segments(hash_points, points):
                             # on va payer plus cher dans cet itérateur à tester l'appartenance
                             # mais moins cher dans les fonctions du graphe car on va éviter
                             # des parcours inutiles
-                            if ((point1, point2) not in segments_seen and
-                                    (point2, point1) not in segments_seen):
-                                segments_seens.add((point1, point2))
-                                segments_seens.add((point2, point1))
+                            if ((point1, point2) not in seen_segments and
+                                    (point2, point1) not in seen_segments):
+                                seen_segments.add((point1, point2))
+                                seen_segments.add((point2, point1))
                                 yield Segment([point1, point2])
-    # sans hachage
+    # sans hachage (itérateur quadratique)
     else:
         for point1, point2 in sorted(combinations(points, 2), key=segment_length):
             yield Segment([point1, point2])

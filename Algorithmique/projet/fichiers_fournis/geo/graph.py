@@ -88,7 +88,6 @@ class Graph:
         else use quadratic segments iterator.
         """
         points = list(self.vertices.keys())
-        segments_vus = set()    # un segment est représenté ici par un couple de points
         unevens = 0
         for vertice in points:
             if len(self.vertices[vertice])%2 != 0:
@@ -96,53 +95,78 @@ class Graph:
         if unevens == 0:
             return
         for segment in ordered_segments(hash_points, points):
-            if (len(self.vertices[segment.endpoints[0]])%2 != 0 and
-                    len(self.vertices[segment.endpoints[1]])%2 != 0 and
-                    segment not in segments_vus):
+            # ici on ne vérifie pas si le segment est déjà dans le graphe avant
+            # de l'ajouter donc une arête peut apparaître plusieurs fois (multi-graphe)
+            if ((len(self.vertices[segment.endpoints[0]])%2 != 0) and
+                    (len(self.vertices[segment.endpoints[1]])%2 != 0)):
                 # ajout du segment aux arêtes du graphe
                 self.vertices[segment.endpoints[0]].append(segment)
                 self.vertices[segment.endpoints[1]].append(segment)
-                # pour éviter les doublons
-                segments_vus.add((segment.endpoints[0], segment.endpoints[1]))
-                segments_vus.add((segment.endpoints[1], segment.endpoints[0]))
                 unevens -= 2
                 if unevens == 0:
-                    return
-
+                    break
 
 
     def eulerian_cycle(self):
         """
         return eulerian cycle. precondition: all degrees are even.
         """
-        pass
 
-        # tous les cycles (chaque cycle contient une liste de points)
-        # cycles = list()
-        # unseen_segments = list()
-        # for segments in self.vertices.values():
-        #     # unseen_segments va posséder des doublons pour chaque segment (à remove)
-        #     unseen_segments.extend(segments)
-        #
-        # while len(unseen_segments) != 0:
-        #     cycles.append(list())
-        #     segment = unseen_segments[0]
-        #     unseen_segments.remove(segment)
-        #     unseen_segments.remove(Segment([segment.endpoints[1], segment.endpoints[0]]))   # ne marche pas
-        #     cycles[-1].append(segment.endpoints[0])
-        #     last_point = segment.endpoints[1]
-        #     # tant que le dernier chemin n'a pas formé un cycle (dernier point != premier point)
-        #     while last_point != cycles[-1][0]:
-        #         # on prend vertices[last_point][0] car on prend un chemin quelconque
-        #         any_point = self.vertices[last_point][0].endpoint_not(last_point)
-        #         cycles[-1].append(any_point)
-        #         unseen_segments.remove(Segment([last_point, any_point]))    # ne marche pas
-        #         unseen_segments.remove(Segment([any_point, last_point]))    # ne marche pas
-        #         last_point = cycles[-1][-1]
+        # tous les cycles (chaque cycle contient une liste de segments qui sont
+        # des couples de 2 points ici)
+        cycles = list()
+        # les segments non vus sont stockés dans un dictionnaire {segment : compteur de doublons}
+        # avec segment qui est un couple de 2 points
+        unseen_segments = dict()
+        for segments in self.vertices.values():
+            for segment in segments:
+                # il se peut qu'on ait (à cause de l'itérateur) les segments [A,B] et [B,A] qui
+                # sont en réalité identiques (auquel cas on doit incrémenter le compteur)
+                new_seg1 = (segment.endpoints[0], segment.endpoints[1])
+                new_seg2 = (segment.endpoints[1], segment.endpoints[0])
+                if new_seg1 not in unseen_segments and new_seg2 not in unseen_segments:
+                    unseen_segments.update({new_seg1 : 1})
+                else:
+                    unseen_segments[new_seg1] += 1
+
+        # comme chaque segment a été compté 2 fois, on divise tout par 2
+        for segment in unseen_segments.keys():
+            unseen_segments[segment] /= 2
+
+        dict_size = len(unseen_segments)
+        while dict_size != 0:
+            cycles.append(list())
+            # segment de départ arbitraire donné par la méthode popitem() de python
+            item = unseen_segments.popitem()
+            # si l'arête est répété plusieurs fois dans le graphe
+            # on le remet dedans en décrémentant le compteur de doublons
+            if item[1] > 1:
+                unseen_segments.update({item[0] : item[1]-1})
+            segment = item[0]
+            cycles[-1].append(Segment([segment[0], segment[1]]))
+            last_point = segment.endpoints[1]
+            # tant que le dernier chemin n'a pas formé un cycle
+            # (si on respecte la précondition et si on avance dans n'importe quelle direction,
+            # on revient toujours au point de départ, donc s'assure que la boucle va se terminer
+            # dans tous les cas)
+            while last_point != cycles[-1][0][0]:
+                # on prend vertices[last_point][0] car on prend un chemin quelconque
+                any_point = self.vertices[last_point][0].endpoint_not(last_point)
+                new_seg1 = Segment([last_point, any_point])
+                new_seg2 = Segment([any_point, last_point])
+                cycles[-1].append(new_seg1)
+                # on supprime le segment pour le marquer comme vu
+                if unseen_segments[]
+                unseen_segments.discard((last_point, any_point))
+                unseen_segments.discard((any_point, last_point))
+                last_point = any_point
+
+        # def common_segment()
 
         # fusion de tous les cycles précédents
-        # ici, le cycle eulérien (qui passe par tous les sommets) contient une liste de segments
-        # euler_cycle = list(Segment([cycles[0][0], cycles[0][1]]))
+        euler_cycle = list(cycles[0][0])
+        head = cycles[0][0]
         # for cycle in cycles:
-        #     for point in cycle:
-        #
+        #     for segment in cycle:
+        #         if
+        #         head = segment
