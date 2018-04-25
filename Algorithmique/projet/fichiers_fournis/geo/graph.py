@@ -121,10 +121,12 @@ class Graph:
                 # sont en réalité identiques (auquel cas on doit incrémenter le compteur)
                 new_seg1 = (segment.endpoints[0], segment.endpoints[1])
                 new_seg2 = (segment.endpoints[1], segment.endpoints[0])
-                if new_seg1 not in unseen_segments and new_seg2 not in unseen_segments:
-                    unseen_segments.update({new_seg1 : 1})
-                else:
+                if new_seg1 in unseen_segments:
                     unseen_segments[new_seg1] += 1
+                elif new_seg2 in unseen_segments:
+                    unseen_segments[new_seg2] += 1
+                else:
+                    unseen_segments.update({new_seg1 : 1})
 
         # comme chaque segment a été compté 2 fois, on divise tout par 2
         for segment in unseen_segments.keys():
@@ -143,20 +145,24 @@ class Graph:
                 unseen_segments.update({item[0] : item[1]-1})
             segment = item[0]
             cycles[-1].append(Segment([segment[0], segment[1]]))
-            last_point = segment.endpoints[1]
+            last_point = segment[1]
             # tant que le dernier chemin n'a pas formé un cycle
             # (si on respecte la précondition et si on avance dans n'importe quelle direction,
             # on revient toujours au point de départ, donc s'assure que la boucle va se terminer
             # dans tous les cas)
-            while last_point != cycles[-1][0][0]:
+            while last_point != segment[0]:
                 # on prend vertices[last_point][0] car on prend un chemin quelconque
                 any_point = self.vertices[last_point][0].endpoint_not(last_point)
                 new_seg1 = Segment([last_point, any_point])
                 new_seg2 = Segment([any_point, last_point])
                 cycles[-1].append(new_seg1)
                 # on supprime le segment pour le marquer comme vu
-                if unseen_segments[new_seg1] > 1:
-                    unseen_segments[new_seg1] -= 1
+                if new_seg1 in unseen_segments:
+                    if unseen_segments[new_seg1] > 1:
+                        unseen_segments[new_seg1] -= 1
+                elif new_seg2 in unseen_segments:
+                    if unseen_segments[new_seg2] > 1:
+                        unseen_segments[new_seg2] -= 1
                 else:
                     # unseen_segments contient soit l'un soit l'autre
                     unseen_segments.pop((last_point, any_point), None)
