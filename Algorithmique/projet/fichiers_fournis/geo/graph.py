@@ -112,95 +112,96 @@ class Graph:
         return eulerian cycle. precondition: all degrees are even.
         """
 
-        # les segments non vus sont stockés dans un dictionnaire {segment : compteur de doublons}
-        # avec segment qui est un couple de 2 points
-        unseen_segments = dict()
-        for segments in self.vertices.values():
-            for segment in segments:
-                # il se peut qu'on ait (à cause de l'itérateur) les segments [A,B] et [B,A] qui
-                # sont en réalité identiques (auquel cas on doit incrémenter le compteur)
-                new_seg1 = (segment.endpoints[0], segment.endpoints[1])
-                new_seg2 = (segment.endpoints[1], segment.endpoints[0])
-                if new_seg1 in unseen_segments:
-                    unseen_segments[new_seg1] += 1
-                elif new_seg2 in unseen_segments:
-                    unseen_segments[new_seg2] += 1
-                else:
-                    unseen_segments.update({new_seg1 : 1})
-
-        # comme chaque segment a été compté 2 fois, on divise tout par 2
-        for segment in unseen_segments.keys():
-            unseen_segments[segment] /= 2
-
-        # tous les cycles (chaque cycle contient une liste de segments qui sont
-        # des couples de 2 points ici)
-        cycles = list()
-        while len(unseen_segments) != 0:
-            cycles.append(list())
-            # segment de départ arbitraire donné par la méthode popitem() de python
-            item = unseen_segments.popitem()
-            # si l'arête est répété plusieurs fois dans le graphe
-            # on le remet dedans en décrémentant le compteur de doublons
-            if item[1] > 1:
-                unseen_segments.update({item[0] : item[1]-1})
-            segment = item[0]
-            cycles[-1].append(Segment([segment[0], segment[1]]))
-            last_point = segment[1]
-            # tant que le dernier chemin n'a pas formé un cycle
-            # (si on respecte la précondition et si on avance dans n'importe quelle direction,
-            # on revient toujours au point de départ, donc s'assure que la boucle va se terminer
-            # dans tous les cas)
-            while last_point != segment[0]:
-                # on prend vertices[last_point][0] car on prend un chemin quelconque
-                any_point = self.vertices[last_point][0].endpoint_not(last_point)
-                new_seg1 = Segment([last_point, any_point])
-                new_seg2 = Segment([any_point, last_point])
-                cycles[-1].append(new_seg1)
-                # on supprime le segment pour le marquer comme vu
-                if new_seg1 in unseen_segments:
-                    if unseen_segments[new_seg1] > 1:
-                        unseen_segments[new_seg1] -= 1
-                elif new_seg2 in unseen_segments:
-                    if unseen_segments[new_seg2] > 1:
-                        unseen_segments[new_seg2] -= 1
-                else:
-                    # unseen_segments contient soit l'un soit l'autre
-                    unseen_segments.pop((last_point, any_point), None)
-                    unseen_segments.pop((any_point, last_point), None)
-                last_point = any_point
-
-        def common_segment(current, current_cycle, cycles):
-            """
-            return the index (0) of the first segment in the cycle and the index (1) of the cycle
-            associated if the current given segment has been found in another cycle, else None
-            """
-            if cycles is None:
-                return None
-            if len(cycles) == 0:
-                return None
-            for cycle_index, cycle in cycles:
-                if cycle_index != current_cycle:
-                    for seg_index, segment in enumerate(cycle):
-                        if ((current.endpoints[0] == segment.endpoints[0] and
-                             current.endpoints[1] == segment.endpoints[1]) or
-                                (current.endpoints[0] == segment.endpoints[1] and
-                                 current.endpoints[1] == segment.endpoints[0])):
-                            return (seg_index, cycle_index)
-            return None
-
-        # fusion de tous les cycles précédents
-        euler_cycle = list(cycles[0][0])
-        # index of current segment and current cycle in cycles list
-        current_segment = 0
-        current_cycle = 0
-        while len(cycles) != 0:
-            current = cycles[current_cycle].pop(current_segment)
-            if len(cycles[current_cycle]) == 0:
-                cycles.pop(current_cycle)
-            euler_cycle.append(current)
-            seg_cycle = common_segment(current, current_cycle, cycles)
-            if seg_cycle is not None:
-                current_segment = (seg_cycle[0]+1)%len(cycles[seg_cycle[1]])
-                current_cycle = seg_cycle[1]
-
-        return euler_cycle
+        # # les segments non vus sont stockés dans un dictionnaire {segment : compteur de doublons}
+        # # avec segment qui est un couple de 2 points
+        # unseen_segments = dict()
+        # for segments in self.vertices.values():
+        #     for segment in segments:
+        #         # il se peut qu'on ait (à cause de l'itérateur) les segments [A,B] et [B,A] qui
+        #         # sont en réalité identiques (auquel cas on doit incrémenter le compteur)
+        #         new_seg1 = (segment.endpoints[0], segment.endpoints[1])
+        #         new_seg2 = (segment.endpoints[1], segment.endpoints[0])
+        #         if new_seg1 in unseen_segments:
+        #             unseen_segments[new_seg1] += 1
+        #         elif new_seg2 in unseen_segments:
+        #             unseen_segments[new_seg2] += 1
+        #         else:
+        #             unseen_segments.update({new_seg1 : 1})
+        #
+        # # comme chaque segment a été compté 2 fois, on divise tout par 2
+        # for segment in unseen_segments.keys():
+        #     unseen_segments[segment] /= 2
+        #
+        # # tous les cycles (chaque cycle contient une liste de segments qui sont
+        # # des couples de 2 points ici)
+        # cycles = list()
+        # while len(unseen_segments) != 0:
+        #     cycles.append(list())
+        #     # segment de départ arbitraire donné par la méthode popitem() de python
+        #     item = unseen_segments.popitem()
+        #     # si l'arête est répété plusieurs fois dans le graphe
+        #     # on le remet dedans en décrémentant le compteur de doublons
+        #     if item[1] > 1:
+        #         unseen_segments.update({item[0] : item[1]-1})
+        #     segment = item[0]
+        #     cycles[-1].append(Segment([segment[0], segment[1]]))
+        #     last_point = segment[1]
+        #     # tant que le dernier chemin n'a pas formé un cycle
+        #     # (si on respecte la précondition et si on avance dans n'importe quelle direction,
+        #     # on revient toujours au point de départ, donc s'assure que la boucle va se terminer
+        #     # dans tous les cas)
+        #     while last_point != segment[0]:
+        #         # on prend vertices[last_point][0] car on prend un chemin quelconque
+        #         any_point = self.vertices[last_point][0].endpoint_not(last_point)
+        #         new_seg1 = Segment([last_point, any_point])
+        #         new_seg2 = Segment([any_point, last_point])
+        #         cycles[-1].append(new_seg1)
+        #         # on supprime le segment pour le marquer comme vu
+        #         if new_seg1 in unseen_segments:
+        #             if unseen_segments[new_seg1] > 1:
+        #                 unseen_segments[new_seg1] -= 1
+        #         elif new_seg2 in unseen_segments:
+        #             if unseen_segments[new_seg2] > 1:
+        #                 unseen_segments[new_seg2] -= 1
+        #         else:
+        #             # unseen_segments contient soit l'un soit l'autre
+        #             unseen_segments.pop((last_point, any_point), None)
+        #             unseen_segments.pop((any_point, last_point), None)
+        #         last_point = any_point
+        #
+        # def common_segment(current, current_cycle, cycles):
+        #     """
+        #     return the index (0) of the first segment in the cycle and the index (1) of the cycle
+        #     associated if the current given segment has been found in another cycle, else None
+        #     """
+        #     if cycles is None:
+        #         return None
+        #     if len(cycles) == 0:
+        #         return None
+        #     for cycle_index, cycle in cycles:
+        #         if cycle_index != current_cycle:
+        #             for seg_index, segment in enumerate(cycle):
+        #                 if ((current.endpoints[0] == segment.endpoints[0] and
+        #                      current.endpoints[1] == segment.endpoints[1]) or
+        #                         (current.endpoints[0] == segment.endpoints[1] and
+        #                          current.endpoints[1] == segment.endpoints[0])):
+        #                     return (seg_index, cycle_index)
+        #     return None
+        #
+        # # fusion de tous les cycles précédents
+        # euler_cycle = list(cycles[0][0])
+        # # index of current segment and current cycle in cycles list
+        # current_segment = 0
+        # current_cycle = 0
+        # while len(cycles) != 0:
+        #     current = cycles[current_cycle].pop(current_segment)
+        #     if len(cycles[current_cycle]) == 0:
+        #         cycles.pop(current_cycle)
+        #     euler_cycle.append(current)
+        #     seg_cycle = common_segment(current, current_cycle, cycles)
+        #     if seg_cycle is not None:
+        #         current_segment = (seg_cycle[0]+1)%len(cycles[seg_cycle[1]])
+        #         current_cycle = seg_cycle[1]
+        #
+        # return euler_cycle
+        return None
