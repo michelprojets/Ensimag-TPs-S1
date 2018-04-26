@@ -28,7 +28,7 @@ class Hash:
             """
             sub-function for hasher
             """
-            if hash_key not in self.tables[index].keys():
+            if hash_key not in self.tables[index]:
                 self.tables[index][hash_key] = []
             self.tables[index][hash_key].append(point)
 
