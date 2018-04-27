@@ -63,8 +63,6 @@ class Graph:
             for j in range(i):
                 if linked(points[i], points[j]):
                     related_components.union(points[i], points[j])
-                    # # pas de break sinon créé une nouvelle composante connexe à chaque fois ?
-                    # break
 
         if related_components.size == 1:
             return
