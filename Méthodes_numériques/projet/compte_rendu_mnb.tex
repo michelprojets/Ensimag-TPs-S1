@@ -1,0 +1,442 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{fullpage}
+\usepackage{xspace}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{url}
+
+\lstset{basicstyle=\small\tt,
+  keywordstyle=\bfseries\color{Orchid},
+  stringstyle=\it\color{Tan},
+  commentstyle=\it\color{LimeGreen},
+  showstringspaces=false}
+
+\newtheorem{exo}{Question}
+
+\newcommand{\dx}{\,dx}
+\newcommand{\ito}{,\dotsc,}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Poly}[1]{\mathcal{P}_{#1}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\pars}[1]{\left(#1\right)}
+\newcommand{\bigpars}[1]{\bigl(#1\bigr)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+\title{TP méthodes numériques : Compte-rendu}
+\author{Billy Ndihokubwayo et Michel Yoeung (ENSIMAG - 1A - Groupe 2)}
+\date{Avril 2018}
+
+\begin{document}
+
+\maketitle
+
+%======================================
+\section{Introduction.}
+%======================================
+
+%======================================
+\section{Simulation de la collision de deux billes par le schéma d’Euler explicite.}
+%======================================
+
+\begin{exo} \ \\
+\begin{equation}
+\frac{d^{2}x_{1}}{dt^{2}} = -({x_{1}-x_{2}})^{\frac{3}{2}}_{+}
+\end{equation} \ 
+\begin{equation}
+\frac{d^{2}x_{2}}{dt^{2}} = ({x_{1}-x_{2}})^{\frac{3}{2}}_{+}
+\end{equation} \ 
+\begin{equation}
+H = \frac{v_{1}^{2}}{2} + \frac{v_{2}^{2}}{2} + \frac{2}{5}({x_{1}-x_{2}})^{\frac{5}{2}}_{+}
+\end{equation} \ \\
+On a donc :
+\begin{equation}
+\begin{align}
+\frac{dH}{dt} & = \frac{1}{2}\frac{dv_{1}^{2}}{dt} + \frac{1}{2}\frac{dv_{2}^{2}}{dt} + 
+(\frac{2}{5}(x_{1}-x_{2})^{\frac{5}{2}}_{+})' \ \\
+& = \frac{2}{2}v_{1}\frac{dv_{1}}{dt} + \frac{2}{2}v_{2}\frac{dv_{2}}{dt} + ({v_{1}-v_{2}})_{+}(x_{1}-x_{2})^{\frac{3}{2}}_{+} \ \\
+& = -v_{1}(v_{1}-v_{2})^{\frac{3}{2}}_{+} + v_{2}(v_{1}-v_{2})^{\frac{3}{2}}_{+} + ({v_{1}-v_{2}})_{+}(x_{1}-x_{2})^{\frac{3}{2}}_{+} \ \\
+& = -(v_{1}-v_{2})_{+}(x_{1}-x_{2})^{\frac{3}{2}}_{+} + (v_{1}-v_{2})_{+}(x_{1}-x_{2})^{\frac{3}{2}}_{+} \ \\
+& = 0
+\end{align}
+\end{equation} \ \\
+\end{exo}
+\begin{exo} \ \\ \\
+\begin{equation}
+\begin{align}
+Y =
+\begin{pmatrix} 
+x_{1} \\
+x_{2} \\
+v_{1} \\
+v_{2}
+\end{pmatrix}
+\mapsto
+\begin{pmatrix} 
+F_{1}(Y) \\
+F_{2}(Y) \\
+F_{3}(Y) \\
+F_{4}(Y)
+\end{pmatrix}
+avec \frac{dY}{dt}=F(Y)
+& \Rightarrow 
+Y =
+\begin{pmatrix} 
+x_{1}(t) \\
+x_{2}(t) \\
+v_{1}(t) \\
+v_{2}(t)
+\end{pmatrix}
+\mapsto
+\begin{pmatrix} 
+\frac{dx_{1}}{dt}(t) \\
+\frac{dx_{2}}{dt}(t) \\
+\frac{dv_{1}}{dt}(t) \\
+\frac{dv_{2}}{dt}(t)
+\end{pmatrix} \ \\
+& \Rightarrow 
+Y =
+\begin{pmatrix} 
+x_{1}(t) \\
+x_{2}(t) \\
+v_{1}(t) \\
+v_{2}(t)
+\end{pmatrix}
+\mapsto
+\begin{pmatrix} 
+v_{1}(t) \\
+v_{2}(t) \\
+-(x_{1}-x_{2})^{\frac{3}{2}}_{+} \\
++(x_{1}-x_{2})^{\frac{3}{2}}_{+}
+\end{pmatrix} \ \\
+\end{align}
+\end{equation} \ \\
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir graphe) \ \\ \\
+Pour $h_{1} = \frac{1}{10}$ : \ \\
+$v_{1}(0) = 1$ \ \\
+$v_{2}(0) = 0$ \ \\
+$v_{1,finale} = -0.13$ \ \\
+$v_{2,finale} = 1.13$ \ \\ \\
+Pour $h_{2} = \frac{1}{100}$ : \ \\
+$v_{1}(0) = 1$ \ \\
+$v_{2}(0) = 0$ \ \\
+$v_{1,finale} = -0.012$ \ \\
+$v_{2,finale} = 1.012$ \ \\ \\
+Pour $h_{3} = \frac{1}{1000}$ : \ \\
+$v_{1}(0) = 1$ \ \\
+$v_{2}(0) = 0$ \ \\
+$v_{1,finale} = -0.0011$ \ \\
+$v_{2,finale} = 1.0011$ \ \\ \\
+On peut donc remarquer que $v_{2,finale} > v_{1}(0)$ pour les trois valeurs de $h$. \ \\
+Ces résultats ne me semble pas réalistes étant donné que la deuxième bille
+aura au finale une plus grande vitesse que la vitesse initiale de la première 
+bille l'ayant touché. Ce qui vaudrait dire que si que le mouvement des billes
+ne s'arrêterait jamais. \ \\
+Et si on prend $h \to 0$, on remaque que $v_{2,finale} \to v_{1}(0)$.
+
+\end{exo}
+
+
+%======================================
+\section{Simulation de la collision de n billes par le schéma d’Euler implicite.}
+%======================================
+
+\begin{exo} \ \\ \\
+On a :
+\left\{
+\begin{array}{ll}
+m_{1}\frac{d^{2}x_{1}}{dt^{2}} = -(x_{1}-x_{2})^{\frac{3}{2}}_{+} \ \\ \\
+m_{i}\frac{d^{2}x_{i}}{dt^{2}} = (x_{i-1}-x_{i})^{\frac{3}{2}}_{+}-(x_{i}-x_{i+1})^{\frac{3}{2}}_{+} \; pour \; 2\leq i\leq n-1 \ \\ \\
+m_{n}\frac{d^{2}x_{n}}{dt^{2}} = -(x_{n-1}-x_{n})^{\frac{3}{2}}_{+}
+\end{array}
+\right \ \\ \\
+qui \; modélise \; la \; collision \; de \; n \; billes \ \\ \\
+et \; $H = \sum_{i=1}^{n}(\frac{1}{2}m_{i}(\frac{dx_{i}}{dt})^{2}) + \frac{2}{5}\sum_{i=1}^{n-1}(x_{i}-x_{i+1})^{\frac{5}{2}}_{+}$ \ \\ \\
+On a donc :
+\begin{equation}
+\begin{align}
+\frac{dH}{dt} & = \frac{d(\sum_{i=1}^{n}(\frac{1}{2}m_{i}(\frac{dx_{i}}{dt})^{2}))}{dt} + \frac{d(\frac{2}{5}\sum_{i=1}^{n-1}(x_{i}-x_{i+1})^{\frac{5}{2}}_{+})}{dt} \ \\
+& = \frac{2}{2}\sum_{i=1}^{n}(\frac{1}{2}m_{i}(\frac{dx_{i}}{dt}\frac{d^{2}x_{i}}{dt^{2}})) + \frac{2}{5}*\frac{5}{2}\sum_{i=1}^{n-1}((v_{i}-v_{i+1})_{+}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+}) \ \\
+& = -\sum_{i=1}^{n}(v_{i}m_{i}\frac{d^{2}x_{i}}{dt^{2}}) + \sum_{i=1}^{n-1}(v_{i}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+} - v_{i+1}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+}) \ \\
+& = -v_{1}(x_{1}-x_{2})^{\frac{3}{2}}_{+} + \sum_{i=2}^{n-1}(v_{i}((x_{i-1}-x_{i})^{\frac{3}{2}}_{+} - (x_{i}-x_{i+1})^{\frac{3}{2}}_{+})) + v_{n}(x_{n-1}-x_{n})^{\frac{3}{2}}_{+} + \ \\
+& \;\;\;\;\; v_{1}(x_{1}-x_{2})^{\frac{3}{2}}_{+} - v_{2}(x_{1}-x_{2})^{\frac{3}{2}}_{+} +
+\sum_{i=2}^{n-2}(v_{i}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+} - v_{i+1}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+}) + \ \\
+& \;\;\;\;\; v_{n}(x_{n-1}-x_{n})^{\frac{3}{2}}_{+} - v_{n}(x_{n-1}-x_{n})^{\frac{3}{2}}_{+} \ \\
+& = \sum_{i=2}^{n-1}(v_{i}(x_{i-1}-x_{i})^{\frac{3}{2}}_{+} - v_{i}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+}) - v_{2}(x_{1}-x_{2})^{\frac{3}{2}}_{+} + \ \\ & \;\;\;\;\; \sum_{i=2}^{n-2}(v_{i}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+} - v_{i+1}(x_{i}-x_{i+1})^{\frac{3}{2}}_{+}) + v_{n-1}(x_{n-1}-x_{n})^{\frac{3}{2}}_{+} \ \\
+& = 0 \;\;\; car \; les \; termes \; s'annulent
+\end{align}
+\end{equation}
+\end{exo}
+
+\begin{exo} \ \\ \\
+On a :
+M =
+\begin{pmatrix} 
+m_{1} & 0 & ... & 0 \\
+0 & m_{2} & ... & ... \\
+... & ... & ... & 0 \\
+0 & ... & 0 & m_{n}
+\end{pmatrix}
+et Mx =
+\begin{pmatrix} 
+m_{1}x_{1} \\
+m_{2}x_{2} \\
+... \\
+m_{n}x_{n}
+\end{pmatrix} \ \\ \\
+Et en se basant sur le schéma d'Euler implicite : \ \\ \\
+\begin{pmatrix} 
+m_{1} & 0 & ... & 0 \\
+0 & m_{2} & ... & ... \\
+... & ... & ... & 0 \\
+0 & ... & 0 & m_{n}
+\end{pmatrix}
+\begin{pmatrix} 
+x_{1}^{(k+1)}-2x_{1}^{(k)}+x_{1}^{(k-1)} \\
+x_{2}^{(k+1)}-2x_{2}^{(k)}+x_{2}^{(k-1)} \\
+... \\
+x_{n}^{(k+1)}-2x_{n}^{(k)}+x_{n}^{(k-1)}
+\end{pmatrix}
+- h^{2}f(x^{(k+1)}) \ \\ \\ \\
+=
+\begin{pmatrix} 
+m_{1}(x_{1}^{(k+1)}-2x_{1}^{(k)}+x_{1}^{(k-1)}) \\
+m_{2}(x_{2}^{(k+1)}-2x_{2}^{(k)}+x_{2}^{(k-1)}) \\
+... \\
+m_{n}(x_{n}^{(k+1)}-2x_{n}^{(k)}+x_{n}^{(k-1)})
+\end{pmatrix}
+- h^{2}f(x^{(k+1)}) \ \\ \\ \\
+=
+h^{2}
+\begin{pmatrix} 
+\frac{m_{1}(x_{1}^{(k+1)}-2x_{1}^{(k)}+x_{1}^{(k-1)})}{h^{2}} \\
+\frac{m_{2}(x_{2}^{(k+1)}-2x_{2}^{(k)}+x_{2}^{(k-1)})}{h^{2}} \\
+... \\
+\frac{m_{n}(x_{n}^{(k+1)}-2x_{n}^{(k)}+x_{n}^{(k-1)})}{h^{2}}
+\end{pmatrix}
+- h^{2}f(x^{(k+1)}) \;\;\;\;\; avec \; le \; vecteur \; qui \; designe \; $f(x^{(k+1)})$
+\ \\ \\ \\
+= h^{2}f(x^{(k+1)})-h^{2}f(x^{(k+1}) \ \\ \\
+= 0
+\ \\ \\
+Donc \; le \; schéma \; d'Euler \; implicite \; s'écrit \; bien \; : \ \\ \\
+M(x^{(k+1)}-2x^{(k)}+x^{(k-1)})-h^{2}f(x^{(k+1)}) = 0
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir graphe) \ \\ \\
+L'énergie mécanique diminue en effet avec le temps. \ \\
+Et plus on prend h petit, plus l'énergie mécanique diminue lentement
+
+\end{exo}
+
+\begin{exo}
+(Voir graphe) \ \\ \\
+Avec le graphe en niveaux de gris (Sgrayplot), on peut constater que les forces de contacts entre deux billes vont en s'amplifiant jusqu'à un certain moment puis diminuenent et viennent à s'annuler une fois pour toutes. Toutefois ce cycle ne se remarque pas au même instant pour tous les couples de billes voisines. En effet par exemple, une fois que les forces de contact entre la première et la deuxième bille commencent à diminuer, le cycle débute pour la deuxième et la troisième bille et ainsi de suite.
+\end{exo}
+
+\begin{exo}
+(Voir graphe) \ \\ \\
+Les résultats obtenus pour $m=0.5$ montrent que l'évolution des forces de contacts entre $2$ billes ne suit plus le cycle observé sur les résultats pour $m=1$.  En effet pour $m=0.5$, les forces de contacts entre 2 billes données peuvent augmenter puis s'annuler puis par la suite augmenter encore(ceci peut se répéter plusieurs fois) ce qui n'était pas le cas pour $m=1$ où les forces de contact entre $2$ billes données ne pouvaient réaugmenter une fois après avoir été annulées.
+\end{exo}
+
+\begin{exo}
+(Voir graphe) \ \\ \\
+Il faut choisir $m=0.5$ pour avoir une vitesse d'ejection minimale.
+\end{exo}
+
+\begin{exo} \ \\ \\
+On rappelle :
+M =
+\begin{pmatrix} 
+m_{1} & 0 & ... & 0 \\
+0 & m_{2} & ... & ... \\
+... & ... & ... & 0 \\
+0 & ... & 0 & m_{n}
+\end{pmatrix} \ \\ \\ \\
+On a :
+\begin{pmatrix} 
+\frac{m_{1}(u_{1}^{(k+1)}-2u_{1}^{(k)}+u_{1}^{(k-1)})}{h^{2}} \\
+... \\
+\frac{m_{i}(u_{i}^{(k+1)}-2u_{i}^{(k)}+u_{i}^{(k-1)})}{h^{2}} \\
+... \\
+\frac{m_{n}(u_{n}^{(k+1)}-2u_{n}^{(k)}+u_{n}^{(k-1)})}{h^{2}}
+\end{pmatrix}
+=
+\begin{pmatrix} 
+u_{2}^{(k+1)}-2u_{1}^{(k+1)}+f_{1}((k+1)h) \\
+... \\
+u_{i+1}^{(k+1)}-2u_{i}^{(k+1)}+u_{i-1}^{(k+1)} \\
+... \\
+u_{n-1}^{(k+1)}-2u_{n}^{(k+1)}
+\end{pmatrix} \ \\ \\ \\
+\Rightarrow
+\begin{pmatrix} 
+m_{1}(u_{1}^{(k+1)}-2u_{1}^{(k)}+u_{1}^{(k-1)})} \\
+... \\
+m_{i}(u_{i}^{(k+1)}-2u_{i}^{(k)}+u_{i}^{(k-1)})} \\
+... \\
+m_{n}(u_{n}^{(k+1)}-2u_{n}^{(k)}+u_{n}^{(k-1)})}
+\end{pmatrix}
+=
+h^{2}
+\begin{pmatrix} 
+u_{2}^{(k+1)}-2u_{1}^{(k+1)}+f_{1}((k+1)h) \\
+... \\
+u_{i+1}^{(k+1)}-2u_{i}^{(k+1)}+u_{i-1}^{(k+1)} \\
+... \\
+u_{n-1}^{(k+1)}-2u_{n}^{(k+1)}
+\end{pmatrix} \ \\ \\ \\
+\Rightarrow
+\begin{pmatrix} 
+m_{1}u_{1}^{(k+1)} \\
+... \\
+m_{i}u_{i}^{(k+1)} \\
+... \\
+m_{n}u_{n}^{(k+1)}
+\end{pmatrix}
++
+M
+\begin{pmatrix} 
+-u_{1}^{(k)} \\
+... \\
+-u_{i}^{(k)} \\
+... \\
+u_{n}^{(k)}
+\end{pmatrix}
+-
+M
+\begin{pmatrix} 
+h\sqrt{1}^{(k)} \\
+... \\
+h\sqrt{i}^{(k)} \\
+... \\
+h\sqrt{n}^{(k)}
+\end{pmatrix}
+=
+h^{2}
+\begin{pmatrix} 
+u_{2}^{(k+1)}-2u_{1}^{(k+1)}+f_{1}((k+1)h) \\
+... \\
+u_{i+1}^{(k+1)}-2u_{i}^{(k+1)}+u_{i-1}^{(k+1)} \\
+... \\
+u_{n-1}^{(k+1)}-2u_{n}^{(k+1)}
+\end{pmatrix} \ \\ \\ \\
+\Rightarrow
+\begin{pmatrix} 
+m_{1}u_{1}^{(k+1)} \\
+... \\
+m_{i}u_{i}^{(k+1)} \\
+... \\
+m_{n}u_{n}^{(k+1)}
+\end{pmatrix}
+-
+\begin{pmatrix} 
+m_{1}(u_{1}^{(k)}+h\sqrt{1}^{(k)}) \\
+... \\
+m_{i}(u_{i}^{(k)}+h\sqrt{i}^{(k)}) \\
+... \\
+m_{n}(u_{n}^{(k)}+h\sqrt{n}^{(k)})
+\end{pmatrix}
+=
+-h^{2}
+\begin{pmatrix} 
+1-f_{1}((k+1)h) & -1 & 0 & ... & ... & 0 \\
+-1 & 2 & -1 & 0 & ... & ... \\
+0 & -1 & 2 & ... & ... & 0 \\
+... & ... & ... & ... & ... & -1 \\
+0 & ... & ... & 0 & -1 & 2
+\end{pmatrix} \ \\ \\ \\
+\begin{pmatrix} 
+u_{1}^{(k+1)} \\
+... \\
+u_{i}^{(k+1)} \\
+... \\
+u_{n}^{(k+1)}
+\end{pmatrix} \ \\ \\
+avec \;\; $Mu^{(k+1)}=$
+\begin{pmatrix} 
+m_{1}u_{1}^{(k+1)} \\
+... \\
+m_{i}u_{i}^{(k+1)} \\
+... \\
+m_{n}u_{n}^{(k+1)}
+\end{pmatrix}
+, $b^{(k)}=$
+\begin{pmatrix} 
+m_{1}(u_{1}^{(k)}+h\sqrt{1}^{(k)}) \\
+... \\
+m_{i}(u_{i}^{(k)}+h\sqrt{i}^{(k)}) \\
+... \\
+m_{n}(u_{n}^{(k)}+h\sqrt{n}^{(k)})
+\end{pmatrix}, \ \\ \\ \\
+$D=$
+\begin{pmatrix} 
+1-f_{1}((k+1)h) & -1 & 0 & ... & ... & 0 \\
+-1 & 2 & -1 & 0 & ... & ... \\
+0 & -1 & 2 & ... & ... & 0 \\
+... & ... & ... & ... & ... & -1 \\
+0 & ... & ... & 0 & -1 & 2
+\end{pmatrix}
+et $u^{(k+1)}=$
+\begin{pmatrix} 
+u_{1}^{(k+1)} \\
+... \\
+u_{i}^{(k+1)} \\
+... \\
+u_{n}^{(k+1)}
+\end{pmatrix} 
+\ \\ \\ \\
+\Rightarrow
+$Mu^{(k+1)}+h^{2}Du^{(k+1)} = b^{(k)}$ \ \\ \\
+\Rightarrow
+$(M+h^{2}-D)u^{(k+1)} = b^{(k)}$ \ \\ \\
+\Rightarrow
+$Au^{(k+1)} = b^{(k)}$ avec $A = M+h^{2}-D$ \ \\ \\
+De plus, $A^{t} = (M+h^{2}D) = M^{t}+h^{2}D^{t} = M+h^{2}D = A$ \ \\
+Donc A est bien une matrice symétrique et tridiagonale.
+\end{exo}
+
+\begin{exo} \ \\
+
+\end{exo}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
