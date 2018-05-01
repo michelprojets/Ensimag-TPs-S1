@@ -120,7 +120,7 @@ v_{2}(t) \\
 +(x_{1}-x_{2})^{\frac{3}{2}}_{+}
 \end{pmatrix} \ \\
 \end{align}
-\end{equation} \ \\
+\end{equation} \ 
 \end{exo}
 
 \begin{exo}
@@ -128,7 +128,44 @@ v_{2}(t) \\
 \end{exo}
 
 \begin{exo}
-(Voir graphe) \ \\ \\
+ \ 
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/0_x1_x2_h1.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/v1_v2_h1.png}
+    \end{minipage}
+ \end{figure}
+        
+
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/0_x1_x2_h2.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/v1_v2_h2.png}
+    \end{minipage}
+ \end{figure}
+ 
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/0_x1_x2_h3.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/v1_v2_h3.png}
+    \end{minipage}
+ \end{figure}  \ \\ \\ \\ \\ 
+\\
 Pour $h_{1} = \frac{1}{10}$ : \ \\
 $v_{1}(0) = 1$ \ \\
 $v_{2}(0) = 0$ \ \\
@@ -249,26 +286,81 @@ M(x^{(k+1)}-2x^{(k)}+x^{(k-1)})-h^{2}f(x^{(k+1)}) = 0
 \begin{exo}
 (Voir script Scilab)
 \end{exo}
-
+\newpage
 \begin{exo}
-(Voir graphe) \ \\ \\
+ \ 
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m1_h1.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m05_h1.png}
+    \end{minipage}
+ \end{figure}
+        
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m1_h2.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m05_h2.png}
+    \end{minipage}
+ \end{figure}
+ 
+ \begin{figure}[!h]
+    \centering
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m1_h3.png}
+    \end{minipage}
+    \begin{minipage}[t]{7 cm}
+        \centering
+        \includegraphics[scale=0.4]{images/q9_m05_h3.png}
+    \end{minipage}
+ \end{figure} \ \\ 
 L'énergie mécanique diminue en effet avec le temps. \ \\
-Et plus on prend h petit, plus l'énergie mécanique diminue lentement
+Et plus on prend h petit, plus l'énergie mécanique diminue lentement.
+
+\end{exo}
+
+\newpage
+\begin{exo}
+ \
+ \begin{figure}[!h]
+ \includegraphics[scale=0.5]{images/q10_7bill.png}
+ \caption{Tracé du graphe des vitesses des 7 billes}
+ \label{Tracé du graphe des vitesses des 7 billes}
+ \end{figure}
+ 
+ \begin{figure}[!h]
+ \includegraphics[scale=0.5]{images/q10_cntc_m1.png}
+ \caption{ Graphe en niveaux de gris}
+ \label{ Graphe en niveaux de gris}
+ \end{figure}
+ \ \\
+Avec le graphe en niveaux de gris (Sgrayplot), on peut constater que les forces de contacts entre deux billes vont en s'amplifiant jusqu'à un certain moment puis diminuenent et viennent à s'annuler une fois pour toutes. Toutefois ce cycle ne se remarque pas au même instant pour tous les couples de billes voisines. En effet par exemple, une fois que les forces de contact entre la première et la deuxième bille commencent à diminuer, le cycle débute pour la deuxième et la troisième bille et ainsi de suite. \ \\
 
 \end{exo}
 
 \begin{exo}
-(Voir graphe) \ \\ \\
-Avec le graphe en niveaux de gris (Sgrayplot), on peut constater que les forces de contacts entre deux billes vont en s'amplifiant jusqu'à un certain moment puis diminuenent et viennent à s'annuler une fois pour toutes. Toutefois ce cycle ne se remarque pas au même instant pour tous les couples de billes voisines. En effet par exemple, une fois que les forces de contact entre la première et la deuxième bille commencent à diminuer, le cycle débute pour la deuxième et la troisième bille et ainsi de suite.
-\end{exo}
-
-\begin{exo}
-(Voir graphe) \ \\ \\
+ \ 
+ \begin{figure}[h]
+ \includegraphics[scale=0.5]{images/q11_cntc_m05.png}
+ \end{figure} \ \\ 
 Les résultats obtenus pour $m=0.5$ montrent que l'évolution des forces de contacts entre $2$ billes ne suit plus le cycle observé sur les résultats pour $m=1$.  En effet pour $m=0.5$, les forces de contacts entre 2 billes données peuvent augmenter puis s'annuler puis par la suite augmenter encore(ceci peut se répéter plusieurs fois) ce qui n'était pas le cas pour $m=1$ où les forces de contact entre $2$ billes données ne pouvaient réaugmenter une fois après avoir été annulées.
 \end{exo}
 
 \begin{exo}
-(Voir graphe) \ \\ \\
+ \ \\
+ \begin{figure}[h]
+ \includegraphics[scale=0.5]{images/q12_vit_ejec.png}
+ \end{figure} \ \\ 
 Il faut choisir $m=0.5$ pour avoir une vitesse d'ejection minimale.
 \end{exo}
 
@@ -338,11 +430,11 @@ u_{n}^{(k)}
 -
 M
 \begin{pmatrix} 
-h\sqrt{1}^{(k)} \\
+hv_{1}^{(k)} \\
 ... \\
-h\sqrt{i}^{(k)} \\
+hv_{i}^{(k)} \\
 ... \\
-h\sqrt{n}^{(k)}
+hv_{n}^{(k)}
 \end{pmatrix}
 =
 h^{2}
@@ -363,16 +455,16 @@ m_{n}u_{n}^{(k+1)}
 \end{pmatrix}
 -
 \begin{pmatrix} 
-m_{1}(u_{1}^{(k)}+h\sqrt{1}^{(k)}) \\
+m_{1}(u_{1}^{(k)}+hv_{1}^{(k)}) + h^2f_{1}((k+1)h) \\
 ... \\
-m_{i}(u_{i}^{(k)}+h\sqrt{i}^{(k)}) \\
+m_{i}(u_{i}^{(k)}+hv_{i}^{(k)}) \\
 ... \\
-m_{n}(u_{n}^{(k)}+h\sqrt{n}^{(k)})
+m_{n}(u_{n}^{(k)}+hv_{n}^{(k)})
 \end{pmatrix}
 =
 -h^{2}
 \begin{pmatrix} 
-1-f_{1}((k+1)h) & -1 & 0 & ... & ... & 0 \\
+1 & -1 & 0 & ... & ... & 0 \\
 -1 & 2 & -1 & 0 & ... & ... \\
 0 & -1 & 2 & ... & ... & 0 \\
 ... & ... & ... & ... & ... & -1 \\
@@ -395,15 +487,15 @@ m_{n}u_{n}^{(k+1)}
 \end{pmatrix}
 , $b^{(k)}=$
 \begin{pmatrix} 
-m_{1}(u_{1}^{(k)}+h\sqrt{1}^{(k)}) \\
+m_{1}(u_{1}^{(k)}+hv_{1}^{(k)}) + h^2f_{1}((k+1)h)\\
 ... \\
-m_{i}(u_{i}^{(k)}+h\sqrt{i}^{(k)}) \\
+m_{i}(u_{i}^{(k)}+hv_{i}^{(k)}) \\
 ... \\
-m_{n}(u_{n}^{(k)}+h\sqrt{n}^{(k)})
+m_{n}(u_{n}^{(k)}+hv_{n}^{(k)})
 \end{pmatrix}, \ \\ \\ \\
 $D=$
 \begin{pmatrix} 
-1-f_{1}((k+1)h) & -1 & 0 & ... & ... & 0 \\
+1 & -1 & 0 & ... & ... & 0 \\
 -1 & 2 & -1 & 0 & ... & ... \\
 0 & -1 & 2 & ... & ... & 0 \\
 ... & ... & ... & ... & ... & -1 \\
@@ -423,25 +515,91 @@ $Mu^{(k+1)}+h^{2}Du^{(k+1)} = b^{(k)}$ \ \\ \\
 \Rightarrow
 $(M+h^{2}-D)u^{(k+1)} = b^{(k)}$ \ \\ \\
 \Rightarrow
-$Au^{(k+1)} = b^{(k)}$ avec $A = M+h^{2}-D$ \ \\ \\
-De plus, $A^{t} = (M+h^{2}D) = M^{t}+h^{2}D^{t} = M+h^{2}D = A$ \ \\
-Donc A est bien une matrice symétrique et tridiagonale.
-
-
+$Au^{(k+1)} = b^{(k)}$ avec $A = M+h^{2}D$ \ \\ \\
 \end{exo}
 
+\begin{exo}
+\ \\ \\
+A =
+\begin{pmatrix} 
+m_{1}+h^2 & -1 & ... & 0 \\
+-1 & m_{i}+2h^2 & ... & ... \\
+... & ... & ... & -1 \\
+0 & ... & -1 & m_{n}+2h^2
+\end{pmatrix} \ \\
 
 
+Avec i = 2...n-1\ \\
 
+$A^{t} = (M+h^{2}D) = M^{t}+h^{2}D^{t} = M+h^{2}D = A$ \ \\
+Donc A est bien une matrice symétrique
+\ \\ \\
+Soit ${\it X} \in {\bf M}_{n,1}(\mathbb{C})$
 
+$~^t{\it X} {\it A}  {\it X}$ = \begin{pmatrix} 
+x_{1} & ... & x_{i} & ... & x_{n} 
+\end{pmatrix}\begin{pmatrix} 
+m_{1}+h^2 & -1 & ... & 0 \\
+-1 & m_{i}+2h^2 & ... & ... \\
+... & ... & ... & -1 \\
+0 & ... & -1 & m_{n}+2h^2
+\end{pmatrix}\begin{pmatrix} 
+x_{1} \\
+... \\
+x_{i} \\
+... \\
+x_{n}
+\end{pmatrix}
 
+$~^t{\it X} {\it A}  {\it X}$ = \begin{pmatrix} 
+(x_{1}(m1_{1} + h^2) - x_{2}) & ... & (-x_{i-1} + (m_{i} + 2h^2)x_{i} - x_{i+1}) & ... & (-x_{n-1} + (m{n} + 2h^2)x_{n})
+\end{pmatrix}\begin{pmatrix}
+x_{1} \\
+... \\
+x_{i} \\
+... \\
+x_{n}
+\end{pmatrix}
 
+$~^t{\it X} {\it A}  {\it X}$ =
+(x_{1}^2(m1_{1} + h^2)-x_{1}x_{2}) + ... + (-x_{i-1}x_{i}+(m_{i}+2h^2)x_{i}^2-x_{i}x_{i+1}) + ... 
++(-x_{n-1}x_{n}+(m{n}+2h^2)x_{n}^2) \ \\
 
+Avec\ i = 2...n \ \\
 
+$~^t{\it X} {\it A}  {\it X}$ =
+m_{1}x_{1}^2 + ... + h^2x_{k-1}^2-2x_{k-1}x_{k} + h^2x_{k}^2 + m_{k}x_{k}^2 + ... + h^2x_{n-1}^2 - 2x_{n-1}x_{n} + h^2x_{n}^2 \ \\
 
+Avec\ k = 2...n\ \\
 
+$~^t{\it X} {\it A}  {\it X} =
+\sum\limits_{i=2}^n (x_{j-1} - x_{j})^2 + \sum\limits_{j=1}^n m_{j}x_{j}^2 + x_{n}^2$
+\ \\ \\
+La matrice A symétrique est définie positive car 
+tous les expressions de $~^t{\it X} {\it A}  {\it X}$ ne peuvent qu'être nul ou supérieurs à zero.
+De plus pour que l'expression $~^t{\it X} {\it A}  {\it X}$ soit nulle, il faut que X soit un vecteur nul.
 
+\end{exo} 
 
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
+
+\begin{exo}
+(Voir script Scilab)
+\end{exo}
 
 \end{document}
 
